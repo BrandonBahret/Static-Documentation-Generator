@@ -1,6 +1,6 @@
 # Atlas Docs
 
-Atlas Docs is a markdown-based static-site generator for building documentation, plus a Codex workflow for turning project context into a finished docs site. 
+Atlas Docs is a Markdown-based static site generator for documentation, paired with a Codex workflow that turns project context into a polished docs site.
 
 ![preview](preview.png)
 **^ Generate docs like these ^**
