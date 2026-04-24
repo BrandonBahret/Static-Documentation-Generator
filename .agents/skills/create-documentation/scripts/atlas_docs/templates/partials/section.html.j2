@@ -1,0 +1,8 @@
+<section class="section{% if section.slug == site.default_section %} active{% endif %}" id="section-{{ section.slug }}" data-section="{{ section.slug }}">
+  <div class="page-hero">
+    {% if section.tag %}<div class="page-tag">{{ section.tag }}</div>{% endif %}
+    <h1 class="page-title">{{ section.title }}{% if section.title_em %}<em>{{ section.title_em }}</em>{% endif %}</h1>
+    {% if section.lead %}<p class="page-lead">{{ section.lead }}</p>{% endif %}
+  </div>
+  {{ section.body_html | safe }}
+</section>

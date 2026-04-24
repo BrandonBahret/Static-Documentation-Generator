@@ -1,0 +1,4 @@
+interface:
+  display_name: "Create Documentation"
+  short_description: "Create Atlas docs in atlas_sources and build to docs_site"
+  default_prompt: "Use create-documentation (/create-documentation or $create-documentation, depending on the surface) to generate Atlas docs for this project under atlas_sources/[project]/ and build the HTML output to docs_site/[project]/index.html."

@@ -1,0 +1,78 @@
+@layer code {
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    overflow-x: auto;
+    margin: 16px 0 24px;
+    position: relative;
+  }
+  pre::before {
+    content: attr(data-lang);
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-dimmer);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    transition: opacity 0.15s, transform 0.15s;
+  }
+  pre[data-lang]:hover::before,
+  pre[data-lang]:focus-within::before { opacity: 0; transform: translateY(-2px); }
+  code { font-family: var(--font-mono); font-size: 13px; line-height: 1.75; color: var(--inline-code-text); }
+  p code, li code {
+    background: var(--inline-code-bg);
+    border: 1px solid var(--border);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 12.5px;
+    color: var(--inline-code-text);
+  }
+  code.inline-code-ref {
+    transition: border-color 0.15s, background 0.15s, color 0.15s, box-shadow 0.15s;
+  }
+  body.mod-nav-active code.inline-code-ref {
+    cursor: pointer;
+    color: var(--text);
+    background: var(--inline-ref-bg);
+    border-color: var(--inline-ref-border);
+    box-shadow: 0 0 0 1px var(--inline-ref-border), 0 0 18px var(--inline-ref-shadow);
+  }
+  body.mod-nav-active code.inline-code-ref:hover {
+    background: var(--inline-ref-hover-bg);
+    border-color: var(--inline-ref-hover-border);
+    box-shadow: 0 0 0 1px var(--inline-ref-hover-border), 0 0 24px var(--inline-ref-hover-shadow);
+  }
+  .copy-code-button {
+    position: absolute; top: 7px; right: 10px; height: 26px; padding: 0 8px 0 6px;
+    display: inline-flex; align-items: center; gap: 5px;
+    border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+    border-radius: 999px; background: var(--copy-button-bg); color: var(--text-dim);
+    cursor: pointer; opacity: 0; transform: translateY(-2px);
+    transition: opacity .15s, transform .15s, color .15s, border-color .15s, background .15s;
+    z-index: 1; font-family: var(--font-mono); font-size: 10px; letter-spacing: .04em;
+    white-space: nowrap;
+  }
+  pre[data-lang]:hover .copy-code-button, pre[data-lang]:focus-within .copy-code-button { opacity: 1; transform: translateY(0); }
+  .copy-code-button:hover, .copy-code-button:focus-visible {
+    color: var(--accent);
+    border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+    background: color-mix(in srgb, var(--accent) 8%, transparent);
+    outline: none;
+  }
+  .copy-code-button.copied {
+    color: var(--accent);
+    border-color: color-mix(in srgb, var(--accent) 65%, transparent);
+    background: var(--accent-glow);
+  }
+  .kw { color: var(--syntax-keyword); }
+  .fn { color: var(--syntax-function); }
+  .cl { color: var(--accent); }
+  .st { color: var(--syntax-string); }
+  .cm { color: var(--text-dimmer); font-style: italic; }
+  .num { color: var(--syntax-number); }
+  .dc { color: var(--syntax-decorator); }
+}

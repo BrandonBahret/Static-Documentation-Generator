@@ -1,0 +1,28 @@
+<aside class="sidebar" id="sidebar">
+  <div class="logo">
+    <div class="logo-name">
+      {{ site.metadata.name }}
+      {% if site.metadata.version %}<span class="logo-pill">{{ site.metadata.version }}</span>{% endif %}
+    </div>
+    {% if site.metadata.tagline %}<div class="logo-tagline">{{ site.metadata.tagline }}</div>{% endif %}
+  </div>
+
+  <nav>
+    {% for group in site.nav_groups %}
+      <div class="nav-group">
+        <div class="nav-group-label">{{ group.label }}</div>
+        {% for entry in group.entries %}
+          {% if entry.external %}
+            <a class="nav-link" href="{{ entry.target }}" target="_blank" rel="noopener noreferrer">
+              <span class="dot"></span> {{ entry.label }}
+            </a>
+          {% else %}
+            <a class="nav-link{% if entry.slug == site.default_section %} active{% endif %}" href="#section-{{ entry.slug }}" data-section-link="{{ entry.slug }}">
+              <span class="dot"></span> {{ entry.label }}
+            </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </nav>
+</aside>

@@ -1,0 +1,17 @@
+<header class="topbar">
+  <div class="topbar-left">
+    <button class="menu-toggle" type="button" data-toggle-sidebar>☰</button>
+    <div class="breadcrumb" id="breadcrumb">
+      {% if site.sections %}{{ site.sections[0].breadcrumb.split('/')[0].strip() }} <span>/</span> {{ site.sections[0].breadcrumb.split('/')[-1].strip() }}{% else %}{{ site.metadata.name | lower }} <span>/</span> docs{% endif %}
+    </div>
+  </div>
+  {% if site.metadata.get("features", {}).get("search", true) %}
+  <div class="topbar-actions">
+    <button class="search-trigger" type="button" data-open-search>
+      <span aria-hidden="true">Search</span>
+      <span class="search-trigger-label">docs, types, examples...</span>
+      <span class="search-trigger-kbd">Ctrl K</span>
+    </button>
+  </div>
+  {% endif %}
+</header>

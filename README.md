@@ -1,8 +1,38 @@
-# Atlas Docs CLI
+# Atlas Docs
 
-A Python CLI static-site generator that compiles an Atlas docs source directory into a single-page documentation site.
+Atlas Docs is a markdown-based static-site generator for building documentation, plus a Codex workflow for turning project context into a finished docs site. 
 
-## Commands
+![preview](preview.png)
+**^ Generate docs like these ^**
+
+The repository has two related parts:
+
+- `src/atlas_docs/`: the reusable Python package and CLI
+- `ATLAS_DOCS_FORMAT.md`: the source format the generator compiles
+
+The Codex skill for this workflow is named `create-documentation`. When packaged for Codex, it is intended to be a standalone bundle that includes its own `SKILL.md`, references, and vendored `atlas_docs` scripts.
+
+## What It Does
+
+Given an Atlas source directory, the CLI builds a browsable static HTML documentation site.
+
+The `create-documentation` skill sits one layer above that. It is meant to:
+
+- inspect a local repository or research a non-local project
+- write Atlas source files such as `metadata.md`, `navigation.md`, `assets.md`, and `content/*.md`
+- build a final `docs_site/index.html`
+
+## Install The CLI
+
+From the repository root:
+
+```bash
+py -m pip install -e .
+```
+
+That installs the `atlas-docs` command defined in `pyproject.toml`.
+
+## CLI Usage
 
 ```bash
 atlas-docs init my-docs
@@ -10,36 +40,66 @@ atlas-docs build my-docs --out dist/index.html --theme atlas_dark
 atlas-docs serve my-docs --port 8000
 ```
 
-## Architecture
+If you do not want to install the package, you can run it from source:
 
-Atlas separates content, templates, themes, and runtime behavior:
-
-```text
-source docs/              plain project input
-  metadata.md             identity, typography, feature flags
-  navigation.md           sidebar and section order
-  assets.md               SVG/image registry
-  content/*.md            one section per file
-
-package templates/        Jinja2 HTML structure
-package themes/<name>/    YAML design tokens + cohesive CSS layers
-package static/js/        framework-free runtime modules
-
-build output              generated index.html + assets/
+```bash
+set PYTHONPATH=src
+py -m atlas_docs.cli build my-docs --out dist/index.html
 ```
 
-## Theme format
+## Atlas Source Layout
 
-Each theme is a directory:
+Atlas separates source content from rendering assets:
 
 ```text
-themes/atlas_dark/
-  theme.yaml              tokens and high-level settings
-  tokens.css.j2           CSS custom properties from tokens
-  base.css                reset, document, typography
-  layout.css              shell, sidebar, topbar, content layout
-  components.css          cards, callouts, tables, methods, search
-  code.css                code blocks and syntax token classes
+docs/
+  metadata.md
+  navigation.md
+  assets.md
+  content/
+    *.md
 ```
 
-A new theme can override any of these files while reusing the same Jinja templates and JavaScript.
+The format is defined in `ATLAS_DOCS_FORMAT.md`.
+
+## Repository Layout
+
+```text
+src/atlas_docs/
+  cli.py
+  loader.py
+  markdown.py
+  renderer.py
+  theme.py
+  templates/
+  themes/
+  static/
+
+ATLAS_DOCS_FORMAT.md
+pyproject.toml
+README.md
+```
+
+## Using The Skill
+
+The intended Codex skill name is `create-documentation`.
+
+Depending on the Codex surface, invocation may look like either of these:
+
+```text
+/create-documentation document this project
+$create-documentation document this project
+```
+
+A packaged standalone skill bundle should contain:
+
+```text
+create-documentation/
+  SKILL.md
+  agents/openai.yaml
+  references/ATLAS_DOCS_FORMAT.md
+  references/atlas-workflow.md
+  scripts/atlas_docs/
+```
+
+That bundle should use the vendored `scripts/atlas_docs` package so the skill remains portable instead of depending on this repository being installed in editable mode.

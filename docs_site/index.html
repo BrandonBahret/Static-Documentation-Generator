@@ -1,0 +1,2960 @@
+<!DOCTYPE html>
+<html lang="en" data-color-scheme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<title>Atlas Docs &mdash; Docs</title>
+<script>
+  (function () {
+    var defaultScheme = "dark";
+    var resolvedScheme = defaultScheme === "light" ? "light" : "dark";
+
+    try {
+      var storage = window.localStorage;
+      var raw = storage && storage.getItem("atlas-docs-settings");
+      if (raw) {
+        var parsed = JSON.parse(raw);
+        if (parsed && parsed.colorScheme === "light") {
+          resolvedScheme = "light";
+        } else if (parsed && parsed.colorScheme === "dark") {
+          resolvedScheme = "dark";
+        }
+      }
+    } catch (_error) {
+      // Ignore storage failures and keep the theme default for first paint.
+    }
+
+    document.documentElement.dataset.colorScheme = resolvedScheme;
+    document.documentElement.style.colorScheme = resolvedScheme;
+  })();
+</script>
+<style>
+  :root, html[data-color-scheme="dark"] {
+  --bg: #0e0e10;
+  --surface: #16161a;
+  --border: #2a2a30;
+  --border-subtle: #1e1e24;
+  --text: #e8e8ec;
+  --text-dim: #888898;
+  --text-dimmer: #555568;
+  --accent: #c8f060;
+  --accent-dim: #a8cc45;
+  --accent-glow: rgba(200,240,96,0.12);
+  --accent2: #60b8f0;
+  --accent2-dim: rgba(96,184,240,0.15);
+  --red: #f06060;
+  --sidebar-w: 260px;
+  --code-bg: #111115;
+  --radius: 6px;
+  --hover-tint: rgba(255,255,255,0.03);
+  --overlay-bg: rgba(5,7,10,0.7);
+  --topbar-bg: color-mix(in srgb, var(--bg) 85%, transparent);
+  --panel-bg: #111317;
+  --panel-border: rgba(255,255,255,0.08);
+  --panel-shadow: 0 24px 80px rgba(0,0,0,0.45);
+  --input-bg: rgba(255,255,255,0.03);
+  --inline-code-bg: rgba(255,255,255,0.06);
+  --inline-code-text: #d4d4e8;
+  --button-bg: rgba(255,255,255,0.02);
+  --copy-button-bg: rgba(17,17,21,0.92);
+  --search-answer-border: rgba(96,184,240,0.2);
+  --search-answer-bg: rgba(96,184,240,0.08);
+  --search-answer-link-border: rgba(96,184,240,0.15);
+  --search-answer-link-hover-border: rgba(96,184,240,0.28);
+  --result-bg: rgba(255,255,255,0.02);
+  --result-hover-border: rgba(200,240,96,0.28);
+  --result-hover-bg: rgba(200,240,96,0.06);
+  --search-target-bg: rgba(200,240,96,0.08);
+  --search-target-ring: rgba(200,240,96,0.42);
+  --search-target-shadow: rgba(200,240,96,0.2);
+  --syntax-keyword: #bb86fc;
+  --syntax-function: #82b4ff;
+  --syntax-string: #a8e6a3;
+  --syntax-number: #ffb347;
+  --syntax-decorator: #f0a0a0;
+  --method-name: #82b4ff;
+  --inline-ref-bg: rgba(96,184,240,0.12);
+  --inline-ref-border: rgba(96,184,240,0.2);
+  --inline-ref-shadow: rgba(96,184,240,0.18);
+  --inline-ref-hover-bg: rgba(96,184,240,0.16);
+  --inline-ref-hover-border: rgba(96,184,240,0.28);
+  --inline-ref-hover-shadow: rgba(96,184,240,0.28);
+  --font-display: "Fraunces", serif;
+  --font-body: "DM Sans", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+}
+
+html[data-color-scheme="light"] {
+  --bg: #f4efe4;
+  --surface: #fbf7ef;
+  --border: #d4c6b3;
+  --border-subtle: #e4d9ca;
+  --text: #1d1711;
+  --text-dim: #43372d;
+  --text-dimmer: #746658;
+  --accent: #7d9f20;
+  --accent-dim: #627d13;
+  --accent-glow: rgba(125,159,32,0.12);
+  --accent2: #1f6eaf;
+  --accent2-dim: rgba(31,110,175,0.12);
+  --red: #ba4b43;
+  --sidebar-w: 260px;
+  --code-bg: #ede4d4;
+  --radius: 6px;
+  --hover-tint: rgba(29,23,17,0.06);
+  --overlay-bg: rgba(76,60,42,0.24);
+  --topbar-bg: color-mix(in srgb, var(--bg) 92%, rgba(255,255,255,0.58));
+  --panel-bg: #fcf7ee;
+  --panel-border: rgba(29,23,17,0.12);
+  --panel-shadow: 0 24px 80px rgba(68,51,34,0.2);
+  --input-bg: rgba(29,23,17,0.045);
+  --inline-code-bg: rgba(29,23,17,0.075);
+  --inline-code-text: #3f3023;
+  --button-bg: rgba(29,23,17,0.04);
+  --copy-button-bg: rgba(252,247,238,0.96);
+  --search-answer-border: rgba(31,110,175,0.28);
+  --search-answer-bg: rgba(31,110,175,0.09);
+  --search-answer-link-border: rgba(31,110,175,0.18);
+  --search-answer-link-hover-border: rgba(31,110,175,0.3);
+  --result-bg: rgba(29,23,17,0.035);
+  --result-hover-border: rgba(125,159,32,0.34);
+  --result-hover-bg: rgba(125,159,32,0.1);
+  --search-target-bg: rgba(125,159,32,0.1);
+  --search-target-ring: rgba(125,159,32,0.42);
+  --search-target-shadow: rgba(125,159,32,0.18);
+  --syntax-keyword: #7c3aed;
+  --syntax-function: #005cc5;
+  --syntax-string: #0f7a43;
+  --syntax-number: #c24e00;
+  --syntax-decorator: #cc2f5a;
+  --method-name: #005cc5;
+  --inline-ref-bg: rgba(31,110,175,0.14);
+  --inline-ref-border: rgba(31,110,175,0.24);
+  --inline-ref-shadow: rgba(31,110,175,0.14);
+  --inline-ref-hover-bg: rgba(31,110,175,0.18);
+  --inline-ref-hover-border: rgba(31,110,175,0.32);
+  --inline-ref-hover-shadow: rgba(31,110,175,0.2);
+  --font-display: "Fraunces", serif;
+  --font-body: "DM Sans", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+}
+
+@layer reset, base, layout, components, code;
+
+@layer reset {
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+}
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  html[data-prefers-motion="false"] { scroll-behavior: auto; }
+  html[data-color-scheme="dark"] { color-scheme: dark; }
+  html[data-color-scheme="light"] { color-scheme: light; }
+  body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+  body[data-prefers-motion="false"] *,
+  body[data-prefers-motion="false"] *::before,
+  body[data-prefers-motion="false"] *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  a { color: var(--accent2); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  p { color: var(--text-dim); margin-bottom: 16px; font-weight: 300; }
+  p strong { color: var(--text); font-weight: 500; }
+  h2 {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 400;
+    letter-spacing: -0.5px;
+    color: var(--text);
+    margin: 44px 0 14px;
+    line-height: 1.25;
+  }
+  h2:first-child { margin-top: 0; }
+  h3 {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent2);
+    letter-spacing: 0.03em;
+    margin: 32px 0 10px;
+    text-transform: uppercase;
+  }
+  h4 {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text);
+    margin: 20px 0 8px;
+  }
+  ul, ol { padding-left: 20px; margin: 10px 0 18px; color: var(--text-dim); font-weight: 300; }
+  li { margin-bottom: 5px; }
+  td strong { color: var(--text); font-weight: 500; }
+  tr:last-child td { border-bottom: none; }
+  hr {
+    border: none;
+    border-top: 1px solid var(--border-subtle);
+    margin: 36px 0;
+  }
+}
+
+
+@layer layout {
+  .shell { display: flex; min-height: 100vh; }
+  .sidebar {
+    width: var(--sidebar-w);
+    flex-shrink: 0;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-track { background: transparent; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+  .logo { padding: 24px 20px 20px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+  .logo-name {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .logo-pill {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    background: var(--accent-glow);
+    color: var(--accent);
+    border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+    padding: 2px 7px;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+  }
+  .logo-tagline { font-size: 12px; color: var(--text-dimmer); margin-top: 4px; font-weight: 300; }
+  nav { padding: 16px 0 24px; flex: 1; }
+  .sidebar-footer {
+    padding: 0 0 20px;
+    border-top: 1px solid var(--border);
+  }
+  .nav-group { margin-bottom: 4px; }
+  .nav-group-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dimmer);
+    padding: 10px 20px 6px;
+    font-family: var(--font-mono);
+  }
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 20px;
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 13.5px;
+    font-weight: 400;
+    transition: color 0.15s, background 0.15s;
+    border-left: 2px solid transparent;
+    margin: 0 0 1px;
+    cursor: pointer;
+  }
+  .nav-link:hover { color: var(--text); background: var(--hover-tint); text-decoration: none; }
+  .nav-link.active { color: var(--accent); border-left-color: var(--accent); background: var(--accent-glow); }
+  .nav-link-external {
+    border-left-color: transparent;
+  }
+  .nav-link .dot {
+    width: 5px; height: 5px; border-radius: 50%; background: var(--border); flex-shrink: 0; transition: background 0.15s;
+  }
+  .nav-link.active .dot { background: var(--accent); }
+  .main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+  .sidebar-scrim {
+    position: fixed;
+    inset: 0;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    background: var(--overlay-bg);
+    backdrop-filter: blur(2px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease, backdrop-filter 0.25s ease;
+    z-index: 90;
+  }
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--topbar-bg);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 0 48px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    gap: 15px;
+  }
+  .topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+    flex: 1 1 auto;
+    position: relative;
+    z-index: 0;
+  }
+  .breadcrumb {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-dimmer);
+    display: block;
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    position: relative;
+    z-index: 0;
+  }
+  .breadcrumb span { color: var(--text-dim); }
+  .topbar-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+  .content-outer {
+    flex: 1;
+    padding: 56px 48px 80px;
+    max-width: min(var(--atlas-line-width, 860px), calc(100vw - var(--sidebar-w)));
+  }
+  body[data-readable-line-length="true"] .content-outer {
+    margin-inline: auto;
+  }
+  .section { display: none; }
+  .section.active { display: block; animation: fadeIn 0.2s ease; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .page-hero { margin-bottom: 52px; padding-bottom: 40px; border-bottom: 1px solid var(--border-subtle); }
+  .page-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .page-title {
+    font-family: var(--font-display);
+    font-size: 42px;
+    font-weight: 300;
+    letter-spacing: -1px;
+    color: var(--text);
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .page-title em { font-style: italic; color: var(--accent); }
+  .page-lead { font-size: 17px; color: var(--text-dim); line-height: 1.65; font-weight: 300; max-width: 600px; }
+  .menu-toggle {
+    display: none;
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  @media (max-width: 820px) {
+    .sidebar { position: fixed; left: -280px; top: 0; z-index: 100; transition: left 0.25s ease; width: 260px; }
+    .sidebar.open { left: 0; }
+    .main { transition: filter 0.25s ease, transform 0.25s ease; }
+    body.sidebar-open { overflow: hidden; }
+    body.sidebar-open .main {
+      filter: blur(8px);
+      transform: scale(0.995);
+    }
+    body.sidebar-open .sidebar-scrim {
+      opacity: 1;
+      pointer-events: auto;
+      backdrop-filter: blur(6px);
+    }
+    .menu-toggle { display: block; }
+    .content-outer {
+      padding: 32px 24px 60px;
+      max-width: min(var(--atlas-line-width, 860px), 100vw);
+    }
+    .topbar { padding: 0 24px; }
+    .topbar-left { gap: 10px; }
+    .search-trigger { min-width: 0; width: auto; }
+    .search-trigger-kbd { display: none; }
+    .cards, .feature-grid { grid-template-columns: 1fr; }
+    .page-title { font-size: 30px; }
+    .page-lead { font-size: 15px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sidebar-scrim,
+    body.sidebar-open .main,
+    .sidebar {
+      transition: none;
+    }
+  }
+}
+
+
+@layer components {
+  .doc-link {
+    color: var(--accent2);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--accent2) 45%, transparent);
+    text-underline-offset: 2px;
+    cursor: pointer;
+  }
+  .doc-link:hover {
+    color: color-mix(in srgb, var(--accent2) 78%, var(--text));
+    text-decoration-color: currentColor;
+  }
+  .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0 32px; }
+  .feature-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .feature-icon {
+    width: 24px; height: 24px; background: var(--accent-glow);
+    border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+    border-radius: 4px; display: flex; align-items: center; justify-content: center;
+    font-size: 12px; flex-shrink: 0; margin-top: 1px;
+  }
+  .feature-text strong { display: block; font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 2px; }
+  .feature-text span { font-size: 12px; color: var(--text-dimmer); font-weight: 300; }
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0 32px; }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .card:hover { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 4%, transparent); }
+  .card-title { font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--accent); margin-bottom: 6px; letter-spacing: 0.03em; }
+  .card-desc { font-size: 13px; color: var(--text-dim); font-weight: 300; line-height: 1.5; }
+  .callout {
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    background: var(--accent-glow);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    margin: 20px 0;
+    font-size: 14px;
+    color: var(--text-dim);
+  }
+  .callout.info { border-left-color: var(--accent2); background: var(--accent2-dim); }
+  .callout.warn { border-left-color: var(--red); background: rgba(240,96,96,0.08); }
+  .callout strong { color: var(--text); font-weight: 500; }
+  .method {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    margin: 12px 0 14px;
+    font-family: var(--font-mono);
+    color: var(--text);
+    overflow-x: auto;
+  }
+  .method .mname { color: var(--method-name); font-weight: 600; }
+  .method .mparam { color: var(--text-dim); }
+  .method .mtype { color: var(--accent); }
+  .method .mdefault { color: var(--text-dimmer); }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 13.5px; }
+  th {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--text-dimmer);
+    border-bottom: 1px solid var(--border);
+    padding: 8px 14px;
+    text-align: left;
+    font-weight: 500;
+  }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border-subtle); color: var(--text-dim); vertical-align: top; }
+  td:first-child { font-family: var(--font-mono); font-size: 12.5px; color: var(--accent2); white-space: nowrap; }
+  .selector-row { display: flex; gap: 16px; align-items: baseline; padding: 12px 0; border-bottom: 1px solid var(--border-subtle); }
+  .selector-syntax { font-family: var(--font-mono); font-size: 13px; color: var(--accent); min-width: 180px; flex-shrink: 0; }
+  .selector-desc { font-size: 13.5px; color: var(--text-dim); font-weight: 300; }
+  .search-trigger {
+    display: inline-flex; align-items: center; gap: 10px; height: 34px; min-width: 240px; padding: 0 12px;
+    border: 1px solid var(--border); border-radius: 999px; background: var(--button-bg);
+    color: var(--text-dim); cursor: pointer; transition: border-color 0.15s, background 0.15s, color 0.15s;
+  }
+  .search-trigger:hover { border-color: color-mix(in srgb, var(--accent) 35%, transparent); background: color-mix(in srgb, var(--accent) 6%, transparent); color: var(--text); }
+  .topbar-icon-button {
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--button-bg);
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s, color 0.15s, transform 0.15s;
+  }
+  .topbar-icon-button:hover,
+  .topbar-icon-button[aria-expanded="true"] {
+    border-color: color-mix(in srgb, var(--accent2) 35%, transparent);
+    background: color-mix(in srgb, var(--accent2) 10%, transparent);
+    color: var(--text);
+    transform: translateY(-1px);
+  }
+  .search-trigger-label { font-size: 13px; font-weight: 300; flex: 1; text-align: left; }
+  .search-trigger-kbd { font-family: var(--font-mono); font-size: 11px; border: 1px solid var(--border); border-radius: 999px; padding: 2px 8px; color: var(--text-dimmer); }
+  .search-modal,
+  .settings-modal { position: fixed; inset: 0; background: var(--overlay-bg); backdrop-filter: blur(8px); display: none; align-items: flex-start; justify-content: center; padding: 72px 24px 24px; z-index: 200; }
+  .search-modal.open,
+  .settings-modal.open { display: flex; }
+  .search-panel,
+  .settings-panel {
+    width: min(920px, 100%);
+    max-height: calc(100vh - 96px);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: var(--panel-bg);
+    border: 1px solid var(--panel-border);
+    border-radius: 18px;
+    box-shadow: var(--panel-shadow);
+  }
+  .settings-panel { width: min(560px, 100%); }
+  .search-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 18px 14px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .settings-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 20px 20px 16px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .settings-kicker {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 8px;
+  }
+  .settings-title {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: var(--text);
+    margin: 0;
+  }
+  .settings-body {
+    padding: 18px 20px 22px;
+    overflow-y: auto;
+  }
+  .settings-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 16px;
+    border: 1px solid var(--panel-border);
+    border-radius: 16px;
+    background: var(--input-bg);
+    cursor: pointer;
+  }
+  .settings-option + .settings-option {
+    margin-top: 12px;
+  }
+  .settings-option-range {
+    align-items: flex-start;
+  }
+  .settings-option-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+  }
+  .settings-option-copy strong {
+    color: var(--text);
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .settings-option-copy span {
+    color: var(--text-dim);
+    font-size: 13px;
+    line-height: 1.55;
+    font-weight: 300;
+  }
+  .settings-switch {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .settings-range-wrap {
+    min-width: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+  .settings-range {
+    width: min(240px, 36vw);
+    accent-color: var(--accent2);
+  }
+  .settings-range:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+  .settings-range-value {
+    min-width: 56px;
+    text-align: right;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-dimmer);
+  }
+  .settings-switch input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+  .settings-switch-ui {
+    width: 54px;
+    height: 31px;
+    display: inline-flex;
+    align-items: center;
+    padding: 3px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--input-bg);
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .settings-switch-ui::after {
+    content: "";
+    width: 23px;
+    height: 23px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--text) 88%, white);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+    transition: transform 0.15s, background 0.15s;
+  }
+  .settings-switch input:checked + .settings-switch-ui {
+    background: color-mix(in srgb, var(--accent2) 20%, var(--input-bg));
+    border-color: color-mix(in srgb, var(--accent2) 45%, transparent);
+  }
+  .settings-switch input:checked + .settings-switch-ui::after {
+    transform: translateX(23px);
+    background: var(--accent2);
+  }
+  .settings-switch input:focus-visible + .settings-switch-ui,
+  .settings-option:focus-within {
+    outline: 2px solid color-mix(in srgb, var(--accent2) 55%, transparent);
+    outline-offset: 2px;
+  }
+  .search-input-wrap {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 14px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--input-bg);
+  }
+  .search-input {
+    flex: 1;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: var(--text);
+    font: inherit;
+    font-size: 15px;
+    padding: 14px 0;
+  }
+  .search-input::placeholder { color: var(--text-dimmer); }
+  .search-close {
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-dim);
+    border-radius: 10px;
+    padding: 10px 12px;
+    cursor: pointer;
+  }
+  .search-toolbar {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    padding: 0 18px 14px;
+    border-bottom: 1px solid var(--border-subtle);
+    color: var(--text-dimmer);
+    font-size: 12px;
+  }
+  .search-pill {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    color: var(--text-dimmer);
+  }
+  .search-results { padding: 10px 12px 14px; overflow-y: auto; }
+  .search-answer {
+    border: 1px solid var(--search-answer-border);
+    background: var(--search-answer-bg);
+    border-radius: 14px;
+    padding: 16px 16px 14px;
+    margin-bottom: 12px;
+  }
+  .search-answer-title {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .search-answer-title strong {
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .search-answer-body {
+    color: var(--text-dim);
+    font-size: 14px;
+    line-height: 1.65;
+  }
+  .search-answer-link {
+    display: block;
+    width: 100%;
+    text-align: left;
+    border: 1px solid var(--search-answer-link-border);
+    background: var(--button-bg);
+    color: var(--text-dim);
+    border-radius: 12px;
+    padding: 12px 13px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s, transform 0.15s;
+  }
+  .search-answer-link:hover {
+    border-color: var(--search-answer-link-hover-border);
+    background: var(--hover-tint);
+    transform: translateY(-1px);
+  }
+  .search-answer-link strong {
+    color: var(--text);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .search-answer-link span { display: block; }
+  .search-answer-source {
+    appearance: none;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-dimmer);
+    border-radius: 999px;
+    padding: 6px 10px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    cursor: pointer;
+  }
+  .search-answer-sources {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .search-result {
+    border: 1px solid transparent;
+    border-radius: 14px;
+    padding: 14px 14px 16px;
+    margin-bottom: 10px;
+    background: var(--result-bg);
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s, transform 0.15s;
+  }
+  .search-result.active, .search-result:hover {
+    border-color: var(--result-hover-border);
+    background: var(--result-hover-bg);
+    transform: translateY(-1px);
+  }
+  .search-result-top {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .search-result-path { font-family: var(--font-mono); color: var(--accent2); font-size: 11px; text-transform: uppercase; }
+  .search-result-score { font-family: var(--font-mono); font-size: 11px; color: var(--text-dimmer); }
+  .search-result-title { color: var(--text); font-size: 16px; font-weight: 500; margin-bottom: 6px; }
+  .search-result-preview { color: var(--text-dim); font-size: 14px; line-height: 1.65; }
+  .search-result-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .search-chip {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-dimmer);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 3px 8px;
+  }
+  .search-empty { padding: 36px 20px 44px; color: var(--text-dim); }
+  .search-empty strong { color: var(--text); }
+  mark.search-hit { background: color-mix(in srgb, var(--accent) 20%, transparent); color: var(--text); border-radius: 3px; padding: 0 2px; }
+  .search-target-glow {
+    border-radius: 10px;
+    animation: searchTargetGlow 1.8s ease-out;
+  }
+  @media (max-width: 820px) {
+    .settings-head,
+    .settings-body { padding-left: 16px; padding-right: 16px; }
+    .settings-option { align-items: flex-start; }
+    .settings-option-range {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .settings-option-range .settings-option-copy,
+    .settings-range-wrap {
+      width: 100%;
+    }
+    .settings-range-wrap {
+      justify-content: space-between;
+      margin-top: 12px;
+    }
+    .settings-range-value {
+      min-width: auto;
+      white-space: nowrap;
+    }
+    .settings-range {
+      width: 100%;
+      flex: 1;
+    }
+  }
+  @keyframes searchTargetGlow {
+    0% {
+      background: transparent;
+      box-shadow: 0 0 0 0 transparent;
+    }
+    18% {
+      background: var(--search-target-bg);
+      box-shadow: 0 0 0 2px var(--search-target-ring), 0 0 28px var(--search-target-shadow);
+    }
+    100% {
+      background: transparent;
+      box-shadow: 0 0 0 0 rgba(200,240,96,0);
+    }
+  }
+}
+
+
+@layer code {
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    overflow-x: auto;
+    margin: 16px 0 24px;
+    position: relative;
+  }
+  pre::before {
+    content: attr(data-lang);
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-dimmer);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    transition: opacity 0.15s, transform 0.15s;
+  }
+  pre[data-lang]:hover::before,
+  pre[data-lang]:focus-within::before { opacity: 0; transform: translateY(-2px); }
+  code { font-family: var(--font-mono); font-size: 13px; line-height: 1.75; color: var(--inline-code-text); }
+  p code, li code {
+    background: var(--inline-code-bg);
+    border: 1px solid var(--border);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 12.5px;
+    color: var(--inline-code-text);
+  }
+  code.inline-code-ref {
+    transition: border-color 0.15s, background 0.15s, color 0.15s, box-shadow 0.15s;
+  }
+  body.mod-nav-active code.inline-code-ref {
+    cursor: pointer;
+    color: var(--text);
+    background: var(--inline-ref-bg);
+    border-color: var(--inline-ref-border);
+    box-shadow: 0 0 0 1px var(--inline-ref-border), 0 0 18px var(--inline-ref-shadow);
+  }
+  body.mod-nav-active code.inline-code-ref:hover {
+    background: var(--inline-ref-hover-bg);
+    border-color: var(--inline-ref-hover-border);
+    box-shadow: 0 0 0 1px var(--inline-ref-hover-border), 0 0 24px var(--inline-ref-hover-shadow);
+  }
+  .copy-code-button {
+    position: absolute; top: 7px; right: 10px; height: 26px; padding: 0 8px 0 6px;
+    display: inline-flex; align-items: center; gap: 5px;
+    border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+    border-radius: 999px; background: var(--copy-button-bg); color: var(--text-dim);
+    cursor: pointer; opacity: 0; transform: translateY(-2px);
+    transition: opacity .15s, transform .15s, color .15s, border-color .15s, background .15s;
+    z-index: 1; font-family: var(--font-mono); font-size: 10px; letter-spacing: .04em;
+    white-space: nowrap;
+  }
+  pre[data-lang]:hover .copy-code-button, pre[data-lang]:focus-within .copy-code-button { opacity: 1; transform: translateY(0); }
+  .copy-code-button:hover, .copy-code-button:focus-visible {
+    color: var(--accent);
+    border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+    background: color-mix(in srgb, var(--accent) 8%, transparent);
+    outline: none;
+  }
+  .copy-code-button.copied {
+    color: var(--accent);
+    border-color: color-mix(in srgb, var(--accent) 65%, transparent);
+    background: var(--accent-glow);
+  }
+  .kw { color: var(--syntax-keyword); }
+  .fn { color: var(--syntax-function); }
+  .cl { color: var(--accent); }
+  .st { color: var(--syntax-string); }
+  .cm { color: var(--text-dimmer); font-style: italic; }
+  .num { color: var(--syntax-number); }
+  .dc { color: var(--syntax-decorator); }
+}
+</style>
+</head>
+<body>
+<script>
+  window.__ATLAS_DOCS__ = {"defaultSection": "introduction", "sections": {"introduction": {"label": "Introduction", "breadcrumb": "atlas docs / introduction", "metadata": {"tag": "Overview", "title": "Atlas Docs", "lead": "Atlas Docs is a Python static-site generator for Atlas-style single-page\ndocumentation sites, paired with a Codex workflow that can turn repository\ncontext into a finished docs build.\n", "breadcrumb": "atlas docs / introduction"}}, "quickstart": {"label": "Quickstart", "breadcrumb": "atlas docs / quickstart", "metadata": {"tag": "Getting started", "title": "Quickstart", "lead": "Install the package in editable mode or run the CLI from source, then build\nan Atlas source directory into a static HTML file.\n", "breadcrumb": "atlas docs / quickstart"}}, "using-the-codex-skill": {"label": "Using the Codex skill", "breadcrumb": "atlas docs / using the codex skill", "metadata": {"tag": "Workflow", "title": "Using the Codex skill", "lead": "Package the `create_documentation` skill at the root of the repository, then\nuse Codex to author Atlas source, expand thin sections, and rebuild the docs\nas the project evolves.\n", "breadcrumb": "atlas docs / using the codex skill"}}, "atlas-source-format": {"label": "Atlas source format", "breadcrumb": "atlas docs / atlas source format", "metadata": {"tag": "Format", "title": "Atlas source format", "lead": "Atlas reads a compact directory contract: site metadata, navigation wiring,\nasset declarations, and one content file per section.\n", "breadcrumb": "atlas docs / atlas source format"}}, "render-pipeline": {"label": "Render pipeline", "breadcrumb": "atlas docs / render pipeline", "metadata": {"tag": "Internals", "title": "Render pipeline", "lead": "Atlas separates loading, markdown compilation, theme resolution, templating,\nand client-side behavior into distinct modules inside `src/atlas_docs/`.\n", "breadcrumb": "atlas docs / render pipeline"}}, "cli-reference": {"label": "CLI reference", "breadcrumb": "atlas docs / cli reference", "metadata": {"tag": "Reference", "title": "CLI reference", "lead": "Atlas Docs exposes a Typer-based CLI with three commands: `init`, `build`,\nand `serve`.\n", "breadcrumb": "atlas docs / cli reference"}}}, "features": {"search": true}, "metadata": {"name": "Atlas Docs", "version": "v0.1.0", "tagline": "Atlas-style single-page documentation generator and Codex documentation workflow", "accent": "#c8f060", "accent_dark": "#c8f060", "accent_light": "#7d9f20", "color_scheme": "dark", "display_font": "Fraunces", "body_font": "DM Sans", "mono_font": "IBM Plex Mono", "font_source": "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap", "search_trigger_label": "atlas docs, cli, format...", "search_placeholder": "Search Atlas Docs...", "search_secondary_hint": "Search the local docs. Try cli, format, theme, build.", "features": {"search": true}}, "siteName": "Atlas Docs", "theme": {"name": "atlas_dark", "defaultColorScheme": "dark", "supportsToggle": true, "supportedColorSchemes": ["dark", "light"]}, "search": {"placeholder": "Search Atlas Docs...", "triggerLabel": "atlas docs, cli, format...", "secondaryHint": "Search the local docs. Try cli, format, theme, build."}};
+</script>
+
+<div class="shell">
+
+  <aside class="sidebar" id="sidebar">
+    <div class="logo">
+      <div class="logo-name">
+        Atlas Docs
+        <span class="logo-pill">v0.1.0</span>
+      </div>
+      <div class="logo-tagline">Atlas-style single-page documentation generator and Codex documentation workflow</div>
+    </div>
+
+    <nav>
+      <div class="nav-group">
+        <div class="nav-group-label">Overview</div>
+        <a class="nav-link active" href="#section-introduction" data-section-link="introduction">
+          <span class="dot"></span> Introduction
+        </a>
+        <a class="nav-link" href="#section-quickstart" data-section-link="quickstart">
+          <span class="dot"></span> Quickstart
+        </a>
+        <a class="nav-link" href="#section-using-the-codex-skill" data-section-link="using-the-codex-skill">
+          <span class="dot"></span> Using the Codex skill
+        </a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-label">Format</div>
+        <a class="nav-link" href="#section-atlas-source-format" data-section-link="atlas-source-format">
+          <span class="dot"></span> Atlas source format
+        </a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-label">Internals</div>
+        <a class="nav-link" href="#section-render-pipeline" data-section-link="render-pipeline">
+          <span class="dot"></span> Render pipeline
+        </a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-label">Reference</div>
+        <a class="nav-link" href="#section-cli-reference" data-section-link="cli-reference">
+          <span class="dot"></span> CLI reference
+        </a>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="nav-group-label">Project</div>
+      <a class="nav-link nav-link-external" href="https://github.com/BrandonBahret/Static-Documentation-Generator" target="_blank" rel="noopener noreferrer">
+        <span class="dot"></span> GitHub
+      </a>
+    </div>
+
+  </aside>
+
+  <button
+    class="sidebar-scrim"
+    type="button"
+    data-sidebar-scrim
+    aria-label="Close navigation menu"
+    tabindex="-1"
+  ></button>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-left">
+        <button class="menu-toggle" type="button" data-toggle-sidebar>&#9776;</button>
+        <div class="breadcrumb" id="breadcrumb">
+          atlas docs <span>/</span> introduction
+        </div>
+      </div>
+      <div class="topbar-actions">
+
+        <button class="search-trigger" type="button" data-open-search>
+          <span aria-hidden="true">Search</span>
+          <span class="search-trigger-label">atlas docs, cli, format...</span>
+          <span class="search-trigger-kbd">Ctrl K</span>
+        </button>
+
+        <button class="topbar-icon-button" type="button" data-open-settings aria-label="Open settings" aria-haspopup="dialog" aria-controls="settings-modal">
+          <span aria-hidden="true">&#9881;</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="content-outer">
+      <div class="section active" id="section-introduction" data-section="introduction">
+        <div class="page-hero">
+          <div class="page-tag">Overview</div>
+          <h1 class="page-title">Atlas Docs</h1>
+          <p class="page-lead">Atlas Docs is a Python static-site generator for Atlas-style single-page
+documentation sites, paired with a Codex workflow that can turn repository
+context into a finished docs build.</p>
+        </div>
+
+        <h2 id="introduction-what-lives-in-this-repository" data-anchor="what-lives-in-this-repository">What lives in this repository</h2>
+        <p>This repository has two closely related deliverables:</p>
+
+        <div class="feature-grid">
+          <div class="feature-item">
+            <div class="feature-icon">PY</div>
+            <div class="feature-text">
+              <strong>Python package</strong>
+              <span><code>src/atlas_docs/</code> contains the reusable generator, CLI entry points, templates,
+        theme definitions, and browser-side JavaScript.</span>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">MD</div>
+            <div class="feature-text">
+              <strong>Source format</strong>
+              <span><code>ATLAS_DOCS_FORMAT.md</code> defines the directory contract that Atlas consumes:
+        <code>metadata.md</code>, <code>navigation.md</code>, <code>assets.md</code>, and <code>content/*.md</code>.</span>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">AI</div>
+            <div class="feature-text">
+              <strong>Codex workflow</strong>
+              <span>The <code>create-documentation</code> skill sits above the package and writes Atlas source
+        for a target project before compiling the final static HTML.</span>
+            </div>
+          </div>
+        </div>
+        <h2 id="introduction-python-package-icon-py" data-anchor="python-package-icon-py">Core workflow</h2>
+        <p>Atlas expects a structured source directory, then compiles it into one
+        self-contained HTML file with a left-rail navigation model and section-based
+        routing.</p>
+        <div class="cards">
+          <div class="card" data-card-link="atlas-source-format">
+            <div class="card-title">→ Start with the source format</div>
+            <div class="card-desc">Use the four control files plus one markdown file per section.</div>
+          </div>
+          <div class="card" data-card-link="cli-reference">
+            <div class="card-title">→ Build with the CLI</div>
+            <div class="card-desc">Create a skeleton, compile HTML, or run a local preview server.</div>
+          </div>
+          <div class="card" data-card-link="render-pipeline">
+            <div class="card-title">→ Understand the renderer</div>
+            <div class="card-desc">The loader, markdown compiler, theme system, templates, and static JS each own
+        a distinct stage of the build.</div>
+          </div>
+        </div>
+        <h2 id="introduction-source-format-icon-md" data-anchor="source-format-icon-md">What the generated site includes</h2>
+        <table>
+          <thead>
+            <tr><th>Area</th><th>Implementation</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Navigation</td>
+              <td><code>navigation.md</code> drives groups, section order, default section, and footer links.</td>
+            </tr>
+            <tr>
+              <td>Identity</td>
+              <td><code>metadata.md</code> supplies project naming, version, typography, accent colors, and search copy.</td>
+            </tr>
+            <tr>
+              <td>Content</td>
+              <td><code>content/*.md</code> provides frontmatter-driven heroes plus Markdown and Atlas directive blocks.</td>
+            </tr>
+            <tr>
+              <td>Presentation</td>
+              <td>Jinja templates and bundled themes render CSS, layout, and light/dark palette variants.</td>
+            </tr>
+            <tr>
+              <td>Runtime UI</td>
+              <td>Bundled JavaScript handles section routing, search, settings, copy-code behavior, and color-scheme persistence.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="callout info">The repository currently exposes the generator as a Python package and CLI. The
+        Codex skill is described in the README and packaged separately when distributed
+        as a standalone skill bundle.</div>
+        <h2 id="introduction-codex-workflow-icon-ai" data-anchor="codex-workflow-icon-ai">Repository layout</h2>
+        <pre data-lang="text"><code>src/atlas_docs/
+  cli.py
+  loader.py
+  markdown.py
+  models.py
+  renderer.py
+  theme.py
+  templates/
+  themes/
+  static/
+
+ATLAS_DOCS_FORMAT.md
+README.md
+pyproject.toml</code></pre>
+        <div class="quick-links">
+        <ul>
+          <li><a class="doc-link" href="#section-quickstart" data-doc-link="quickstart">Quickstart</a> - Build or preview the docs generator locally</li>
+          <li><a class="doc-link" href="#section-atlas-source-format" data-doc-link="atlas-source-format">Atlas source format</a> - Learn the Atlas directory contract</li>
+          <li><a class="doc-link" href="#section-render-pipeline" data-doc-link="render-pipeline">Render pipeline</a> - See how Atlas turns markdown into a single-page site</li>
+          <li><a class="doc-link" href="#section-cli-reference" data-doc-link="cli-reference">CLI reference</a> - Review command behavior and options</li>
+        </ul>
+        </div>
+      </div>
+
+      <div class="section" id="section-quickstart" data-section="quickstart">
+        <div class="page-hero">
+          <div class="page-tag">Getting started</div>
+          <h1 class="page-title">Quickstart</h1>
+          <p class="page-lead">Install the package in editable mode or run the CLI from source, then build
+an Atlas source directory into a static HTML file.</p>
+        </div>
+
+        <h2 id="quickstart-install-the-cli" data-anchor="install-the-cli">Install the CLI</h2>
+        <p>From the repository root:</p>
+        <pre data-lang="bash"><code>py -m pip install -e .</code></pre>
+        <p>That installs the <code>atlas-docs</code> console script declared in <code>pyproject.toml</code>.</p>
+        <h2 id="quickstart-run-from-source" data-anchor="run-from-source">Run from source</h2>
+        <p>If you do not want to install the package, point <code>PYTHONPATH</code> at <code>src</code> and call
+        the module directly:</p>
+        <pre data-lang="bash"><code>$env:PYTHONPATH = "src"
+py -m atlas_docs.cli build .\my-docs --out .\dist\index.html</code></pre>
+        <h2 id="quickstart-typical-command-flow" data-anchor="typical-command-flow">Typical command flow</h2>
+        <div class="cards">
+          <div class="card" data-card-link="cli-reference">
+            <div class="card-title">→ Create a starter tree</div>
+            <div class="card-desc">Use <code>atlas-docs init my-docs</code> to scaffold the expected directory structure.</div>
+          </div>
+          <div class="card" data-card-link="atlas-source-format">
+            <div class="card-title">→ Write Atlas content</div>
+            <div class="card-desc">Fill in the control files and add one markdown file per navigable section.</div>
+          </div>
+          <div class="card" data-card-link="cli-reference">
+            <div class="card-title">→ Compile HTML</div>
+            <div class="card-desc">Run <code>build</code> to emit a static <code>index.html</code>, or <code>serve</code> to preview local changes.</div>
+          </div>
+        </div>
+        <h2 id="quickstart-create-a-starter-tree-link-cli-reference" data-anchor="create-a-starter-tree-link-cli-reference">Minimal example</h2>
+        <pre data-lang="bash"><code>atlas-docs init my-docs
+atlas-docs build my-docs --out dist/index.html --theme atlas_dark
+atlas-docs serve my-docs --port 8000</code></pre>
+        <h2 id="quickstart-write-atlas-content-link-atlas-source-format" data-anchor="write-atlas-content-link-atlas-source-format">Dependency profile</h2>
+        <table>
+          <thead><tr><th>Package</th><th>Role</th></tr></thead>
+          <tbody>
+            <tr><td><code>typer</code></td><td>CLI entry points and option parsing</td></tr>
+            <tr><td><code>jinja2</code></td><td>HTML templates and theme token rendering</td></tr>
+            <tr><td><code>markdown-it-py</code> + <code>mdit-py-plugins</code></td><td>Markdown parsing and directive-friendly rendering</td></tr>
+            <tr><td><code>pyyaml</code></td><td>Frontmatter and configuration loading</td></tr>
+            <tr><td><code>watchfiles</code></td><td>Local preview workflow support</td></tr>
+            <tr><td><code>rapidfuzz</code> / <code>cydifflib</code></td><td>Search and matching support for the generated docs UI</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout info">The project requires Python 3.11 or newer according to <code>pyproject.toml</code>.</div>
+        <h2 id="quickstart-compile-html-link-cli-reference" data-anchor="compile-html-link-cli-reference">When to use the skill instead</h2>
+        <p>Use the Codex <code>create-documentation</code> workflow when the goal is not just to
+        render Atlas source, but to inspect a repository, author the Atlas files for
+        that target, and then build the finished static output. That workflow is
+        described in the README and mirrored in the standalone skill bundle.</p>
+      </div>
+
+      <div class="section" id="section-using-the-codex-skill" data-section="using-the-codex-skill">
+        <div class="page-hero">
+          <div class="page-tag">Workflow</div>
+          <h1 class="page-title">Using the Codex skill</h1>
+          <p class="page-lead">Package the <code>create_documentation</code> skill at the root of the repository, then
+use Codex to author Atlas source, expand thin sections, and rebuild the docs
+as the project evolves.</p>
+        </div>
+
+        <h2 id="using-the-codex-skill-install-the-skill-into-the-target-repository" data-anchor="install-the-skill-into-the-target-repository">Install the skill into the target repository</h2>
+        <p>For those that want to generate docs with Codex, place the
+        skill bundle at your repository root:</p>
+        <pre data-lang="text"><code>your-project/
+  .agents/
+    skills/
+      create_documentation/
+        SKILL.md
+        references/
+        scripts/</code></pre>
+
+        <p>That keeps the workflow local to the project instead of depending on a global
+        Codex setup. Once that folder exists at the root, Codex can expose the skill as
+        <code>/create documentation</code>. If Codex cannot find the skill, then restart the instance.</p>
+
+        <div class="callout info">Teams that prefer writing Atlas files directly can still use the same
+        repository-local layout. The skill does not replace the source format; it helps
+        author and maintain it.</div>
+        <h2 id="using-the-codex-skill-two-supported-authoring-modes" data-anchor="two-supported-authoring-modes">Two supported authoring modes</h2>
+        <div class="cards">
+          <div class="card" data-card-link="atlas-source-format">
+            <div class="card-title">→ Write Atlas source yourself</div>
+            <div class="card-desc">Use <code>metadata.md</code>, <code>navigation.md</code>, <code>assets.md</code>, and <code>content/*.md</code> directly
+        when you want exact control over the structure and wording.</div>
+          </div>
+          <div class="card" style="cursor:default">
+            <div class="card-title" style="color: var(--accent);">Use Codex to build and maintain it</div>
+            <div class="card-desc">Ask Codex to inspect the repository, draft or revise <code>atlas_sources/</code>, and then
+        compile the static HTML build for review.</div>
+          </div>
+        </div>
+        <h2 id="using-the-codex-skill-write-atlas-source-yourself-link-atlas-source-format" data-anchor="write-atlas-source-yourself-link-atlas-source-format">Good prompts for the skill</h2>
+        <p>The skill performs best when the prompt names both the output location and the
+        evidence it should rely on.</p>
+        <div class="selector-row">
+          <div class="selector-syntax">Bootstrap docs from a repo</div>
+          <div class="selector-desc"><code>/create documentation document this repository into atlas_sources and build docs_site/index.html</code></div>
+        </div>
+        <div class="selector-row">
+          <div class="selector-syntax">Expand package documentation while coding examples</div>
+          <div class="selector-desc"><code>/create documentation update atlas_sources for this package and, whenever you add an example, read the implementation first and document the feature from source</code></div>
+        </div>
+        <div class="selector-row">
+          <div class="selector-syntax">Tighten API docs</div>
+          <div class="selector-desc"><code>/create documentation refresh the API sections from the current handlers, types, and tests, then rebuild the docs</code></div>
+        </div>
+        <h2 id="using-the-codex-skill-use-codex-to-build-and-maintain-it" data-anchor="use-codex-to-build-and-maintain-it">How to get more from Codex</h2>
+        <p>If the repository already has some documentation, treat <code>atlas_sources/</code> as a
+        working knowledge base instead of a one-time export.</p>
+
+        <div class="feature-grid">
+          <div class="feature-item">
+            <div class="feature-icon">01</div>
+            <div class="feature-text">
+              <strong>Ask for source-backed examples</strong>
+              <span>When documenting a package or library, tell Codex to read the implementation,
+        tests, and existing examples before it writes new examples. That reduces drift
+        between docs and the actual feature behavior.</span>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">02</div>
+            <div class="feature-text">
+              <strong>Grow <code>atlas_sources/</code> alongside the product</strong>
+              <span>If you are building a package or API, ask Codex to update the relevant
+        <code>atlas_sources/content/*.md</code> files in the same pass where it adds routes,
+        modules, CLI commands, or examples. The docs stay closer to the code because
+        the authoring happens during the feature change.</span>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">03</div>
+            <div class="feature-text">
+              <strong>Add context when the docs feel thin</strong>
+              <span>If the first pass is too light, tell Codex to enrich the Atlas source with
+        architecture notes, constraints, tradeoffs, request flows, glossary material,
+        and links between related sections before rebuilding.</span>
+            </div>
+          </div>
+        </div>
+        <h2 id="using-the-codex-skill-good-prompts-for-the-skill" data-anchor="good-prompts-for-the-skill">Useful prompting patterns</h2>
+        <table>
+          <thead>
+            <tr><th>Goal</th><th>Prompt pattern</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Build initial package docs</td>
+              <td><code>Create atlas_sources for this package, include installation, concepts, examples, and API reference, and cite behavior from the source files you inspect.</code></td>
+            </tr>
+            <tr>
+              <td>Improve examples</td>
+              <td><code>Revise the examples in atlas_sources so each one matches the current implementation and test coverage.</code></td>
+            </tr>
+            <tr>
+              <td>Deepen sparse docs</td>
+              <td><code>The docs are too light. Add missing context to atlas_sources, especially architecture, edge cases, and operational guidance, then rebuild.</code></td>
+            </tr>
+            <tr>
+              <td>Keep docs current during feature work</td>
+              <td><code>As you implement this feature, also update atlas_sources for any new commands, config, or API behavior and rebuild the site.</code></td>
+            </tr>
+          </tbody>
+        </table>
+        <h2 id="using-the-codex-skill-bootstrap-docs-from-a-repo" data-anchor="bootstrap-docs-from-a-repo">Recommended workflow for GitHub repositories</h2>
+        <ol>
+          <li>Commit the skill bundle to <code>.agents/skills/create_documentation/</code> at the
+        root of the project.</li>
+          <li>Keep authored Atlas files in <code>atlas_sources/</code> so both humans and Codex have
+        a stable place to improve the docs.</li>
+          <li>Ask Codex to refresh the affected source files whenever code, APIs, or
+        examples change.</li>
+          <li>Rebuild the static output and review the generated HTML before publishing.</li>
+        </ol>
+        <div class="quick-links">
+        <ul>
+          <li><a class="doc-link" href="#section-quickstart" data-doc-link="quickstart">Quickstart</a> - Build Atlas docs from source or via the CLI</li>
+          <li><a class="doc-link" href="#section-atlas-source-format" data-doc-link="atlas-source-format">Atlas source format</a> - Review the Atlas file contract Codex writes</li>
+          <li><a class="doc-link" href="#section-cli-reference" data-doc-link="cli-reference">CLI reference</a> - See build and preview commands</li>
+        </ul>
+        </div>
+      </div>
+
+      <div class="section" id="section-atlas-source-format" data-section="atlas-source-format">
+        <div class="page-hero">
+          <div class="page-tag">Format</div>
+          <h1 class="page-title">Atlas source format</h1>
+          <p class="page-lead">Atlas reads a compact directory contract: site metadata, navigation wiring,
+asset declarations, and one content file per section.</p>
+        </div>
+
+        <h2 id="atlas-source-format-required-layout" data-anchor="required-layout">Required layout</h2>
+        <pre data-lang="text"><code>my-docs/
+  metadata.md
+  navigation.md
+  assets.md
+  content/
+    introduction.md
+    quickstart.md
+    api-reference.md</code></pre>
+
+        <p>The generator processes the control files first, then compiles section files in
+        the order declared in <code>navigation.md</code>.</p>
+        <h2 id="atlas-source-format-control-files" data-anchor="control-files">Control files</h2>
+        <div class="selector-row">
+          <div class="selector-syntax">metadata.md</div>
+          <div class="selector-desc">Defines project identity, version, tagline, accent colors, typography, search
+        copy, feature flags, and the default color scheme.</div>
+        </div>
+        <div class="selector-row">
+          <div class="selector-syntax">navigation.md</div>
+          <div class="selector-desc">Defines sidebar groups, section labels, slug mapping, default section behavior,
+        and optional footer links.</div>
+        </div>
+        <div class="selector-row">
+          <div class="selector-syntax">assets.md</div>
+          <div class="selector-desc">Declares inline SVGs, bundled images, and remote images that content files can
+        reference by short name through <code>@asset[...]</code>.</div>
+        </div>
+        <h2 id="atlas-source-format-metadata-md" data-anchor="metadata-md">Section files</h2>
+        <p>Every navigable entry in <code>navigation.md</code> maps to one file in <code>content/</code>.
+        Frontmatter controls the hero region:</p>
+        <table>
+          <thead><tr><th>Field</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td><code>tag</code></td><td>Small category label above the page title</td></tr>
+            <tr><td><code>title</code></td><td>Generated <code>&lt;h1&gt;</code> for the section</td></tr>
+            <tr><td><code>title_em</code></td><td>Optional emphasized suffix appended to the title</td></tr>
+            <tr><td><code>lead</code></td><td>Subtitle paragraph under the title</td></tr>
+            <tr><td><code>breadcrumb</code></td><td>Topbar breadcrumb override</td></tr>
+            <tr><td><code>comment</code></td><td>Optional HTML comment label injected above the section in the output</td></tr>
+          </tbody>
+        </table>
+        <h2 id="atlas-source-format-navigation-md" data-anchor="navigation-md">Cross-section and asset syntax</h2>
+        <p>Atlas adds a few authoring shortcuts on top of plain Markdown.</p>
+        <table>
+          <thead>
+            <tr><th>Syntax</th><th>Effect</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>&lt;a class="doc-link" href="#section-slug" data-doc-link="slug"&gt;slug&lt;/a&gt;</code></td>
+              <td>Link to another section using its nav label</td>
+            </tr>
+            <tr>
+              <td><code>&lt;a class="doc-link" href="#section-slug:slug-anchor" data-doc-link="slug" data-target-id="slug-anchor"&gt;Label&lt;/a&gt;</code></td>
+              <td>Link to a specific section heading with custom text</td>
+            </tr>
+            <tr>
+              <td><code>&lt;code class="inline-code-ref" data-section-id="slug"&gt;token&lt;/code&gt;</code></td>
+              <td>Render inline code that can jump to another section</td>
+            </tr>
+            <tr>
+              <td><code>&lt;!-- missing asset: name --&gt;</code></td>
+              <td>Insert a declared SVG or image asset</td>
+            </tr>
+          </tbody>
+        </table>
+        <h2 id="atlas-source-format-assets-md" data-anchor="assets-md">Structured directives</h2>
+        <p>The markdown compiler also recognizes Atlas block directives. The format spec
+        documents blocks such as <code>:::feature_grid</code>, <code>:::cards</code>, <code>:::callout</code>,
+        <code>:::method</code>, <code>:::selector_list</code>, <code>:::table</code>, <code>:::quick_links</code>, and
+        <code>:::reference_list</code>.</p>
+
+        <div class="callout info">The current implementation includes renderer logic for the directive set in
+        <code>src/atlas_docs/markdown.py</code>. The repository documentation should treat that
+        code as the implementation source of truth when behavior and examples need to
+        be reconciled.</div>
+        <h2 id="atlas-source-format-section-files" data-anchor="section-files">Authoring guidance</h2>
+
+        <div class="feature-grid">
+          <div class="feature-item">
+            <div class="feature-icon">01</div>
+            <div class="feature-text">
+              <strong>Keep navigation explicit</strong>
+              <span>Every non-external nav entry must have a matching <code>content/&lt;slug&gt;.md</code> file or
+        the loader raises <code>FileNotFoundError</code>.</span>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">02</div>
+            <div class="feature-text">
+              <strong>Prefer evidence over invention</strong>
+              <span>When Atlas source is generated for another project, derive setup, API, and
+        architecture details from repository files or official sources.</span>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">03</div>
+            <div class="feature-text">
+              <strong>Use assets sparingly</strong>
+              <span>Leave <code>assets.md</code> empty when there is nothing worth bundling. The workflow
+        expects that to be a normal case.</span>
+            </div>
+          </div>
+        </div>
+        <div class="quick-links">
+        <ul>
+          <li><a class="doc-link" href="#section-render-pipeline" data-doc-link="render-pipeline">Render pipeline</a> - See how these source files are loaded and compiled</li>
+          <li><a class="doc-link" href="#section-cli-reference" data-doc-link="cli-reference">CLI reference</a> - Build and preview an Atlas source tree</li>
+        </ul>
+        </div>
+      </div>
+
+      <div class="section" id="section-render-pipeline" data-section="render-pipeline">
+        <div class="page-hero">
+          <div class="page-tag">Internals</div>
+          <h1 class="page-title">Render pipeline</h1>
+          <p class="page-lead">Atlas separates loading, markdown compilation, theme resolution, templating,
+and client-side behavior into distinct modules inside <code>src/atlas_docs/</code>.</p>
+        </div>
+
+        <h2 id="render-pipeline-pipeline-stages" data-anchor="pipeline-stages">Pipeline stages</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Stage</th>
+              <th>Module</th>
+              <th>Responsibility</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td><code>loader.py</code></td>
+              <td>Reads frontmatter files, repairs mojibake when possible, validates navigation targets, and constructs the in-memory <code>Site</code> model.</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td><code>markdown.py</code></td>
+              <td>Expands Atlas-specific link syntax, directives, assets, heading anchors, and Python code highlighting before returning section HTML.</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td><code>theme.py</code></td>
+              <td>Resolves theme directories, applies metadata-driven accent and typography overrides, and renders CSS tokens for primary and alternate schemes.</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td><code>renderer.py</code></td>
+              <td>Loads the site, bundles CSS and JavaScript, assembles <code>window.__ATLAS_DOCS__</code>, and renders the final HTML template.</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td><code>templates/</code> + <code>static/js/</code></td>
+              <td>Deliver the shell, sidebar, modals, and browser behaviors for navigation, search, settings, and copy-code actions.</td>
+            </tr>
+          </tbody>
+        </table>
+        <h2 id="render-pipeline-loader-model" data-anchor="loader-model">Loader model</h2>
+        <p>The data model is intentionally small:</p>
+        <div class="selector-row">
+          <div class="selector-syntax">NavEntry</div>
+          <div class="selector-desc">Stores the visible label, target slug or external URL, and whether the link is
+        external.</div>
+        </div>
+        <div class="selector-row">
+          <div class="selector-syntax">NavGroup</div>
+          <div class="selector-desc">Represents one labeled sidebar group with ordered entries.</div>
+        </div>
+        <div class="selector-row">
+          <div class="selector-syntax">Section</div>
+          <div class="selector-desc">Carries the slug, label, hero metadata, compiled body HTML, search text, and
+        raw frontmatter.</div>
+        </div>
+        <div class="selector-row">
+          <div class="selector-syntax">Site</div>
+          <div class="selector-desc">Combines metadata, nav groups, sections, footer links, and assets while also
+        exposing the default section.</div>
+        </div>
+        <h2 id="render-pipeline-naventry" data-anchor="naventry">Theme behavior</h2>
+        <p>The shipped theme family is <code>atlas</code>, with <code>atlas_dark</code> and <code>atlas_light</code>
+        variants. <code>theme.py</code> can choose the active variant from the requested theme name
+        and <code>metadata.md</code> color scheme, then optionally load the opposite variant so the
+        generated UI can support a light/dark toggle.</p>
+
+        <div class="callout info">Metadata can override the accent color per scheme through <code>accent_dark</code> and
+        <code>accent_light</code>, while typography fields such as <code>display_font</code>, <code>body_font</code>, and
+        <code>mono_font</code> override the bundled theme defaults.</div>
+        <h2 id="render-pipeline-navgroup" data-anchor="navgroup">Output model</h2>
+        <p><code>renderer.py</code> emits one HTML file with all sections already present in the DOM.
+        The browser runtime swaps the active section client-side rather than loading
+        separate pages.</p>
+        <pre data-lang="text"><code>Atlas source -&gt; Site model -&gt; themed HTML shell -&gt; single static index.html</code></pre>
+        <h2 id="render-pipeline-section" data-anchor="section">Search and settings</h2>
+        <p>The base template injects <code>window.__ATLAS_DOCS__</code> with:</p>
+        <table>
+          <thead><tr><th>Key</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td><code>defaultSection</code></td><td>The first non-external navigation target</td></tr>
+            <tr><td><code>sections</code></td><td>Section labels, breadcrumbs, and frontmatter metadata</td></tr>
+            <tr><td><code>features</code></td><td>Runtime feature flags such as search</td></tr>
+            <tr><td><code>metadata</code></td><td>Site-level identity and UI copy</td></tr>
+            <tr><td><code>theme</code></td><td>Current scheme, toggle support, and supported palette variants</td></tr>
+            <tr><td><code>search</code></td><td>Placeholder text and empty-state labels</td></tr>
+          </tbody>
+        </table>
+        <p>That payload is consumed by the bundled JavaScript modules that power the docs
+        UI.</p>
+      </div>
+
+      <div class="section" id="section-cli-reference" data-section="cli-reference">
+        <div class="page-hero">
+          <div class="page-tag">Reference</div>
+          <h1 class="page-title">CLI reference</h1>
+          <p class="page-lead">Atlas Docs exposes a Typer-based CLI with three commands: <code>init</code>, <code>build</code>,
+and <code>serve</code>.</p>
+        </div>
+
+        <h2 id="cli-reference-command-summary" data-anchor="command-summary">Command summary</h2>
+        <table>
+          <thead>
+            <tr><th>Command</th><th>Purpose</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>atlas-docs init &lt;path&gt;</code></td>
+              <td>Create a minimal Atlas source tree with control files and an introduction page.</td>
+            </tr>
+            <tr>
+              <td><code>atlas-docs build &lt;source&gt; --out &lt;html&gt;</code></td>
+              <td>Compile an Atlas source directory into static HTML.</td>
+            </tr>
+            <tr>
+              <td><code>atlas-docs serve &lt;source&gt; --out-dir &lt;dir&gt; --port &lt;n&gt;</code></td>
+              <td>Build a preview copy and serve it over a simple local HTTP server.</td>
+            </tr>
+          </tbody>
+        </table>
+        <h2 id="cli-reference-init" data-anchor="init"><code>init</code></h2>
+        <div class="method">atlas-docs init PATH</div>
+        <p>Creates:</p>
+        <pre data-lang="text"><code>&lt;path&gt;/
+  metadata.md
+  navigation.md
+  assets.md
+  content/introduction.md</code></pre>
+
+        <p>The starter metadata uses the bundled Atlas visual defaults and enables search.</p>
+        <h2 id="cli-reference-build" data-anchor="build"><code>build</code></h2>
+        <div class="method">atlas-docs build SOURCE --out dist/index.html --theme atlas_dark --pretty False</div>
+        <p>Behavior:</p>
+        <div class="selector-row">
+          <div class="selector-syntax">source</div>
+          <div class="selector-desc">Atlas source directory to compile. The loader also accepts a parent directory
+        when it contains a nested <code>atlas_docs/</code> source root.</div>
+        </div>
+        <div class="selector-row">
+          <div class="selector-syntax">--out</code>, <code>-o</div>
+          <div class="selector-desc">Destination HTML file. Parent directories are created automatically.</div>
+        </div>
+        <div class="selector-row">
+          <div class="selector-syntax">--theme</code>, <code>-t</div>
+          <div class="selector-desc">Theme name or path to a theme directory.</div>
+        </div>
+        <div class="selector-row">
+          <div class="selector-syntax">--pretty</div>
+          <div class="selector-desc">Exposed as an option in the CLI, though the current implementation always calls
+        <code>build_site(..., minify=False)</code>.</div>
+        </div>
+        <h2 id="cli-reference-source" data-anchor="source"><code>serve</code></h2>
+        <div class="method">atlas-docs serve SOURCE --out-dir .atlas-preview --theme atlas_dark --port 8000</div>
+        <p><code>serve</code> builds an <code>index.html</code> into the preview directory, changes into that
+        directory, and starts <code>http.server.SimpleHTTPRequestHandler</code> through
+        <code>socketserver.TCPServer</code>.</p>
+
+        <div class="callout warn">The current implementation serves the generated preview, but it does not yet
+        wire file watching or incremental rebuild behavior into the command loop.</div>
+        <h2 id="cli-reference-out-o" data-anchor="out-o">Common usage</h2>
+        <pre data-lang="bash"><code>atlas-docs init my-docs
+atlas-docs build my-docs --out dist/index.html
+atlas-docs serve my-docs --port 8000</code></pre>
+        <div class="reference-list">
+        <ul>
+          <li><a class="doc-link" href="#section-quickstart" data-doc-link="quickstart">Quickstart</a> - Installation and first-run commands</li>
+          <li><a class="doc-link" href="#section-render-pipeline" data-doc-link="render-pipeline">Render pipeline</a> - How the CLI hands off to the loader and renderer</li>
+          <li><a class="doc-link" href="#section-atlas-source-format" data-doc-link="atlas-source-format">Atlas source format</a> - The expected source directory contract</li>
+        </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="search-modal" id="search-modal" aria-hidden="true">
+  <div class="search-panel" role="dialog" aria-modal="true" aria-labelledby="search-input-label">
+    <div class="search-head">
+      <div class="search-input-wrap">
+        <span aria-hidden="true">&#8981;</span>
+        <label id="search-input-label" class="search-trigger-label" for="search-input" style="display:none;">Search docs</label>
+        <input
+          id="search-input"
+          class="search-input"
+          type="search"
+          placeholder="Search Atlas Docs..."
+          autocomplete="off"
+          spellcheck="false"
+        >
+      </div>
+      <button class="search-close" type="button" data-close-search>Esc</button>
+    </div>
+    <div class="search-toolbar">
+      <div id="search-status">Search is ready</div>
+    </div>
+    <div class="search-results" id="search-results">
+      <div class="search-empty">
+        <strong>Search the local docs. Try cli, format, theme, build.</strong>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="settings-modal" id="settings-modal" aria-hidden="true">
+  <div class="settings-panel" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+    <div class="settings-head">
+      <div>
+        <div class="settings-kicker">Config</div>
+        <h2 class="settings-title" id="settings-title">Interface settings</h2>
+      </div>
+      <button class="search-close" type="button" data-close-settings>Esc</button>
+    </div>
+    <div class="settings-body">
+      <label class="settings-option" for="setting-readable-line-length">
+        <div class="settings-option-copy">
+          <strong>Readable line length</strong>
+          <span>Center the document column and limit long lines for a more readable layout.</span>
+        </div>
+        <span class="settings-switch">
+          <input id="setting-readable-line-length" type="checkbox" data-setting="readableLineLength">
+          <span class="settings-switch-ui" aria-hidden="true"></span>
+        </span>
+      </label>
+      <label class="settings-option settings-option-range" for="setting-line-width">
+        <div class="settings-option-copy">
+          <strong>Line width</strong>
+          <span>Adjust the maximum width of the reading column.</span>
+        </div>
+        <div class="settings-range-wrap">
+          <input
+            id="setting-line-width"
+            class="settings-range"
+            type="range"
+            min="640"
+            max="1300"
+            step="20"
+            value="860"
+            data-setting="lineWidth"
+          >
+          <output class="settings-range-value" id="setting-line-width-value" for="setting-line-width">860px</output>
+        </div>
+      </label>
+      <label class="settings-option" for="setting-prefers-motion">
+        <div class="settings-option-copy">
+          <strong>Prefers motion</strong>
+          <span>Allow transitions and motion flourishes across the docs UI.</span>
+        </div>
+        <span class="settings-switch">
+          <input id="setting-prefers-motion" type="checkbox" data-setting="prefersMotion">
+          <span class="settings-switch-ui" aria-hidden="true"></span>
+        </span>
+      </label>
+      
+      <label class="settings-option" for="setting-color-scheme">
+        <div class="settings-option-copy">
+          <strong>Light mode</strong>
+          <span>Swap the docs palette between the default dark presentation and the new light variant.</span>
+        </div>
+        <span class="settings-switch">
+          <input id="setting-color-scheme" type="checkbox" data-setting="colorScheme" value="light">
+          <span class="settings-switch-ui" aria-hidden="true"></span>
+        </span>
+      </label>
+      
+    </div>
+  </div>
+</div>
+<script>
+  const Atlas = {
+  config: window.__ATLAS_DOCS__ || { defaultSection: "introduction", sections: {}, features: { search: true } },
+  state: {
+    activeSection: null,
+    chunks: [],
+    results: [],
+    activeResult: -1,
+    refIndex: new Map(),
+    activeTarget: null,
+    activeTargetTimer: null,
+    settings: {},
+  },
+};
+
+function atlasSlugify(text) {
+  return (text || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 64);
+}
+
+function atlasEscapeHtml(text) {
+  return (text || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
+
+
+const ATLAS_SETTINGS_KEY = "atlas-docs-settings";
+const DEFAULT_LINE_WIDTH = 860;
+const MIN_LINE_WIDTH = 640;
+const MAX_LINE_WIDTH = 1300;
+
+function settingsStorage() {
+  try {
+    return window.localStorage;
+  } catch (_error) {
+    return null;
+  }
+}
+
+function systemPrefersMotion() {
+  try {
+    return !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  } catch (_error) {
+    return true;
+  }
+}
+
+function defaultSettings() {
+  const defaultColorScheme = Atlas.config.theme?.defaultColorScheme === "light" ? "light" : "dark";
+  return {
+    colorScheme: defaultColorScheme,
+    readableLineLength: false,
+    lineWidth: DEFAULT_LINE_WIDTH,
+    prefersMotion: systemPrefersMotion(),
+  };
+}
+
+function normalizeLineWidth(value) {
+  const numeric = Number(value);
+  if (!Number.isFinite(numeric)) return DEFAULT_LINE_WIDTH;
+  return Math.min(MAX_LINE_WIDTH, Math.max(MIN_LINE_WIDTH, Math.round(numeric)));
+}
+
+function readSettings() {
+  const fallback = defaultSettings();
+  const storage = settingsStorage();
+  if (!storage) return fallback;
+
+  try {
+    const raw = storage.getItem(ATLAS_SETTINGS_KEY);
+    if (!raw) return fallback;
+    const parsed = JSON.parse(raw);
+    return {
+      ...fallback,
+      ...(parsed && typeof parsed === "object" ? parsed : {}),
+    };
+  } catch (_error) {
+    return fallback;
+  }
+}
+
+function writeSettings(nextSettings) {
+  Atlas.state.settings = nextSettings;
+  const storage = settingsStorage();
+  if (!storage) return;
+
+  try {
+    storage.setItem(ATLAS_SETTINGS_KEY, JSON.stringify(nextSettings));
+  } catch (_error) {
+    // Ignore storage failures and keep the in-memory value.
+  }
+}
+
+function normalizeColorScheme(value) {
+  return value === "light" ? "light" : "dark";
+}
+
+function applyColorSchemePreference(colorScheme) {
+  const normalized = normalizeColorScheme(colorScheme);
+  document.documentElement.dataset.colorScheme = normalized;
+}
+
+function applyMotionPreference(prefersMotion) {
+  const value = prefersMotion ? "true" : "false";
+  document.documentElement.dataset.prefersMotion = value;
+  document.body.dataset.prefersMotion = value;
+}
+
+function applyReadableLineLengthPreference(enabled) {
+  const value = enabled ? "true" : "false";
+  document.documentElement.dataset.readableLineLength = value;
+  document.body.dataset.readableLineLength = value;
+}
+
+function applyLineWidthPreference(lineWidth) {
+  const normalized = normalizeLineWidth(lineWidth);
+  document.documentElement.style.setProperty("--atlas-line-width", `${normalized}px`);
+  document.body.style.setProperty("--atlas-line-width", `${normalized}px`);
+}
+
+function syncSettingsForm() {
+  const colorSchemeInput = document.getElementById("setting-color-scheme");
+  if (colorSchemeInput) colorSchemeInput.checked = Atlas.state.settings.colorScheme === "light";
+
+  const readableLineLengthInput = document.getElementById("setting-readable-line-length");
+  if (readableLineLengthInput) readableLineLengthInput.checked = !!Atlas.state.settings.readableLineLength;
+
+  const lineWidthInput = document.getElementById("setting-line-width");
+  const lineWidthValue = document.getElementById("setting-line-width-value");
+  const normalizedLineWidth = normalizeLineWidth(Atlas.state.settings.lineWidth);
+  if (lineWidthInput) {
+    lineWidthInput.value = String(normalizedLineWidth);
+    lineWidthInput.disabled = !Atlas.state.settings.readableLineLength;
+  }
+  if (lineWidthValue) lineWidthValue.textContent = `${normalizedLineWidth}px`;
+
+  const prefersMotionInput = document.getElementById("setting-prefers-motion");
+  if (prefersMotionInput) prefersMotionInput.checked = !!Atlas.state.settings.prefersMotion;
+}
+
+function openSettingsModal() {
+  if (typeof closeSearch === "function") closeSearch();
+  const modal = document.getElementById("settings-modal");
+  const trigger = document.querySelector("[data-open-settings]");
+  if (!modal) return;
+  modal.classList.add("open");
+  modal.setAttribute("aria-hidden", "false");
+  if (trigger) trigger.setAttribute("aria-expanded", "true");
+  syncSettingsForm();
+  document.getElementById("setting-readable-line-length")?.focus();
+}
+
+function closeSettingsModal() {
+  const modal = document.getElementById("settings-modal");
+  const trigger = document.querySelector("[data-open-settings]");
+  if (!modal) return;
+  modal.classList.remove("open");
+  modal.setAttribute("aria-hidden", "true");
+  if (trigger) trigger.setAttribute("aria-expanded", "false");
+}
+
+function updateSetting(name, value) {
+  const nextSettings = {
+    ...Atlas.state.settings,
+    [name]:
+      name === "lineWidth"
+        ? normalizeLineWidth(value)
+        : name === "colorScheme"
+          ? normalizeColorScheme(value)
+          : value,
+  };
+  writeSettings(nextSettings);
+  if (name === "colorScheme") applyColorSchemePreference(nextSettings.colorScheme);
+  if (name === "readableLineLength") applyReadableLineLengthPreference(!!value);
+  if (name === "lineWidth") applyLineWidthPreference(nextSettings.lineWidth);
+  if (name === "prefersMotion") applyMotionPreference(!!value);
+  syncSettingsForm();
+}
+
+function bindSettings() {
+  const trigger = document.querySelector("[data-open-settings]");
+  trigger?.addEventListener("click", () => {
+    const modalOpen = document.getElementById("settings-modal")?.classList.contains("open");
+    if (modalOpen) closeSettingsModal();
+    else openSettingsModal();
+  });
+
+  document.querySelector("[data-close-settings]")?.addEventListener("click", closeSettingsModal);
+  document.getElementById("settings-modal")?.addEventListener("click", event => {
+    if (event.target?.id === "settings-modal") closeSettingsModal();
+  });
+
+  document.querySelectorAll("[data-setting]").forEach(input => {
+    const applyInputValue = event => {
+      const { setting } = event.target.dataset;
+      if (!setting) return;
+      const value =
+        setting === "colorScheme"
+          ? (event.target.checked ? "light" : "dark")
+          : event.target.type === "checkbox"
+            ? !!event.target.checked
+            : event.target.value;
+      updateSetting(setting, value);
+    };
+
+    input.addEventListener("change", applyInputValue);
+    if (input.type === "range") input.addEventListener("input", applyInputValue);
+  });
+
+  document.addEventListener("keydown", event => {
+    const modalOpen = document.getElementById("settings-modal")?.classList.contains("open");
+    if (!modalOpen) return;
+
+    if (event.key === "Escape") {
+      event.preventDefault();
+      closeSettingsModal();
+    }
+  });
+}
+
+function initializeSettings() {
+  Atlas.state.settings = readSettings();
+  Atlas.state.settings.colorScheme = normalizeColorScheme(Atlas.state.settings.colorScheme);
+  Atlas.state.settings.lineWidth = normalizeLineWidth(Atlas.state.settings.lineWidth);
+  applyColorSchemePreference(Atlas.state.settings.colorScheme);
+  applyReadableLineLengthPreference(!!Atlas.state.settings.readableLineLength);
+  applyLineWidthPreference(Atlas.state.settings.lineWidth);
+  applyMotionPreference(!!Atlas.state.settings.prefersMotion);
+  syncSettingsForm();
+  bindSettings();
+}
+
+
+function updateHistory(slug, targetId = "", mode = "push") {
+  const hash = targetId ? `#section-${slug}:${targetId}` : `#section-${slug}`;
+  const state = { slug, targetId };
+
+  if (mode === "replace") {
+    history.replaceState(state, "", hash);
+    return;
+  }
+
+  if (location.hash === hash) {
+    history.replaceState(state, "", hash);
+    return;
+  }
+
+  history.pushState(state, "", hash);
+}
+
+function clearActiveSectionTarget() {
+  if (Atlas.state.activeTarget) {
+    Atlas.state.activeTarget.classList.remove("search-target-glow");
+    Atlas.state.activeTarget = null;
+  }
+
+  if (Atlas.state.activeTargetTimer) {
+    clearTimeout(Atlas.state.activeTargetTimer);
+    Atlas.state.activeTargetTimer = null;
+  }
+}
+
+function scrollAndGlowTarget(target, options = {}) {
+  if (!target) return;
+
+  const { glow = true, behavior = "smooth" } = options;
+  clearActiveSectionTarget();
+
+  const topbarHeight = document.querySelector(".topbar")?.offsetHeight || 0;
+  const extraOffset = 24;
+  const targetTop = window.scrollY + target.getBoundingClientRect().top - topbarHeight - extraOffset;
+
+  window.scrollTo({ top: Math.max(targetTop, 0), behavior });
+  window.getSelection?.()?.removeAllRanges?.();
+
+  if (!glow) return;
+
+  target.classList.remove("search-target-glow");
+  void target.offsetWidth;
+  target.classList.add("search-target-glow");
+
+  Atlas.state.activeTarget = target;
+  Atlas.state.activeTargetTimer = window.setTimeout(() => {
+    target.classList.remove("search-target-glow");
+    if (Atlas.state.activeTarget === target) Atlas.state.activeTarget = null;
+    Atlas.state.activeTargetTimer = null;
+  }, 1800);
+}
+
+function finalizeSectionTarget(targetId, options = {}) {
+  if (!targetId) return;
+
+  const { glow = true, behavior = "smooth" } = options;
+  window.setTimeout(() => {
+    const target = document.getElementById(targetId);
+    if (!target) return;
+    scrollAndGlowTarget(target, { glow, behavior });
+  }, 30);
+}
+
+function setSidebarOpen(open) {
+  const sidebar = document.getElementById("sidebar");
+  if (!sidebar) return;
+  sidebar.classList.toggle("open", open);
+  document.body.classList.toggle("sidebar-open", open);
+}
+
+function closeSidebar() {
+  setSidebarOpen(false);
+}
+
+function toggleSidebar() {
+  const sidebar = document.getElementById("sidebar");
+  if (!sidebar) return;
+  setSidebarOpen(!sidebar.classList.contains("open"));
+}
+
+function showSection(slug, push = true, targetId = "", historyMode = "push") {
+  const target = document.getElementById(`section-${slug}`);
+  if (!target) return;
+
+  document.querySelectorAll(".section").forEach(section => section.classList.toggle("active", section === target));
+  document.querySelectorAll("[data-section-link]").forEach(link => {
+    link.classList.toggle("active", link.dataset.sectionLink === slug);
+  });
+
+  const meta = Atlas.config.sections[slug] || {};
+  const breadcrumb = document.getElementById("breadcrumb");
+  if (breadcrumb && meta.breadcrumb) {
+    const parts = meta.breadcrumb.split("/");
+    breadcrumb.innerHTML = parts.map((part, index) => index ? `<span>/</span> ${atlasEscapeHtml(part.trim())}` : atlasEscapeHtml(part.trim())).join(" ");
+  }
+
+  Atlas.state.activeSection = slug;
+  closeSidebar();
+
+  if (push) updateHistory(slug, targetId, historyMode);
+  if (targetId) {
+    finalizeSectionTarget(targetId, {
+      glow: push,
+      behavior: historyMode === "replace" ? "auto" : "smooth",
+    });
+    return;
+  }
+
+  clearActiveSectionTarget();
+  window.scrollTo({ top: 0, behavior: "auto" });
+}
+
+function bindInlineReferences() {
+  document.querySelectorAll("code.inline-code-ref[data-section-id]").forEach(node => {
+    const match = { sectionId: node.dataset.sectionId, targetId: node.dataset.targetId || "" };
+    node.title = match.targetId ? "Ctrl/Cmd+Click to open exact docs reference" : "Ctrl/Cmd+Click to open docs section";
+    node.addEventListener("click", event => {
+      if (!(event.ctrlKey || event.metaKey)) return;
+      event.preventDefault();
+      event.stopPropagation();
+      showSection(match.sectionId || Atlas.config.defaultSection, true, match.targetId || "");
+    });
+  });
+}
+
+function parseHash() {
+  const hash = location.hash.replace(/^#/, "");
+  if (!hash.startsWith("section-")) {
+    return { slug: Atlas.config.defaultSection, targetId: "" };
+  }
+
+  const raw = hash.slice("section-".length);
+  const separator = raw.indexOf(":");
+  if (separator === -1) {
+    return { slug: raw || Atlas.config.defaultSection, targetId: "" };
+  }
+
+  return {
+    slug: raw.slice(0, separator) || Atlas.config.defaultSection,
+    targetId: raw.slice(separator + 1),
+  };
+}
+
+function syncModifierNavigationState(event) {
+  document.body.classList.toggle("mod-nav-active", Boolean(event?.ctrlKey || event?.metaKey));
+}
+
+function bindNavigation() {
+  document.querySelectorAll("[data-section-link], [data-doc-link]").forEach(link => {
+    link.addEventListener("click", event => {
+      event.preventDefault();
+      showSection(link.dataset.sectionLink || link.dataset.docLink, true, link.dataset.targetId || "");
+    });
+  });
+
+  document.querySelectorAll("[data-card-link]").forEach(card => {
+    card.addEventListener("click", () => showSection(card.dataset.cardLink, true));
+  });
+
+  document.querySelector("[data-toggle-sidebar]")?.addEventListener("click", () => {
+    toggleSidebar();
+  });
+  document.querySelector("[data-sidebar-scrim]")?.addEventListener("click", closeSidebar);
+
+  document.addEventListener("keydown", syncModifierNavigationState);
+  document.addEventListener("keyup", syncModifierNavigationState);
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape") closeSidebar();
+  });
+  window.addEventListener("blur", () => {
+    document.body.classList.remove("mod-nav-active");
+  });
+
+  window.addEventListener("popstate", event => {
+    const state = event.state || parseHash();
+    showSection(state.slug || Atlas.config.defaultSection, false, state.targetId || "", "replace");
+  });
+
+  const initial = parseHash();
+  showSection(initial.slug || Atlas.config.defaultSection, false, initial.targetId || "", "replace");
+  bindInlineReferences();
+}
+
+
+function initializeCopyCodeButtons() {
+  document.querySelectorAll("pre").forEach(pre => {
+    if (pre.querySelector(".copy-code-button")) return;
+    const code = pre.querySelector("code");
+    if (!code) return;
+
+    if (!pre.dataset.lang) {
+      const lang = [...code.classList].find(name => name.startsWith("language-"));
+      if (lang) pre.dataset.lang = lang.replace("language-", "");
+    }
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "copy-code-button";
+    button.textContent = "copy";
+    button.addEventListener("click", async event => {
+      event.preventDefault();
+      event.stopPropagation();
+      await navigator.clipboard.writeText(code.textContent.replace(/\n$/, ""));
+      button.classList.add("copied");
+      button.textContent = "copied!";
+      window.setTimeout(() => {
+        button.classList.remove("copied");
+        button.textContent = "copy";
+      }, 1200);
+    });
+    pre.appendChild(button);
+  });
+}
+
+
+const ATLAS_SEARCH_STORAGE_RESULT_LIMIT = 6;
+
+const atlasSemanticAliases = {
+  hydration: ["hydrate", "hydrated", "hydrating", "typed", "model", "models", "cast", "apimodel", "get_object"],
+  hydrate: ["hydration", "hydrated", "typed", "cast", "apimodel"],
+  typed: ["hydration", "hydrate", "apimodel", "model", "models", "cast"],
+  model: ["models", "typed", "hydration", "apimodel", "cast"],
+  models: ["model", "typed", "hydration", "apimodel", "cast"],
+  apimodel: ["typed", "hydration", "model", "models", "cast", "alias", "timestamp", "lazy"],
+  cast: ["typed", "hydration", "apimodel", "model"],
+  ttl: ["expiry", "freshness", "stale", "cache"],
+  expiry: ["ttl", "stale", "freshness"],
+  stale: ["ttl", "expiry", "freshness"],
+  selectors: ["selector", "query", "jsoninjester", "path"],
+  selector: ["selectors", "query", "jsoninjester", "path"],
+  query: ["selector", "selectors", "jsoninjester", "path"],
+  jsoninjester: ["query", "selector", "selectors", "path"],
+  tutorial: ["jsonplaceholder", "example", "walkthrough", "apiwrapper"],
+  tutorials: ["tutorial", "jsonplaceholder", "example", "walkthrough"],
+  jsonplaceholder: ["tutorial", "example", "apiwrapper", "alias", "cast"],
+  example: ["tutorial", "jsonplaceholder", "walkthrough"],
+};
+
+function normalizeSearchText(text) {
+  return (text || "").toLowerCase().replace(/[^a-z0-9_@.\- ]+/g, " ").replace(/\s+/g, " ").trim();
+}
+
+function tokenizeSearch(text) {
+  return normalizeSearchText(text).split(" ").map(token => token.trim()).filter(token => token.length > 1);
+}
+
+function splitSearchToken(token) {
+  const raw = normalizeSearchText(token).replace(/^[._-]+|[._-]+$/g, "");
+  if (!raw) return [];
+
+  const parts = raw
+    .split(/[._-]+/)
+    .map(part => part.trim())
+    .filter(part => part.length > 1);
+
+  const dottedParts = raw
+    .replace(/\.+$/g, "")
+    .split(".")
+    .map(part => part.trim())
+    .filter(Boolean);
+
+  const dottedPrefixes = [];
+  for (let i = 1; i <= dottedParts.length; i += 1) {
+    const prefix = dottedParts.slice(0, i).join(".");
+    if (prefix.length > 1) dottedPrefixes.push(prefix);
+  }
+
+  return uniqueSearchItems([raw, ...parts, ...dottedPrefixes]);
+}
+
+function tokenizeStructuredSearch(text) {
+  return uniqueSearchItems(
+    tokenizeSearch(text)
+      .flatMap(token => splitSearchToken(token))
+      .filter(token => token.length > 1)
+  );
+}
+
+function uniqueSearchItems(items) {
+  return Array.from(new Set(items));
+}
+
+function getSearchStorageKey() {
+  const siteName = Atlas.config.siteName || Atlas.config.metadata?.name || "atlas-docs";
+  return `atlas-docs-search-v2:${atlasSlugify(siteName) || "docs"}`;
+}
+
+function getSearchStorage() {
+  try {
+    return window.localStorage;
+  } catch {
+    return null;
+  }
+}
+
+function trimStoredSearchQuery(query) {
+  return typeof query === "string" ? query.slice(0, 240) : "";
+}
+
+function persistSearchSnapshot() {
+  const storage = getSearchStorage();
+  if (!storage) return;
+
+  const snapshot = {
+    query: trimStoredSearchQuery(Atlas.state.searchQuery || ""),
+    activeIndex: Math.max(Atlas.state.activeResult || -1, -1),
+    resultIds: (Atlas.state.results || [])
+      .slice(0, ATLAS_SEARCH_STORAGE_RESULT_LIMIT)
+      .map(result => result.id)
+      .filter(Boolean),
+  };
+
+  if (!snapshot.query && !snapshot.resultIds.length) {
+    storage.removeItem(getSearchStorageKey());
+    return;
+  }
+
+  try {
+    storage.setItem(getSearchStorageKey(), JSON.stringify(snapshot));
+  } catch {
+    storage.removeItem(getSearchStorageKey());
+  }
+}
+
+function restoreSearchSnapshot() {
+  const storage = getSearchStorage();
+  if (!storage) return;
+
+  let snapshot = null;
+  try {
+    snapshot = JSON.parse(storage.getItem(getSearchStorageKey()) || "null");
+  } catch {
+    storage.removeItem(getSearchStorageKey());
+    return;
+  }
+
+  if (!snapshot || typeof snapshot !== "object") return;
+
+  Atlas.state.searchQuery = trimStoredSearchQuery(snapshot.query);
+  const chunkById = new Map((Atlas.state.chunks || []).map(chunk => [chunk.id, chunk]));
+  const resultIds = Array.isArray(snapshot.resultIds) ? snapshot.resultIds : [];
+
+  Atlas.state.results = resultIds
+    .map(id => chunkById.get(id))
+    .filter(Boolean)
+    .map((chunk, index) => ({
+      ...chunk,
+      score: ATLAS_SEARCH_STORAGE_RESULT_LIMIT - index,
+      matchedTerms: [],
+    }));
+
+  Atlas.state.activeResult = Atlas.state.results.length
+    ? Math.min(Math.max(snapshot.activeIndex || 0, 0), Atlas.state.results.length - 1)
+    : -1;
+}
+
+function buildSearchTrigrams(value) {
+  const text = `  ${normalizeSearchText(value)}  `;
+  const grams = new Set();
+  for (let i = 0; i < text.length - 2; i += 1) {
+    grams.add(text.slice(i, i + 3));
+  }
+  return grams;
+}
+
+function jaccardSimilarity(setA, setB) {
+  if (!setA.size || !setB.size) return 0;
+  let intersection = 0;
+  setA.forEach(item => {
+    if (setB.has(item)) intersection += 1;
+  });
+  return intersection / (setA.size + setB.size - intersection);
+}
+
+function expandQueryTokens(query) {
+  const tokens = tokenizeSearch(query);
+  const expanded = [...tokens];
+  tokens.forEach(token => {
+    const aliases = atlasSemanticAliases[token];
+    if (aliases) expanded.push(...aliases);
+    if (token.endsWith("s")) expanded.push(token.slice(0, -1));
+    else expanded.push(`${token}s`);
+  });
+  return uniqueSearchItems(expanded.filter(token => token.length > 1));
+}
+
+function isCodeLikeQuery(query) {
+  return /\b(from|import|class|def)\b|[._()]/i.test(query || "");
+}
+
+function bestTokenSimilarity(token, candidateSet) {
+  if (!token || !candidateSet?.size) return 0;
+  const tokenTrigrams = buildSearchTrigrams(token);
+  let best = 0;
+  candidateSet.forEach(candidate => {
+    if (Math.abs(candidate.length - token.length) > 3) return;
+    const similarity = jaccardSimilarity(tokenTrigrams, buildSearchTrigrams(candidate));
+    if (similarity > best) best = similarity;
+  });
+  return best;
+}
+
+function tokenWindowScore(text, tokens) {
+  if (!text || !tokens.length) return 0;
+  const hits = tokens
+    .map(token => ({ token, index: text.indexOf(token) }))
+    .filter(hit => hit.index >= 0)
+    .sort((a, b) => a.index - b.index);
+
+  if (!hits.length) return 0;
+  if (hits.length === 1) return (1 / tokens.length) * 8;
+
+  const first = hits[0];
+  const last = hits[hits.length - 1];
+  const span = Math.max((last.index + last.token.length) - first.index, 1);
+  const coverage = hits.length / tokens.length;
+  const compactness = Math.min(1, (hits.length * 18) / span);
+  return (coverage * 24) + (compactness * 12);
+}
+
+function resultTitle(result) {
+  if (!result) return "";
+  if (result.heading === "Overview" || result.heading === result.sectionTitle) {
+    return result.sectionTitle;
+  }
+  return `${result.sectionTitle} - ${result.heading}`;
+}
+
+function resultPath(sectionTitle, heading) {
+  if (heading === "Overview" || heading === sectionTitle) return sectionTitle;
+  return `${sectionTitle} / ${heading}`;
+}
+
+function makeSearchChunk({ id, sectionId, sectionTitle, heading, anchorId, targetId, text, sourceType, ordinal }) {
+  const normalizedText = normalizeSearchText(text);
+  return {
+    id,
+    sectionId,
+    sectionTitle,
+    heading,
+    anchorId,
+    targetId,
+    text,
+    normalizedText,
+    tokenSet: new Set(tokenizeSearch(text)),
+    structuredTokenSet: new Set(tokenizeStructuredSearch(text)),
+    trigramSet: buildSearchTrigrams(text),
+    sourceType,
+    ordinal,
+    path: resultPath(sectionTitle, heading),
+  };
+}
+
+function buildSearchIndex() {
+  const chunks = [];
+
+  document.querySelectorAll(".section").forEach(section => {
+    const sectionId = section.dataset.section;
+    const sectionTitle = section.querySelector(".page-title")?.textContent?.trim() || Atlas.config.sections[sectionId]?.label || sectionId;
+    let currentHeading = sectionTitle;
+    let currentAnchor = section.id;
+    let chunkCounter = 0;
+
+    const heroLead = section.querySelector(".page-lead")?.textContent?.trim();
+    if (heroLead) {
+      const heroChunkId = `${sectionId}-hero`;
+      const heroNode = section.querySelector(".page-hero");
+      if (heroNode && !heroNode.id) heroNode.id = heroChunkId;
+      const heroTarget = section.querySelector(".page-lead") || heroNode;
+      if (heroTarget && !heroTarget.id) heroTarget.id = `${heroChunkId}-target`;
+
+      chunks.push(makeSearchChunk({
+        id: heroChunkId,
+        sectionId,
+        sectionTitle,
+        heading: "Overview",
+        anchorId: heroNode?.id || heroChunkId,
+        targetId: heroTarget?.id || `${heroChunkId}-target`,
+        text: heroLead,
+        sourceType: "hero",
+        ordinal: chunkCounter++,
+      }));
+    }
+
+    section.querySelectorAll("h2, h3, p, li, pre, .callout, .method, td, .card").forEach(node => {
+      if (node.matches("h2, h3")) {
+        currentHeading = node.textContent.trim();
+        if (!node.id) node.id = `${sectionId}-${atlasSlugify(currentHeading) || chunkCounter}`;
+        currentAnchor = node.id;
+        return;
+      }
+
+      const text = (node.innerText || node.textContent || "").trim();
+      if (!text || text.length < 20) return;
+      if (!node.id) node.id = `${sectionId}-${chunkCounter}-target`;
+
+      chunks.push(makeSearchChunk({
+        id: `${sectionId}-${chunkCounter}`,
+        sectionId,
+        sectionTitle,
+        heading: currentHeading,
+        anchorId: currentAnchor,
+        targetId: node.id,
+        text,
+        sourceType: node.tagName.toLowerCase(),
+        ordinal: chunkCounter++,
+      }));
+    });
+  });
+
+  Atlas.state.chunks = chunks;
+  const status = document.getElementById("search-status");
+  if (status) status.textContent = `Indexed ${chunks.length} local chunks`;
+}
+
+function scoreClassicQuery(query) {
+  const trimmed = query.trim();
+  if (!trimmed) return [];
+
+  const rawTokens = tokenizeSearch(trimmed);
+  const expandedTokens = expandQueryTokens(trimmed);
+  const structuredTokens = tokenizeStructuredSearch(trimmed);
+  const queryTrigrams = buildSearchTrigrams(trimmed);
+  const codeLikeQuery = isCodeLikeQuery(trimmed);
+
+  return (Atlas.state.chunks || [])
+    .map(chunk => {
+      let exactScore = 0;
+      let fuzzyScore = 0;
+      let semanticScore = 0;
+      let structureScore = 0;
+      let headingScore = 0;
+      let titleScore = 0;
+      const matchedTerms = [];
+      const matchedRawTokens = new Set();
+      const matchedStructuredTokens = new Set();
+
+      rawTokens.forEach(token => {
+        if (chunk.normalizedText.includes(token)) {
+          exactScore += 12;
+          matchedTerms.push(token);
+          matchedRawTokens.add(token);
+        }
+        if (chunk.heading.toLowerCase().includes(token)) headingScore += 14;
+        if (chunk.sectionTitle.toLowerCase().includes(token)) titleScore += 8;
+      });
+
+      expandedTokens.forEach(token => {
+        if (chunk.tokenSet.has(token)) {
+          semanticScore += rawTokens.includes(token) ? 8 : 3.5;
+          matchedTerms.push(token);
+        } else if (chunk.normalizedText.includes(token)) {
+          semanticScore += rawTokens.includes(token) ? 6 : 2.5;
+          matchedTerms.push(token);
+        }
+      });
+
+      structuredTokens.forEach(token => {
+        if (chunk.structuredTokenSet.has(token)) {
+          structureScore += rawTokens.includes(token) ? 8 : 4.5;
+          matchedStructuredTokens.add(token);
+          matchedTerms.push(token);
+          return;
+        }
+
+        const similarity = token.length >= 4 ? bestTokenSimilarity(token, chunk.structuredTokenSet) : 0;
+        if (similarity >= 0.45) {
+          structureScore += similarity * (rawTokens.includes(token) ? 7 : 4);
+          matchedStructuredTokens.add(token);
+        }
+      });
+
+      fuzzyScore = jaccardSimilarity(queryTrigrams, chunk.trigramSet) * 30;
+
+      if (chunk.sourceType === "hero") semanticScore += 4;
+      if (chunk.sourceType === "pre" && rawTokens.some(token => chunk.normalizedText.includes(token))) semanticScore += 2;
+
+      const rawCoverage = rawTokens.length ? (matchedRawTokens.size / rawTokens.length) : 0;
+      const structuredCoverage = structuredTokens.length ? (matchedStructuredTokens.size / structuredTokens.length) : rawCoverage;
+      const coverageScore = (rawCoverage * 26) + (structuredCoverage * 20);
+      const proximityScore = tokenWindowScore(chunk.normalizedText, Array.from(matchedStructuredTokens));
+      const missingPenalty = rawTokens.length >= 3 ? (rawTokens.length - matchedRawTokens.size) * 6.5 : 0;
+
+      if (codeLikeQuery) {
+        if (chunk.sourceType === "pre") structureScore += 14;
+        if (chunk.sourceType === "td") structureScore += 5;
+        if (chunk.sourceType === "hero") structureScore -= 6;
+        if (chunk.sourceType === "p" || chunk.sourceType === "li") structureScore -= 1.5;
+      }
+
+      return {
+        ...chunk,
+        score: exactScore + fuzzyScore + semanticScore + structureScore + headingScore + titleScore + coverageScore + proximityScore - missingPenalty,
+        matchedTerms: uniqueSearchItems(matchedTerms).slice(0, 6),
+      };
+    })
+    .filter(result => result.score >= 8)
+    .sort((a, b) => b.score - a.score || a.ordinal - b.ordinal)
+    .slice(0, 24);
+}
+
+function dedupeSearchResults(results, limit = 12) {
+  const deduped = [];
+  const seenKeys = new Set();
+
+  results.forEach(result => {
+    if (deduped.length >= limit) return;
+    const key = `${result.sectionId}::${result.heading}`;
+    if (seenKeys.has(key)) return;
+    seenKeys.add(key);
+    deduped.push(result);
+  });
+
+  return deduped;
+}
+
+function searchDocs(query) {
+  return Promise.resolve(dedupeSearchResults(scoreClassicQuery(query)));
+}
+
+function escapeSearchRegex(text) {
+  return String(text).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function collectSearchRanges(text, query) {
+  const raw = String(text || "").replace(/\s+/g, " ").trim();
+  const queryText = String(query || "").replace(/\s+/g, " ").trim();
+  if (!raw || !queryText) return [];
+
+  const phraseTokens = tokenizeSearch(queryText);
+  if (phraseTokens.length) {
+    const phrasePattern = phraseTokens.map(token => escapeSearchRegex(token)).join("[^a-z0-9_@.\\-]+");
+    const phraseRegex = new RegExp(phrasePattern, "i");
+    const phraseMatch = phraseRegex.exec(raw);
+    if (phraseMatch) {
+      return [{
+        start: phraseMatch.index,
+        end: phraseMatch.index + phraseMatch[0].length,
+        weight: phraseMatch[0].length + 200,
+      }];
+    }
+  }
+
+  const terms = uniqueSearchItems([
+    ...tokenizeSearch(queryText),
+    ...expandQueryTokens(queryText),
+  ])
+    .filter(term => term.length > 2)
+    .sort((a, b) => b.length - a.length);
+
+  const lower = raw.toLowerCase();
+  const hits = [];
+
+  terms.forEach(term => {
+    const needle = term.toLowerCase();
+    let offset = 0;
+    while (offset < lower.length) {
+      const index = lower.indexOf(needle, offset);
+      if (index === -1) break;
+      hits.push({ start: index, end: index + needle.length, weight: needle.length });
+      offset = index + needle.length;
+    }
+  });
+
+  if (!hits.length) return [];
+
+  hits.sort((a, b) => a.start - b.start || b.end - a.end);
+  const merged = [];
+
+  hits.forEach(hit => {
+    const previous = merged[merged.length - 1];
+    if (!previous) {
+      merged.push({ ...hit });
+      return;
+    }
+
+    if (hit.start <= previous.end + 18) {
+      previous.end = Math.max(previous.end, hit.end);
+      previous.weight += hit.weight;
+      return;
+    }
+
+    merged.push({ ...hit });
+  });
+
+  return merged;
+}
+
+function bestSearchRange(text, query) {
+  const ranges = collectSearchRanges(text, query);
+  if (!ranges.length) return null;
+  return ranges.slice().sort((a, b) => b.weight - a.weight || a.start - b.start)[0];
+}
+
+function renderSearchHighlight(text, query) {
+  const raw = String(text || "").replace(/\s+/g, " ").trim();
+  const ranges = collectSearchRanges(raw, query);
+  if (!ranges.length) return atlasEscapeHtml(raw);
+
+  let cursor = 0;
+  let html = "";
+
+  ranges.forEach(range => {
+    if (range.start > cursor) html += atlasEscapeHtml(raw.slice(cursor, range.start));
+    html += `<mark class="search-hit">${atlasEscapeHtml(raw.slice(range.start, range.end))}</mark>`;
+    cursor = range.end;
+  });
+
+  if (cursor < raw.length) html += atlasEscapeHtml(raw.slice(cursor));
+  return html;
+}
+
+function snippetFor(result, query) {
+  const raw = String(result?.text || "").replace(/\s+/g, " ").trim();
+  const bestRange = bestSearchRange(raw, query);
+  const startIndex = bestRange ? bestRange.start : 0;
+  const hitLength = bestRange ? Math.max(bestRange.end - bestRange.start, 0) : 0;
+  const start = Math.max(0, startIndex - 70);
+  const end = Math.min(raw.length, startIndex + hitLength + 140);
+  const prefix = start > 0 ? "..." : "";
+  const suffix = end < raw.length ? "..." : "";
+  return `${prefix}${raw.slice(start, end).trim()}${suffix}`;
+}
+
+function renderSearchResultsList(query, results, restored = false) {
+  if (!results.length) {
+    return `
+      <div class="search-empty">
+        <strong>No direct match.</strong>
+        Try a broader term like <code>typed</code>, <code>cache</code>, or <code>query</code>.
+      </div>
+    `;
+  }
+
+  return `
+    ${restored ? `
+      <div class="search-empty" style="margin-bottom:16px;">
+        <strong>Restored last search.</strong>
+        Run it again to refresh scores and snippets.
+      </div>
+    ` : ""}
+    ${results.map((result, index) => `
+      <article class="search-result${index === Atlas.state.activeResult ? " active" : ""}" data-search-index="${index}" data-search-section="${result.sectionId}" data-search-target="${result.targetId || result.anchorId || ""}" aria-selected="${index === Atlas.state.activeResult ? "true" : "false"}">
+        <div class="search-result-top">
+          <div class="search-result-path">${atlasEscapeHtml(result.path)}</div>
+          <div class="search-result-score">score ${Math.round(result.score)}</div>
+        </div>
+        <div class="search-result-title">${renderSearchHighlight(resultTitle(result), query)}</div>
+        <div class="search-result-preview">${renderSearchHighlight(snippetFor(result, query), query)}</div>
+      </article>
+    `).join("")}
+  `;
+}
+
+function searchEmptyStateHtml() {
+  const search = Atlas.config.search || {};
+  const hint = atlasEscapeHtml(search.secondaryHint || "Search the local docs. Try docs, guides, examples.");
+  return `<div class="search-empty"><strong>${hint}</strong></div>`;
+}
+
+function setActiveSearchResult(index) {
+  const items = Array.from(document.querySelectorAll("#search-results [data-search-index]"));
+  if (!items.length) {
+    Atlas.state.activeResult = -1;
+    return;
+  }
+
+  const nextIndex = Math.min(Math.max(index, 0), items.length - 1);
+  Atlas.state.activeResult = nextIndex;
+
+  items.forEach((item, itemIndex) => {
+    const isActive = itemIndex === nextIndex;
+    item.classList.toggle("active", isActive);
+    item.setAttribute("aria-selected", isActive ? "true" : "false");
+  });
+
+  items[nextIndex]?.scrollIntoView({ block: "nearest" });
+}
+
+function openActiveSearchResult() {
+  const activeResult = Atlas.state.results[Atlas.state.activeResult];
+  if (!activeResult) return;
+  closeSearch();
+  showSection(activeResult.sectionId, true, activeResult.targetId || activeResult.anchorId || "");
+}
+
+function bindRenderedSearchResults() {
+  document.querySelectorAll("#search-results [data-search-index]").forEach(item => {
+    item.addEventListener("click", () => {
+      setActiveSearchResult(Number(item.dataset.searchIndex || 0));
+      openActiveSearchResult();
+    });
+  });
+}
+
+async function renderSearchResults(query) {
+  const container = document.getElementById("search-results");
+  const status = document.getElementById("search-status");
+  if (!container || !status) return;
+
+  if (!query.trim()) {
+    Atlas.state.results = [];
+    Atlas.state.activeResult = -1;
+    container.innerHTML = searchEmptyStateHtml();
+    status.textContent = `Indexed ${Atlas.state.chunks.length} local chunks`;
+    persistSearchSnapshot();
+    return;
+  }
+
+  const requestId = Symbol("search-request");
+  Atlas.state.searchLastRequestId = requestId;
+  status.textContent = `Searching "${query}"...`;
+
+  let results = [];
+  try {
+    results = await searchDocs(query);
+  } catch (error) {
+    console.error("Search failed", error);
+    if (Atlas.state.searchLastRequestId !== requestId) return;
+    Atlas.state.results = [];
+    Atlas.state.activeResult = -1;
+    status.textContent = "Search failed to load.";
+    container.innerHTML = `
+      <div class="search-empty">
+        <strong>Search is temporarily unavailable.</strong>
+        Reload the page and try again.
+      </div>
+    `;
+    persistSearchSnapshot();
+    return;
+  }
+
+  if (Atlas.state.searchLastRequestId !== requestId) return;
+
+  Atlas.state.results = results;
+  Atlas.state.activeResult = results.length ? 0 : -1;
+  status.textContent = results.length ? `${results.length} matches for "${query}"` : `No matches for "${query}"`;
+  container.innerHTML = renderSearchResultsList(query, results);
+  bindRenderedSearchResults();
+  persistSearchSnapshot();
+}
+
+function renderRestoredSearch() {
+  const query = Atlas.state.searchQuery || "";
+  const container = document.getElementById("search-results");
+  const status = document.getElementById("search-status");
+  if (!container || !status) return;
+
+  if (!query.trim() || !Atlas.state.results.length) {
+    renderSearchResults(query);
+    return;
+  }
+
+  Atlas.state.activeResult = Math.min(Math.max(Atlas.state.activeResult, 0), Atlas.state.results.length - 1);
+  status.textContent = `Restored ${Atlas.state.results.length} cached matches for "${query}"`;
+  container.innerHTML = renderSearchResultsList(query, Atlas.state.results, true);
+  bindRenderedSearchResults();
+}
+
+function handleSearchInput(value) {
+  Atlas.state.searchQuery = value;
+  persistSearchSnapshot();
+  renderSearchResults(value);
+}
+
+function openSearch() {
+  if (typeof closeSettingsModal === "function") closeSettingsModal();
+  const modal = document.getElementById("search-modal");
+  const input = document.getElementById("search-input");
+  if (!modal || !input) return;
+  modal.classList.add("open");
+  modal.setAttribute("aria-hidden", "false");
+  input.value = Atlas.state.searchQuery || "";
+  input.focus();
+  input.select();
+  renderRestoredSearch();
+}
+
+function closeSearch() {
+  const modal = document.getElementById("search-modal");
+  if (!modal) return;
+  modal.classList.remove("open");
+  modal.setAttribute("aria-hidden", "true");
+}
+
+function bindSearch() {
+  if (Atlas.config.features && Atlas.config.features.search === false) return;
+
+  Atlas.state.searchQuery ||= "";
+  Atlas.state.searchLastRequestId ||= null;
+
+  buildSearchIndex();
+  restoreSearchSnapshot();
+
+  const input = document.getElementById("search-input");
+  if (input) input.value = Atlas.state.searchQuery || "";
+
+  document.querySelector("[data-open-search]")?.addEventListener("click", openSearch);
+  document.querySelector("[data-close-search]")?.addEventListener("click", closeSearch);
+  document.getElementById("search-modal")?.addEventListener("click", event => {
+    if (event.target?.id === "search-modal") closeSearch();
+  });
+  document.getElementById("search-input")?.addEventListener("input", event => handleSearchInput(event.target.value));
+
+  renderRestoredSearch();
+
+  document.addEventListener("keydown", event => {
+    const modal = document.getElementById("search-modal");
+    const modalOpen = modal?.classList.contains("open");
+
+    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
+      event.preventDefault();
+      if (modalOpen) closeSearch();
+      else openSearch();
+      return;
+    }
+
+    if (!modalOpen) return;
+
+    if (event.key === "Escape") {
+      event.preventDefault();
+      closeSearch();
+      return;
+    }
+
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      setActiveSearchResult(Math.min(Atlas.state.activeResult + 1, Atlas.state.results.length - 1));
+      return;
+    }
+
+    if (event.key === "ArrowUp") {
+      event.preventDefault();
+      setActiveSearchResult(Math.max(Atlas.state.activeResult - 1, 0));
+      return;
+    }
+
+    if (event.key === "Enter" && Atlas.state.activeResult >= 0) {
+      event.preventDefault();
+      openActiveSearchResult();
+    }
+  });
+}
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  initializeSettings();
+  bindNavigation();
+  initializeCopyCodeButtons();
+  bindSearch();
+});
+</script>
+
+</body>
+</html>
