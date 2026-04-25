@@ -2,8 +2,8 @@
 
 Atlas Docs is a Markdown-based static site generator for documentation, paired with a Codex workflow that turns project context into a polished docs site.
 
-![preview](preview.png)
-**^ Generate docs like these ^**
+[![preview](preview.png)](https://brandonbahret.github.io/Static-Documentation-Generator/docs_site/index.html)
+**^ generate docs like [these](https://brandonbahret.github.io/Static-Documentation-Generator/docs_site/index.html) ^**
 
 The repository has two related parts:
 
