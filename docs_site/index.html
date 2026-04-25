@@ -1305,6 +1305,20 @@ py -m atlas_docs.cli build .\my-docs --out .\dist\index.html</code></pre>
           <p class="page-lead">The <code>create-documentation</code> skill sits above the CLI. It inspects a local or remote project, designs documentation navigation around the project domain, writes Atlas source files, and builds the resulting site.</p>
         </div>
 
+        <h2 id="use-the-codex-skill-install-the-skill-into-the-target-repository" data-anchor="install-the-skill-into-the-target-repository">Install the skill into the target repository</h2>
+        <p>For those that want to generate docs with Codex, place the
+        skill bundle at your repository root:</p>
+        <pre data-lang="text"><code>your-project/
+  .agents/
+    skills/
+      create_documentation/
+        SKILL.md
+        references/
+        scripts/</code></pre>
+
+        <p>That keeps the workflow local to the project instead of depending on a global
+        Codex setup. Once that folder exists at the root, Codex can expose the skill as
+        <code>/create documentation</code>. If Codex cannot find the skill, then restart the instance.</p>
         <h2 id="use-the-codex-skill-what-the-skill-adds" data-anchor="what-the-skill-adds">What the skill adds</h2>
         <p>The CLI expects you to author Atlas source manually. The Codex skill automates the authoring layer:</p>
         <ul>

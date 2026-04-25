@@ -5,6 +5,25 @@ lead: |
   The `create-documentation` skill sits above the CLI. It inspects a local or remote project, designs documentation navigation around the project domain, writes Atlas source files, and builds the resulting site.
 ---
 
+## Install the skill into the target repository
+
+For those that want to generate docs with Codex, place the
+skill bundle at your repository root:
+
+```text
+your-project/
+  .agents/
+    skills/
+      create_documentation/
+        SKILL.md
+        references/
+        scripts/
+```
+
+That keeps the workflow local to the project instead of depending on a global
+Codex setup. Once that folder exists at the root, Codex can expose the skill as
+`/create documentation`. If Codex cannot find the skill, then restart the instance.
+
 ## What the skill adds
 
 The CLI expects you to author Atlas source manually. The Codex skill automates the authoring layer:
