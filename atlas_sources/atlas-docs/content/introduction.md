@@ -8,8 +8,6 @@ lead: |
 
 ## What it is
 
-@asset[hero-atlas-visual]
-
 Atlas Docs has two layers:
 
 - The reusable package in `src/atlas_docs/`, which loads Atlas source files, renders Markdown and directives, and emits a static HTML document.

@@ -501,6 +501,25 @@ A compact list of linked references, rendered at the bottom of a section as a "s
 
 **Visual:** Small mono-type links with a subtle separator, styled as a footer row.
 
+### `:::example_pair`
+
+A documentation helper block for syntax walkthroughs. It renders a titled comparison with the raw Atlas source in one panel and the live browser output in the other, so examples stay authored in one place.
+
+```md
+:::example_pair title="Internal doc link" lang=md
+See [doc:format-assets] for the asset catalog format.
+:::
+```
+
+Accepted attributes:
+
+| Attribute | Description |
+|-----------|-------------|
+| `title` | Required display title shown at the top of the example block |
+| `lang` | Optional source panel language label. Defaults to `md` |
+
+**Visual:** A split example composition with labeled `Source` and `Browser` panels. On narrow screens it stacks vertically.
+
 ---
 
 ## Generator Responsibilities
@@ -510,7 +529,7 @@ A conforming generator that reads this directory structure must:
 1. Parse `metadata.md` for CSS variable values, font imports, identity fields, and search UI copy.
 2. Parse `navigation.md` to determine section order, group labels, sidebar link text, optional footer entries, and slug-to-file mapping.
 3. Parse `assets.md` to build a name-to-asset registry. Inline SVGs are embedded at build time; images are copied or referenced.
-4. For each section declared in navigation.md, compile the corresponding `content/*.md` file: frontmatter → hero block, prose → HTML, `:::` directives → structured components, `[doc:slug]` → wired navigation links, `` `token{ref=slug}` `` → interactive code references.
+4. For each section declared in navigation.md, compile the corresponding `content/*.md` file: frontmatter → hero block, prose → HTML, `:::` directives → structured components, `[doc:slug]` → wired navigation links, `` `token{ref=slug}` `` → interactive code references, and `:::example_pair` → paired source/preview examples.
 5. Emit a single self-contained HTML file with all sections present in the DOM (one active at a time), the sidebar pre-wired to activate them, and inter-section link handlers registered.
 6. Exclude search widgets and any other runtime-only features from the compiled output unless explicitly declared in `metadata.md`.
 

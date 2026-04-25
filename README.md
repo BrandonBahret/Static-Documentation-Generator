@@ -40,6 +40,8 @@ atlas-docs build my-docs --out dist/index.html --theme atlas_dark
 atlas-docs serve my-docs --port 8000
 ```
 
+`atlas-docs serve` rebuilds on save and refreshes the browser automatically for local preview work.
+
 If you do not want to install the package, you can run it from source:
 
 ```bash

@@ -2,7 +2,7 @@
 tag: Commands
 title: serve
 lead: |
-  `atlas-docs serve` builds a preview into a directory and serves it over Python's standard library HTTP server.
+  `atlas-docs serve` builds a preview into a directory, serves it locally, and live-reloads the browser after local edits and successful rebuilds.
 ---
 
 ## Signature
@@ -24,8 +24,6 @@ atlas-docs serve SOURCE --out-dir .atlas-preview --theme atlas_dark --port 8000
 
 ## Behavior
 
-The command builds `index.html` into the selected output directory, changes the working directory to that output folder, and then starts `socketserver.TCPServer` with `http.server.SimpleHTTPRequestHandler`.
+The command builds `index.html` into the selected output directory, starts a threaded local preview server, watches the Atlas source plus bundled theme/template assets, and streams reload notifications to the browser after each successful rebuild.
 
-:::callout warn
-The current implementation serves forever until interrupted and does not watch source files for changes, even though `watchfiles` is present as a dependency.
-:::
+If a rebuild fails, the server keeps the last successful preview running and prints the build error to the terminal instead of replacing the output with a broken page.

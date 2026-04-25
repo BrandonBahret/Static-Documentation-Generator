@@ -44,7 +44,7 @@ The generated file contains all sections, styles, and behavior in one HTML docum
 atlas-docs serve my-docs --port 8000
 ```
 
-That command builds a preview into `.atlas-preview/index.html` by default, then serves the output directory over a local HTTP server.
+That command builds a preview into `.atlas-preview/index.html` by default, serves the output directory over a local HTTP server, then watches for saved changes and reloads the browser after a successful rebuild.
 
 :::quick_links
 - [doc:command-init] - Create a starter Atlas tree

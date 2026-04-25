@@ -7,8 +7,6 @@ lead: |
 
 ## Pipeline
 
-@asset[pipeline-figure]
-
 The build path is straightforward:
 
 1. Resolve the source root from the path you pass to the CLI.

@@ -59,6 +59,9 @@ Render a compact row of internal or external links.
 
 ### `:::reference_list`
 Render a small "see also" link block.
+
+### `:::example_pair`
+Render a titled source-and-preview example block from one body.
 :::
 
 ## Code blocks

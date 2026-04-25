@@ -466,6 +466,94 @@ html[data-color-scheme="light"] {
   }
   .feature-text strong { display: block; font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 2px; }
   .feature-text span { font-size: 12px; color: var(--text-dimmer); font-weight: 300; }
+  .example-pair {
+    margin: 24px 0 34px;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--surface) 94%, transparent), color-mix(in srgb, var(--bg) 88%, transparent)),
+      radial-gradient(circle at top left, color-mix(in srgb, var(--accent) 10%, transparent), transparent 42%);
+    overflow: hidden;
+    box-shadow: 0 18px 46px color-mix(in srgb, var(--bg) 46%, transparent);
+  }
+  .example-pair-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 16px 18px 14px;
+    border-bottom: 1px solid var(--border-subtle);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--surface) 92%, transparent), transparent);
+  }
+  .example-pair-title {
+    font-family: var(--font-display);
+    font-size: 22px;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--text);
+  }
+  .example-pair-kicker,
+  .example-pair-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+  .example-pair-kicker {
+    color: var(--accent2);
+    white-space: nowrap;
+    padding-top: 3px;
+  }
+  .example-pair-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+    gap: 0;
+  }
+  .example-pair-panel {
+    min-width: 0;
+    padding: 16px 18px 18px;
+  }
+  .example-pair-panel + .example-pair-panel {
+    border-left: 1px solid var(--border-subtle);
+    background: color-mix(in srgb, var(--surface) 58%, transparent);
+  }
+  .example-pair-label {
+    color: var(--text-dimmer);
+    margin-bottom: 10px;
+  }
+  .example-pair-panel-source pre {
+    margin: 0;
+    min-height: 100%;
+    border-radius: 14px;
+    border-color: color-mix(in srgb, var(--accent2) 10%, var(--border));
+    background: color-mix(in srgb, var(--code-bg) 92%, black 8%);
+    box-shadow: inset 0 1px 0 color-mix(in srgb, white 4%, transparent);
+  }
+  .example-pair-panel-preview {
+    position: relative;
+  }
+  .example-pair-render {
+    min-height: 100%;
+    padding: 18px;
+    border: 1px dashed color-mix(in srgb, var(--accent) 22%, var(--border));
+    border-radius: 14px;
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--bg) 86%, transparent), color-mix(in srgb, var(--surface) 84%, transparent)),
+      radial-gradient(circle at top right, color-mix(in srgb, var(--accent2) 10%, transparent), transparent 46%);
+  }
+  .example-pair-render > :first-child { margin-top: 0; }
+  .example-pair-render > :last-child { margin-bottom: 0; }
+  .example-pair-render pre {
+    margin-bottom: 0;
+  }
+  .example-pair-render .asset-image {
+    margin: 0;
+  }
+  .example-pair-render h2,
+  .example-pair-render h3,
+  .example-pair-render h4 {
+    scroll-margin-top: 0;
+  }
   .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0 32px; }
   .card {
     background: var(--surface);
@@ -874,6 +962,20 @@ html[data-color-scheme="light"] {
     animation: searchTargetGlow 1.8s ease-out;
   }
   @media (max-width: 820px) {
+    .example-pair-head {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .example-pair-grid {
+      grid-template-columns: 1fr;
+    }
+    .example-pair-panel + .example-pair-panel {
+      border-left: 0;
+      border-top: 1px solid var(--border-subtle);
+    }
+    .example-pair-title {
+      font-size: 18px;
+    }
     .settings-head,
     .settings-body { padding-left: 16px; padding-right: 16px; }
     .settings-option { align-items: flex-start; }
@@ -997,7 +1099,7 @@ html[data-color-scheme="light"] {
 </head>
 <body>
 <script>
-  window.__ATLAS_DOCS__ = {"defaultSection": "introduction", "sections": {"introduction": {"label": "Introduction", "breadcrumb": "Atlas Docs / Introduction", "metadata": {"tag": "Overview", "title": "Atlas Docs", "title_em": ".", "lead": "Atlas Docs is a Python package and CLI for compiling a structured Markdown source tree into a single-page documentation site with sidebar navigation, search, themed typography, and interactive reference blocks."}}, "how-atlas-works": {"label": "How Atlas Works", "breadcrumb": "Atlas Docs / How Atlas Works", "metadata": {"tag": "Concepts", "title": "How Atlas Works", "lead": "The Atlas workflow is a pipeline: source files define site structure, the loader resolves them into a typed site model, the Markdown renderer expands Atlas directives, and the renderer emits a themed HTML document."}}, "install-the-cli": {"label": "Install the CLI", "breadcrumb": "Atlas Docs / Install the CLI", "metadata": {"tag": "Guides", "title": "Install the CLI", "lead": "Atlas Docs can run as an installed command or directly from source. The repository currently targets Python 3.11+ and exposes the `atlas-docs` entry point through `pyproject.toml`."}}, "build-your-first-site": {"label": "Build your first site", "breadcrumb": "Atlas Docs / Build your first site", "metadata": {"tag": "Guides", "title": "Build your first site", "lead": "The shortest end-to-end flow is: initialize a source tree, edit the generated Markdown files, and run the build command to produce a static `index.html`."}}, "use-the-codex-skill": {"label": "Use the Codex skill", "breadcrumb": "Atlas Docs / Use the Codex skill", "metadata": {"tag": "Guides", "title": "Use the Codex skill", "lead": "The `create-documentation` skill sits above the CLI. It inspects a local or remote project, designs documentation navigation around the project domain, writes Atlas source files, and builds the resulting site."}}, "command-init": {"label": "init", "breadcrumb": "Atlas Docs / init", "metadata": {"tag": "Commands", "title": "init", "lead": "`atlas-docs init` creates a minimal Atlas source tree with starter metadata, navigation, assets, and one introduction page."}}, "command-build": {"label": "build", "breadcrumb": "Atlas Docs / build", "metadata": {"tag": "Commands", "title": "build", "lead": "`atlas-docs build` compiles an Atlas source directory into a static HTML file. This is the main production command."}}, "command-serve": {"label": "serve", "breadcrumb": "Atlas Docs / serve", "metadata": {"tag": "Commands", "title": "serve", "lead": "`atlas-docs serve` builds a preview into a directory and serves it over Python's standard library HTTP server."}}, "format-metadata": {"label": "metadata.md", "breadcrumb": "Atlas Docs / metadata.md", "metadata": {"tag": "Source Format", "title": "metadata.md", "lead": "`metadata.md` defines site identity, theme accents, typography, default color scheme, and search UI copy. It is a frontmatter-only file with no prose body."}}, "format-navigation": {"label": "navigation.md", "breadcrumb": "Atlas Docs / navigation.md", "metadata": {"tag": "Source Format", "title": "navigation.md", "lead": "`navigation.md` is the sidebar contract for the whole site. It defines group order, nav labels, section slugs, and optional footer links."}}, "format-assets": {"label": "assets.md", "breadcrumb": "Atlas Docs / assets.md", "metadata": {"tag": "Source Format", "title": "assets.md", "lead": "`assets.md` is an optional registry for SVGs and images. It keeps raw paths out of section prose by assigning each asset a short name."}}, "format-content": {"label": "content/*.md", "breadcrumb": "Atlas Docs / content/*.md", "metadata": {"tag": "Source Format", "title": "content/*.md", "lead": "Each file in `content/` is one navigable section. The slug in `navigation.md` must match the filename, and the frontmatter supplies the page hero metadata."}}, "architecture-loader": {"label": "Loader and site model", "breadcrumb": "Atlas Docs / Loader and site model", "metadata": {"tag": "Architecture", "title": "Loader and site model", "lead": "The loader is responsible for turning an Atlas source directory into a typed `Site` object composed of metadata, nav groups, assets, and rendered sections."}}, "architecture-markdown": {"label": "Markdown and directives", "breadcrumb": "Atlas Docs / Markdown and directives", "metadata": {"tag": "Architecture", "title": "Markdown and directives", "lead": "`markdown.py` is where Atlas becomes more than plain CommonMark. It adds internal document links, inline code references, asset expansion, custom blocks, heading IDs, and Python code highlighting."}}, "architecture-renderer": {"label": "Renderer and themes", "breadcrumb": "Atlas Docs / Renderer and themes", "metadata": {"tag": "Architecture", "title": "Renderer and themes", "lead": "`renderer.py` and `theme.py` turn a loaded site into the final document by choosing the active theme, layering metadata overrides, serializing search/navigation state, and rendering the Jinja base template."}}}, "features": {"search": true}, "metadata": {"name": "Atlas Docs", "version": "v0.1.0", "tagline": "A Python CLI and Atlas source format for building polished single-page documentation sites.", "accent": "#c8f060", "accent_dark": "#c8f060", "accent_light": "#7d9f20", "color_scheme": "dark", "display_font": "Fraunces", "body_font": "DM Sans", "mono_font": "IBM Plex Mono", "font_source": "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap", "search_trigger_label": "cli, format, guides...", "search_placeholder": "Search Atlas Docs...", "search_secondary_hint": "Search commands, content files, and renderer behavior.", "features": {"search": true}}, "siteName": "Atlas Docs", "theme": {"name": "atlas_dark", "defaultColorScheme": "dark", "supportsToggle": true, "supportedColorSchemes": ["dark", "light"]}, "search": {"placeholder": "Search Atlas Docs...", "triggerLabel": "cli, format, guides...", "secondaryHint": "Search commands, content files, and renderer behavior."}};
+  window.__ATLAS_DOCS__ = {"defaultSection": "introduction", "sections": {"introduction": {"label": "Introduction", "breadcrumb": "Atlas Docs / Introduction", "metadata": {"tag": "Overview", "title": "Atlas Docs", "title_em": ".", "lead": "Atlas Docs is a Python package and CLI for compiling a structured Markdown source tree into a single-page documentation site with sidebar navigation, search, themed typography, and interactive reference blocks."}}, "how-atlas-works": {"label": "How Atlas Works", "breadcrumb": "Atlas Docs / How Atlas Works", "metadata": {"tag": "Concepts", "title": "How Atlas Works", "lead": "The Atlas workflow is a pipeline: source files define site structure, the loader resolves them into a typed site model, the Markdown renderer expands Atlas directives, and the renderer emits a themed HTML document."}}, "install-the-cli": {"label": "Install the CLI", "breadcrumb": "Atlas Docs / Install the CLI", "metadata": {"tag": "Guides", "title": "Install the CLI", "lead": "Atlas Docs can run as an installed command or directly from source. The repository currently targets Python 3.11+ and exposes the `atlas-docs` entry point through `pyproject.toml`."}}, "build-your-first-site": {"label": "Build your first site", "breadcrumb": "Atlas Docs / Build your first site", "metadata": {"tag": "Guides", "title": "Build your first site", "lead": "The shortest end-to-end flow is: initialize a source tree, edit the generated Markdown files, and run the build command to produce a static `index.html`."}}, "use-the-codex-skill": {"label": "Use the Codex skill", "breadcrumb": "Atlas Docs / Use the Codex skill", "metadata": {"tag": "Guides", "title": "Use the Codex skill", "lead": "The `create-documentation` skill sits above the CLI. It inspects a local or remote project, designs documentation navigation around the project domain, writes Atlas source files, and builds the resulting site."}}, "command-init": {"label": "init", "breadcrumb": "Atlas Docs / init", "metadata": {"tag": "Commands", "title": "init", "lead": "`atlas-docs init` creates a minimal Atlas source tree with starter metadata, navigation, assets, and one introduction page."}}, "command-build": {"label": "build", "breadcrumb": "Atlas Docs / build", "metadata": {"tag": "Commands", "title": "build", "lead": "`atlas-docs build` compiles an Atlas source directory into a static HTML file. This is the main production command."}}, "command-serve": {"label": "serve", "breadcrumb": "Atlas Docs / serve", "metadata": {"tag": "Commands", "title": "serve", "lead": "`atlas-docs serve` builds a preview into a directory, serves it locally, and live-reloads the browser after local edits and successful rebuilds."}}, "format-metadata": {"label": "metadata.md", "breadcrumb": "Atlas Docs / metadata.md", "metadata": {"tag": "Source Format", "title": "metadata.md", "lead": "`metadata.md` defines site identity, theme accents, typography, default color scheme, and search UI copy. It is a frontmatter-only file with no prose body."}}, "format-navigation": {"label": "navigation.md", "breadcrumb": "Atlas Docs / navigation.md", "metadata": {"tag": "Source Format", "title": "navigation.md", "lead": "`navigation.md` is the sidebar contract for the whole site. It defines group order, nav labels, section slugs, and optional footer links."}}, "format-assets": {"label": "assets.md", "breadcrumb": "Atlas Docs / assets.md", "metadata": {"tag": "Source Format", "title": "assets.md", "lead": "`assets.md` is an optional registry for SVGs and images. It keeps raw paths out of section prose by assigning each asset a short name."}}, "format-content": {"label": "content/*.md", "breadcrumb": "Atlas Docs / content/*.md", "metadata": {"tag": "Source Format", "title": "content/*.md", "lead": "Each file in `content/` is one navigable section. The slug in `navigation.md` must match the filename, and the frontmatter supplies the page hero metadata."}}, "architecture-loader": {"label": "Loader and site model", "breadcrumb": "Atlas Docs / Loader and site model", "metadata": {"tag": "Architecture", "title": "Loader and site model", "lead": "The loader is responsible for turning an Atlas source directory into a typed `Site` object composed of metadata, nav groups, assets, and rendered sections."}}, "architecture-markdown": {"label": "Markdown and directives", "breadcrumb": "Atlas Docs / Markdown and directives", "metadata": {"tag": "Architecture", "title": "Markdown and directives", "lead": "`markdown.py` is where Atlas becomes more than plain CommonMark. It adds internal document links, inline code references, asset expansion, custom blocks, heading IDs, and Python code highlighting."}}, "architecture-renderer": {"label": "Renderer and themes", "breadcrumb": "Atlas Docs / Renderer and themes", "metadata": {"tag": "Architecture", "title": "Renderer and themes", "lead": "`renderer.py` and `theme.py` turn a loaded site into the final document by choosing the active theme, layering metadata overrides, serializing search/navigation state, and rendering the Jinja base template."}}}, "features": {"search": true}, "metadata": {"name": "Atlas Docs", "version": "v0.1.0", "tagline": "A Python CLI and Atlas source format for building polished single-page documentation sites.", "accent": "#c8f060", "accent_dark": "#c8f060", "accent_light": "#7d9f20", "color_scheme": "dark", "display_font": "Fraunces", "body_font": "DM Sans", "mono_font": "IBM Plex Mono", "font_source": "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap", "search_trigger_label": "cli, format, guides...", "search_placeholder": "Search Atlas Docs...", "search_secondary_hint": "Search commands, content files, and renderer behavior.", "features": {"search": true}}, "siteName": "Atlas Docs", "theme": {"name": "atlas_dark", "defaultColorScheme": "dark", "supportsToggle": true, "supportedColorSchemes": ["dark", "light"]}, "search": {"placeholder": "Search Atlas Docs...", "triggerLabel": "cli, format, guides...", "secondaryHint": "Search commands, content files, and renderer behavior."}};
 </script>
 
 <div class="shell">
@@ -1126,7 +1228,6 @@ html[data-color-scheme="light"] {
         </div>
 
         <h2 id="introduction-what-it-is" data-anchor="what-it-is">What it is</h2>
-        <img class="asset asset-image" src="./assets/hero-atlas-visual.png" alt="Editorial Atlas Docs hero visual">
         <p>Atlas Docs has two layers:</p>
         <ul>
           <li>The reusable package in <code>src/atlas_docs/</code>, which loads Atlas source files, renders Markdown and directives, and emits a static HTML document.</li>
@@ -1186,7 +1287,6 @@ html[data-color-scheme="light"] {
         </div>
 
         <h2 id="how-atlas-works-pipeline" data-anchor="pipeline">Pipeline</h2>
-        <img class="asset asset-image" src="./assets/pipeline-figure.png" alt="Atlas Docs pipeline figure">
         <p>The build path is straightforward:</p>
         <ol>
           <li>Resolve the source root from the path you pass to the CLI.</li>
@@ -1288,7 +1388,7 @@ py -m atlas_docs.cli build .\my-docs --out .\dist\index.html</code></pre>
         <p>The generated file contains all sections, styles, and behavior in one HTML document.</p>
         <h2 id="build-your-first-site-preview-locally" data-anchor="preview-locally">Preview locally</h2>
         <pre data-lang="bash"><code>atlas-docs serve my-docs --port 8000</code></pre>
-        <p>That command builds a preview into <code>.atlas-preview/index.html</code> by default, then serves the output directory over a local HTTP server.</p>
+        <p>That command builds a preview into <code>.atlas-preview/index.html</code> by default, serves the output directory over a local HTTP server, then watches for saved changes and reloads the browser after a successful rebuild.</p>
         <div class="quick-links">
         <ul>
           <li><a class="doc-link" href="#section-command-init" data-doc-link="command-init">init</a> - Create a starter Atlas tree</li>
@@ -1430,7 +1530,7 @@ py -m atlas_docs.cli build .\atlas_sources\[project] --out .\docs_site\[project]
         <div class="page-hero">
           <div class="page-tag">Commands</div>
           <h1 class="page-title">serve</h1>
-          <p class="page-lead"><code>atlas-docs serve</code> builds a preview into a directory and serves it over Python's standard library HTTP server.</p>
+          <p class="page-lead"><code>atlas-docs serve</code> builds a preview into a directory, serves it locally, and live-reloads the browser after local edits and successful rebuilds.</p>
         </div>
 
         <h2 id="command-serve-signature" data-anchor="signature">Signature</h2>
@@ -1446,9 +1546,8 @@ py -m atlas_docs.cli build .\atlas_sources\[project] --out .\docs_site\[project]
           </tbody>
         </table>
         <h2 id="command-serve-behavior" data-anchor="behavior">Behavior</h2>
-        <p>The command builds <code>index.html</code> into the selected output directory, changes the working directory to that output folder, and then starts <code>socketserver.TCPServer</code> with <code>http.server.SimpleHTTPRequestHandler</code>.</p>
-
-        <div class="callout warn">The current implementation serves forever until interrupted and does not watch source files for changes, even though <code>watchfiles</code> is present as a dependency.</div>
+        <p>The command builds <code>index.html</code> into the selected output directory, starts a threaded local preview server, watches the Atlas source plus bundled theme/template assets, and streams reload notifications to the browser after each successful rebuild.</p>
+        <p>If a rebuild fails, the server keeps the last successful preview running and prints the build error to the terminal instead of replacing the output with a broken page.</p>
       </div>
 
       <div class="section" id="section-format-metadata" data-section="format-metadata">
@@ -1633,6 +1732,10 @@ See [build parameters | doc:command-build#parameters] for a subsection.</code></
           <div class="selector-syntax">:::reference_list</div>
           <div class="selector-desc">Render a small "see also" link block.</div>
         </div>
+        <div class="selector-row">
+          <div class="selector-syntax">:::example_pair</div>
+          <div class="selector-desc">Render a titled source-and-preview example block from one body.</div>
+        </div>
         <h2 id="format-content-feature-grid" data-anchor="feature-grid">Code blocks</h2>
         <p>Python code fences receive custom highlighting from <code>highlight_code()</code> in <code>markdown.py</code>. Other languages render without the Python-specific token styling.</p>
       </div>
@@ -1697,11 +1800,378 @@ See [build parameters | doc:command-build#parameters] for a subsection.</code></
           </tbody>
         </table>
         <h2 id="architecture-markdown-directive-coverage" data-anchor="directive-coverage">Directive coverage</h2>
-        <p>The current implementation handles <code>feature_grid</code>, <code>cards</code>, <code>callout</code>, <code>method</code>, <code>selector_list</code>, <code>table</code>, <code>quick_links</code>, and <code>reference_list</code>.</p>
+        <p>The current implementation handles <code>feature_grid</code>, <code>cards</code>, <code>callout</code>, <code>method</code>, <code>selector_list</code>, <code>table</code>, <code>quick_links</code>, <code>reference_list</code>, and <code>example_pair</code>.</p>
         <h2 id="architecture-markdown-heading-ids" data-anchor="heading-ids">Heading IDs</h2>
         <p>Atlas strips explicit <code>{id=...}</code> suffixes from the rendered heading text, but preserves them for the resulting DOM ID. If no explicit anchor is present, it slugifies the heading text.</p>
         <h2 id="architecture-markdown-syntax-highlighting" data-anchor="syntax-highlighting">Syntax highlighting</h2>
         <p>Python code fences are tokenized with repository-defined regex rules for comments, strings, decorators, classes, functions, keywords, and numbers. That means highlighting is deterministic and local to the project; it is not delegated to an external highlighter.</p>
+        <h2 id="architecture-markdown-examples-in-markdown-and-browser-output" data-anchor="examples-in-markdown-and-browser-output">Examples in Markdown and browser output</h2>
+        <p>Use <code>example_pair</code> when you want a single block that shows Atlas source on one side and the rendered browser result on the other.</p>
+        <p>Think of the examples below as a progression. Start with the smallest inline syntax, confirm what the browser output looks like, and then move on to the larger directives once the basics feel familiar.</p>
+        <p>We will start with links, because they are usually the first Atlas-specific syntax you add to a page.</p>
+        <section class="example-pair">
+          <div class="example-pair-head">
+            <div class="example-pair-title">Internal doc link</div>
+            <div class="example-pair-kicker">Markdown to browser output</div>
+          </div>
+          <div class="example-pair-grid">
+            <div class="example-pair-panel example-pair-panel-source">
+              <div class="example-pair-label">Source</div>
+              <pre data-lang="md"><code>See [doc:format-assets] for the asset catalog format.</code></pre>
+            </div>
+            <div class="example-pair-panel example-pair-panel-preview">
+              <div class="example-pair-label">Browser</div>
+              <div class="example-pair-render">
+        <p>See <a class="doc-link" href="#section-format-assets" data-doc-link="format-assets">assets.md</a> for the asset catalog format.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <p>This syntax creates a link to another section by slug. Atlas looks up the navigation label for that slug, so the browser output shows a reader-friendly title instead of the raw slug.</p>
+        <section class="example-pair">
+          <div class="example-pair-head">
+            <div class="example-pair-title">Internal doc link with custom text</div>
+            <div class="example-pair-kicker">Markdown to browser output</div>
+          </div>
+          <div class="example-pair-grid">
+            <div class="example-pair-panel example-pair-panel-source">
+              <div class="example-pair-label">Source</div>
+              <pre data-lang="md"><code>Open [the assets registry docs | doc:format-assets] for naming rules.</code></pre>
+            </div>
+            <div class="example-pair-panel example-pair-panel-preview">
+              <div class="example-pair-label">Browser</div>
+              <div class="example-pair-render">
+        <p>Open <a class="doc-link" href="#section-format-assets" data-doc-link="format-assets">the assets registry docs</a> for naming rules.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <p>Use this version when the default nav label is not quite the wording you want in a sentence. The destination stays the same, but you control the text that appears in the paragraph.</p>
+        <section class="example-pair">
+          <div class="example-pair-head">
+            <div class="example-pair-title">Inline code reference</div>
+            <div class="example-pair-kicker">Markdown to browser output</div>
+          </div>
+          <div class="example-pair-grid">
+            <div class="example-pair-panel example-pair-panel-source">
+              <div class="example-pair-label">Source</div>
+              <pre data-lang="md"><code>The loader builds the `Site{ref=architecture-loader}` model before rendering.</code></pre>
+            </div>
+            <div class="example-pair-panel example-pair-panel-preview">
+              <div class="example-pair-label">Browser</div>
+              <div class="example-pair-render">
+        <p>The loader builds the <code class="inline-code-ref" data-section-id="architecture-loader">Site</code> model before rendering.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <p>Inline code references are useful when you want code-like formatting and a connection to another section at the same time. This works well for class names, functions, and important types that readers may want to explore next.</p>
+        <section class="example-pair">
+          <div class="example-pair-head">
+            <div class="example-pair-title">Asset reference</div>
+            <div class="example-pair-kicker">Markdown to browser output</div>
+          </div>
+          <div class="example-pair-grid">
+            <div class="example-pair-panel example-pair-panel-source">
+              <div class="example-pair-label">Source</div>
+              <pre data-lang="md"><code>@asset[pipeline-figure]</code></pre>
+            </div>
+            <div class="example-pair-panel example-pair-panel-preview">
+              <div class="example-pair-label">Browser</div>
+              <div class="example-pair-render">
+        <img class="asset asset-image" src="./assets/pipeline-figure.png" alt="Atlas Docs pipeline figure">
+              </div>
+            </div>
+          </div>
+        </section>
+        <p>An asset reference pulls a named image or SVG from <code>assets.md</code> into the page. This keeps prose cleaner, because authors can reuse short asset names instead of repeating file paths everywhere.</p>
+        <section class="example-pair">
+          <div class="example-pair-head">
+            <div class="example-pair-title">Heading ID override</div>
+            <div class="example-pair-kicker">Markdown to browser output</div>
+          </div>
+          <div class="example-pair-grid">
+            <div class="example-pair-panel example-pair-panel-source">
+              <div class="example-pair-label">Source</div>
+              <pre data-lang="md"><code>### Stable heading target {id=stable-heading-target}</code></pre>
+            </div>
+            <div class="example-pair-panel example-pair-panel-preview">
+              <div class="example-pair-label">Browser</div>
+              <div class="example-pair-render">
+
+        <h3>Stable heading target</h3>
+              </div>
+            </div>
+          </div>
+        </section>
+        <p>Explicit heading IDs are helpful when you want a stable anchor that will not change if the visible heading text gets rewritten later. That is especially useful for deep links from other docs or saved bookmarks.</p>
+        <section class="example-pair">
+          <div class="example-pair-head">
+            <div class="example-pair-title">Python code highlighting</div>
+            <div class="example-pair-kicker">Markdown to browser output</div>
+          </div>
+          <div class="example-pair-grid">
+            <div class="example-pair-panel example-pair-panel-source">
+              <div class="example-pair-label">Source</div>
+              <pre data-lang="md"><code>```python
+from atlas_docs.loader import load_site
+
+site = load_site(source_dir)
+return site
+```</code></pre>
+            </div>
+            <div class="example-pair-panel example-pair-panel-preview">
+              <div class="example-pair-label">Browser</div>
+              <div class="example-pair-render">
+        <pre data-lang="python"><code><span class="kw">from</span> atlas_docs.loader <span class="kw">import</span> load_site
+
+site = <span class="fn">load_site</span>(source_dir)
+<span class="kw">return</span> site</code></pre>
+              </div>
+            </div>
+          </div>
+        </section>
+        <p>Code fences still behave like normal Markdown, but Atlas adds local Python highlighting on top. That means you can mix standard Markdown habits with Atlas-specific syntax instead of learning a completely different authoring model.</p>
+        <p>Once the inline pieces make sense, the bigger directives are easier to read. Each directive starts with <code>:::name</code>, accepts its own structured body, and renders to a more polished UI block in the finished site.</p>
+        <section class="example-pair">
+          <div class="example-pair-head">
+            <div class="example-pair-title">feature_grid directive</div>
+            <div class="example-pair-kicker">Markdown to browser output</div>
+          </div>
+          <div class="example-pair-grid">
+            <div class="example-pair-panel example-pair-panel-source">
+              <div class="example-pair-label">Source</div>
+              <pre data-lang="md"><code>:::feature_grid
+### Cross-section links {icon=-&gt;}
+Jump between sections with `[doc:slug]` syntax.
+
+### Inline references {icon=#}
+Attach interactive refs to code tokens with `` `name{ref=slug}` ``.
+:::</code></pre>
+            </div>
+            <div class="example-pair-panel example-pair-panel-preview">
+              <div class="example-pair-label">Browser</div>
+              <div class="example-pair-render">
+
+        <div class="feature-grid">
+          <div class="feature-item">
+            <div class="feature-icon">-&gt;</div>
+            <div class="feature-text">
+              <strong>Cross-section links</strong>
+              <span>Jump between sections with <code>[doc:slug]</code> syntax.</span>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">#</div>
+            <div class="feature-text">
+              <strong>Inline references</strong>
+              <span>Attach interactive refs to code tokens with <code>`name{ref=slug}`</code>.</span>
+            </div>
+          </div>
+        </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <p><code>feature_grid</code> is a good first directive to study because the source stays very close to the final layout. Each mini-heading becomes one feature item, and the optional icon gives the card a small visual marker.</p>
+        <section class="example-pair">
+          <div class="example-pair-head">
+            <div class="example-pair-title">cards directive</div>
+            <div class="example-pair-kicker">Markdown to browser output</div>
+          </div>
+          <div class="example-pair-grid">
+            <div class="example-pair-panel example-pair-panel-source">
+              <div class="example-pair-label">Source</div>
+              <pre data-lang="md"><code>:::cards
+### Source files {link=format-content}
+See how section files map to navigation entries and frontmatter.
+
+### Theme rendering {link=architecture-renderer}
+Follow the last stage of the pipeline into HTML and CSS output.
+:::</code></pre>
+            </div>
+            <div class="example-pair-panel example-pair-panel-preview">
+              <div class="example-pair-label">Browser</div>
+              <div class="example-pair-render">
+        <div class="cards">
+          <div class="card" data-card-link="format-content">
+            <div class="card-title">→ Source files</div>
+            <div class="card-desc">See how section files map to navigation entries and frontmatter.</div>
+          </div>
+          <div class="card" data-card-link="architecture-renderer">
+            <div class="card-title">→ Theme rendering</div>
+            <div class="card-desc">Follow the last stage of the pipeline into HTML and CSS output.</div>
+          </div>
+        </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <p>Cards are similar to a feature grid, but they are designed to feel more clickable and navigational. Use them when you want readers to branch into a few important follow-up sections.</p>
+        <section class="example-pair">
+          <div class="example-pair-head">
+            <div class="example-pair-title">callout directive</div>
+            <div class="example-pair-kicker">Markdown to browser output</div>
+          </div>
+          <div class="example-pair-grid">
+            <div class="example-pair-panel example-pair-panel-source">
+              <div class="example-pair-label">Source</div>
+              <pre data-lang="md"><code>:::callout info
+Atlas transforms custom syntax before standard Markdown rendering runs.
+:::</code></pre>
+            </div>
+            <div class="example-pair-panel example-pair-panel-preview">
+              <div class="example-pair-label">Browser</div>
+              <div class="example-pair-render">
+
+        <div class="callout info">Atlas transforms custom syntax before standard Markdown rendering runs.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <p>Callouts are the simplest way to emphasize a note without inventing custom HTML. They work well for warnings, tips, and short explanations that should stand apart from the surrounding body text.</p>
+        <section class="example-pair">
+          <div class="example-pair-head">
+            <div class="example-pair-title">method directive</div>
+            <div class="example-pair-kicker">Markdown to browser output</div>
+          </div>
+          <div class="example-pair-grid">
+            <div class="example-pair-panel example-pair-panel-source">
+              <div class="example-pair-label">Source</div>
+              <pre data-lang="md"><code>:::method
+load_site(source_dir, *, strict=False) -&gt; Site
+:::</code></pre>
+            </div>
+            <div class="example-pair-panel example-pair-panel-preview">
+              <div class="example-pair-label">Browser</div>
+              <div class="example-pair-render">
+        <div class="method"><span class="fn">load_site</span>(<span class="mparam">source_dir, *, strict=False</span>) → <span class="mtype">Site</span></div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <p>The <code>method</code> directive is more specialized. It turns a function or API-style signature into a compact reference block, which makes architecture pages and API docs easier to scan.</p>
+        <section class="example-pair">
+          <div class="example-pair-head">
+            <div class="example-pair-title">selector_list directive</div>
+            <div class="example-pair-kicker">Markdown to browser output</div>
+          </div>
+          <div class="example-pair-grid">
+            <div class="example-pair-panel example-pair-panel-source">
+              <div class="example-pair-label">Source</div>
+              <pre data-lang="md"><code>:::selector_list
+### `[doc:slug]`
+Link to another Atlas section.
+
+### `[label | doc:slug]`
+Link to a section with author-defined text.
+:::</code></pre>
+            </div>
+            <div class="example-pair-panel example-pair-panel-preview">
+              <div class="example-pair-label">Browser</div>
+              <div class="example-pair-render">
+        <div class="selector-row">
+          <div class="selector-syntax">[doc:slug]</div>
+          <div class="selector-desc">Link to another Atlas section.</div>
+        </div>
+        <div class="selector-row">
+          <div class="selector-syntax">[label | doc:slug]</div>
+          <div class="selector-desc">Link to a section with author-defined text.</div>
+        </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <p><code>selector_list</code> works well when you need a small syntax reference. The left side shows the token or pattern, and the right side explains what that syntax means in plain language.</p>
+        <section class="example-pair">
+          <div class="example-pair-head">
+            <div class="example-pair-title">table directive</div>
+            <div class="example-pair-kicker">Markdown to browser output</div>
+          </div>
+          <div class="example-pair-grid">
+            <div class="example-pair-panel example-pair-panel-source">
+              <div class="example-pair-label">Source</div>
+              <pre data-lang="md"><code>:::table
+| Syntax | Purpose |
+|--------|---------|
+| `[doc:slug]` | Navigate to another section |
+| `@asset[name]` | Render a named asset |
+:::</code></pre>
+            </div>
+            <div class="example-pair-panel example-pair-panel-preview">
+              <div class="example-pair-label">Browser</div>
+              <div class="example-pair-render">
+        <table>
+          <thead><tr><th>Syntax</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td><code>[doc:slug]</code></td><td>Navigate to another section</td></tr>
+            <tr><td><code>@asset[name]</code></td><td>Render a named asset</td></tr>
+          </tbody>
+        </table>
+              </div>
+            </div>
+          </div>
+        </section>
+        <p>Use a table when readers need to compare several patterns at once. This is a better fit than prose when the information is naturally organized into columns like syntax, purpose, and result.</p>
+        <section class="example-pair">
+          <div class="example-pair-head">
+            <div class="example-pair-title">quick_links directive</div>
+            <div class="example-pair-kicker">Markdown to browser output</div>
+          </div>
+          <div class="example-pair-grid">
+            <div class="example-pair-panel example-pair-panel-source">
+              <div class="example-pair-label">Source</div>
+              <pre data-lang="md"><code>:::quick_links
+- [doc:architecture-loader]
+- [doc:architecture-renderer]
+- [Atlas repository](https://github.com/BrandonBahret/Static-Documentation-Generator)
+:::</code></pre>
+            </div>
+            <div class="example-pair-panel example-pair-panel-preview">
+              <div class="example-pair-label">Browser</div>
+              <div class="example-pair-render">
+        <div class="quick-links">
+        <ul>
+          <li><a class="doc-link" href="#section-architecture-loader" data-doc-link="architecture-loader">Loader and site model</a></li>
+          <li><a class="doc-link" href="#section-architecture-renderer" data-doc-link="architecture-renderer">Renderer and themes</a></li>
+          <li><a href="https://github.com/BrandonBahret/Static-Documentation-Generator" target="_blank">Atlas repository</a></li>
+        </ul>
+        </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <p><code>quick_links</code> turns a short list of destinations into a cleaner navigation block. It is a good choice near the top or bottom of a section when you want to guide readers toward the next useful pages.</p>
+        <section class="example-pair">
+          <div class="example-pair-head">
+            <div class="example-pair-title">reference_list directive</div>
+            <div class="example-pair-kicker">Markdown to browser output</div>
+          </div>
+          <div class="example-pair-grid">
+            <div class="example-pair-panel example-pair-panel-source">
+              <div class="example-pair-label">Source</div>
+              <pre data-lang="md"><code>:::reference_list
+- [doc:format-content] for section frontmatter and headings
+- [doc:format-assets] for asset registration
+- [doc:architecture-renderer] for final HTML output
+:::</code></pre>
+            </div>
+            <div class="example-pair-panel example-pair-panel-preview">
+              <div class="example-pair-label">Browser</div>
+              <div class="example-pair-render">
+        <div class="reference-list">
+        <ul>
+          <li><a class="doc-link" href="#section-format-content" data-doc-link="format-content">content/*.md</a> for section frontmatter and headings</li>
+          <li><a class="doc-link" href="#section-format-assets" data-doc-link="format-assets">assets.md</a> for asset registration</li>
+          <li><a class="doc-link" href="#section-architecture-renderer" data-doc-link="architecture-renderer">Renderer and themes</a> for final HTML output</li>
+        </ul>
+        </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <p><code>reference_list</code> is similar, but it reads more like supporting material than navigation. Use it when you want a small "read this next" list tied to the current topic.</p>
+        <p>After working through these pairs, you can usually predict how a new block will render just by reading the Markdown. That is the main goal of <code>example_pair</code>: it turns the page into a side-by-side sandbox instead of a purely textual specification.</p>
       </div>
 
       <div class="section" id="section-architecture-renderer" data-section="architecture-renderer">
