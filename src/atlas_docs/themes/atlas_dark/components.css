@@ -53,6 +53,17 @@
   .callout.info { border-left-color: var(--accent2); background: var(--accent2-dim); }
   .callout.warn { border-left-color: var(--red); background: rgba(240,96,96,0.08); }
   .callout strong { color: var(--text); font-weight: 500; }
+  .asset-image {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    margin: 24px 0 32px;
+    border-radius: var(--radius);
+  }
+  body[data-readable-line-length="true"] .asset-image {
+    width: min(100%, calc(var(--atlas-line-width, 860px) * 0.8));
+  }
   .method {
     background: var(--code-bg);
     border: 1px solid var(--border);

@@ -1,4 +1,4 @@
 interface:
   display_name: "Create Documentation"
   short_description: "Create Atlas docs in atlas_sources and build to docs_site"
-  default_prompt: "Use create-documentation (/create-documentation or $create-documentation, depending on the surface) to generate Atlas docs for this project under atlas_sources/[project]/ and build the HTML output to docs_site/[project]/index.html."
+  default_prompt: "Use create-documentation (/create-documentation or $create-documentation, depending on the surface) to generate Atlas docs for this project. Before writing any content or navigation: gather source material, then classify what kind of thing is being documented (REST API, SDK/library, CLI tool, config schema, or conceptual/architecture) — this classification determines the atomic navigation unit and the correct nav shape. Design navigation.md before writing content files. Set the docs generator (scripts/atlas_docs) build output to docs_site/[project]/index.html."

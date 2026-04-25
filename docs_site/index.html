@@ -352,9 +352,10 @@ html[data-color-scheme="light"] {
   .content-outer {
     flex: 1;
     padding: 56px 48px 80px;
-    max-width: min(var(--atlas-line-width, 860px), calc(100vw - var(--sidebar-w)));
+    max-width: min(1120px, calc(100vw - var(--sidebar-w)));
   }
   body[data-readable-line-length="true"] .content-outer {
+    max-width: min(var(--atlas-line-width, 860px), calc(100vw - var(--sidebar-w)));
     margin-inline: auto;
   }
   .section { display: none; }
@@ -411,6 +412,9 @@ html[data-color-scheme="light"] {
     .menu-toggle { display: block; }
     .content-outer {
       padding: 32px 24px 60px;
+      max-width: 100vw;
+    }
+    body[data-readable-line-length="true"] .content-outer {
       max-width: min(var(--atlas-line-width, 860px), 100vw);
     }
     .topbar { padding: 0 24px; }
@@ -487,6 +491,17 @@ html[data-color-scheme="light"] {
   .callout.info { border-left-color: var(--accent2); background: var(--accent2-dim); }
   .callout.warn { border-left-color: var(--red); background: rgba(240,96,96,0.08); }
   .callout strong { color: var(--text); font-weight: 500; }
+  .asset-image {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    margin: 24px 0 32px;
+    border-radius: var(--radius);
+  }
+  body[data-readable-line-length="true"] .asset-image {
+    width: min(100%, calc(var(--atlas-line-width, 860px) * 0.8));
+  }
   .method {
     background: var(--code-bg);
     border: 1px solid var(--border);
@@ -982,7 +997,7 @@ html[data-color-scheme="light"] {
 </head>
 <body>
 <script>
-  window.__ATLAS_DOCS__ = {"defaultSection": "introduction", "sections": {"introduction": {"label": "Introduction", "breadcrumb": "atlas docs / introduction", "metadata": {"tag": "Overview", "title": "Atlas Docs", "lead": "Atlas Docs is a Python static-site generator for Atlas-style single-page\ndocumentation sites, paired with a Codex workflow that can turn repository\ncontext into a finished docs build.\n", "breadcrumb": "atlas docs / introduction"}}, "quickstart": {"label": "Quickstart", "breadcrumb": "atlas docs / quickstart", "metadata": {"tag": "Getting started", "title": "Quickstart", "lead": "Install the package in editable mode or run the CLI from source, then build\nan Atlas source directory into a static HTML file.\n", "breadcrumb": "atlas docs / quickstart"}}, "using-the-codex-skill": {"label": "Using the Codex skill", "breadcrumb": "atlas docs / using the codex skill", "metadata": {"tag": "Workflow", "title": "Using the Codex skill", "lead": "Package the `create_documentation` skill at the root of the repository, then\nuse Codex to author Atlas source, expand thin sections, and rebuild the docs\nas the project evolves.\n", "breadcrumb": "atlas docs / using the codex skill"}}, "atlas-source-format": {"label": "Atlas source format", "breadcrumb": "atlas docs / atlas source format", "metadata": {"tag": "Format", "title": "Atlas source format", "lead": "Atlas reads a compact directory contract: site metadata, navigation wiring,\nasset declarations, and one content file per section.\n", "breadcrumb": "atlas docs / atlas source format"}}, "render-pipeline": {"label": "Render pipeline", "breadcrumb": "atlas docs / render pipeline", "metadata": {"tag": "Internals", "title": "Render pipeline", "lead": "Atlas separates loading, markdown compilation, theme resolution, templating,\nand client-side behavior into distinct modules inside `src/atlas_docs/`.\n", "breadcrumb": "atlas docs / render pipeline"}}, "cli-reference": {"label": "CLI reference", "breadcrumb": "atlas docs / cli reference", "metadata": {"tag": "Reference", "title": "CLI reference", "lead": "Atlas Docs exposes a Typer-based CLI with three commands: `init`, `build`,\nand `serve`.\n", "breadcrumb": "atlas docs / cli reference"}}}, "features": {"search": true}, "metadata": {"name": "Atlas Docs", "version": "v0.1.0", "tagline": "Atlas-style single-page documentation generator and Codex documentation workflow", "accent": "#c8f060", "accent_dark": "#c8f060", "accent_light": "#7d9f20", "color_scheme": "dark", "display_font": "Fraunces", "body_font": "DM Sans", "mono_font": "IBM Plex Mono", "font_source": "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap", "search_trigger_label": "atlas docs, cli, format...", "search_placeholder": "Search Atlas Docs...", "search_secondary_hint": "Search the local docs. Try cli, format, theme, build.", "features": {"search": true}}, "siteName": "Atlas Docs", "theme": {"name": "atlas_dark", "defaultColorScheme": "dark", "supportsToggle": true, "supportedColorSchemes": ["dark", "light"]}, "search": {"placeholder": "Search Atlas Docs...", "triggerLabel": "atlas docs, cli, format...", "secondaryHint": "Search the local docs. Try cli, format, theme, build."}};
+  window.__ATLAS_DOCS__ = {"defaultSection": "introduction", "sections": {"introduction": {"label": "Introduction", "breadcrumb": "Atlas Docs / Introduction", "metadata": {"tag": "Overview", "title": "Atlas Docs", "title_em": ".", "lead": "Atlas Docs is a Python package and CLI for compiling a structured Markdown source tree into a single-page documentation site with sidebar navigation, search, themed typography, and interactive reference blocks."}}, "how-atlas-works": {"label": "How Atlas Works", "breadcrumb": "Atlas Docs / How Atlas Works", "metadata": {"tag": "Concepts", "title": "How Atlas Works", "lead": "The Atlas workflow is a pipeline: source files define site structure, the loader resolves them into a typed site model, the Markdown renderer expands Atlas directives, and the renderer emits a themed HTML document."}}, "install-the-cli": {"label": "Install the CLI", "breadcrumb": "Atlas Docs / Install the CLI", "metadata": {"tag": "Guides", "title": "Install the CLI", "lead": "Atlas Docs can run as an installed command or directly from source. The repository currently targets Python 3.11+ and exposes the `atlas-docs` entry point through `pyproject.toml`."}}, "build-your-first-site": {"label": "Build your first site", "breadcrumb": "Atlas Docs / Build your first site", "metadata": {"tag": "Guides", "title": "Build your first site", "lead": "The shortest end-to-end flow is: initialize a source tree, edit the generated Markdown files, and run the build command to produce a static `index.html`."}}, "use-the-codex-skill": {"label": "Use the Codex skill", "breadcrumb": "Atlas Docs / Use the Codex skill", "metadata": {"tag": "Guides", "title": "Use the Codex skill", "lead": "The `create-documentation` skill sits above the CLI. It inspects a local or remote project, designs documentation navigation around the project domain, writes Atlas source files, and builds the resulting site."}}, "command-init": {"label": "init", "breadcrumb": "Atlas Docs / init", "metadata": {"tag": "Commands", "title": "init", "lead": "`atlas-docs init` creates a minimal Atlas source tree with starter metadata, navigation, assets, and one introduction page."}}, "command-build": {"label": "build", "breadcrumb": "Atlas Docs / build", "metadata": {"tag": "Commands", "title": "build", "lead": "`atlas-docs build` compiles an Atlas source directory into a static HTML file. This is the main production command."}}, "command-serve": {"label": "serve", "breadcrumb": "Atlas Docs / serve", "metadata": {"tag": "Commands", "title": "serve", "lead": "`atlas-docs serve` builds a preview into a directory and serves it over Python's standard library HTTP server."}}, "format-metadata": {"label": "metadata.md", "breadcrumb": "Atlas Docs / metadata.md", "metadata": {"tag": "Source Format", "title": "metadata.md", "lead": "`metadata.md` defines site identity, theme accents, typography, default color scheme, and search UI copy. It is a frontmatter-only file with no prose body."}}, "format-navigation": {"label": "navigation.md", "breadcrumb": "Atlas Docs / navigation.md", "metadata": {"tag": "Source Format", "title": "navigation.md", "lead": "`navigation.md` is the sidebar contract for the whole site. It defines group order, nav labels, section slugs, and optional footer links."}}, "format-assets": {"label": "assets.md", "breadcrumb": "Atlas Docs / assets.md", "metadata": {"tag": "Source Format", "title": "assets.md", "lead": "`assets.md` is an optional registry for SVGs and images. It keeps raw paths out of section prose by assigning each asset a short name."}}, "format-content": {"label": "content/*.md", "breadcrumb": "Atlas Docs / content/*.md", "metadata": {"tag": "Source Format", "title": "content/*.md", "lead": "Each file in `content/` is one navigable section. The slug in `navigation.md` must match the filename, and the frontmatter supplies the page hero metadata."}}, "architecture-loader": {"label": "Loader and site model", "breadcrumb": "Atlas Docs / Loader and site model", "metadata": {"tag": "Architecture", "title": "Loader and site model", "lead": "The loader is responsible for turning an Atlas source directory into a typed `Site` object composed of metadata, nav groups, assets, and rendered sections."}}, "architecture-markdown": {"label": "Markdown and directives", "breadcrumb": "Atlas Docs / Markdown and directives", "metadata": {"tag": "Architecture", "title": "Markdown and directives", "lead": "`markdown.py` is where Atlas becomes more than plain CommonMark. It adds internal document links, inline code references, asset expansion, custom blocks, heading IDs, and Python code highlighting."}}, "architecture-renderer": {"label": "Renderer and themes", "breadcrumb": "Atlas Docs / Renderer and themes", "metadata": {"tag": "Architecture", "title": "Renderer and themes", "lead": "`renderer.py` and `theme.py` turn a loaded site into the final document by choosing the active theme, layering metadata overrides, serializing search/navigation state, and rendering the Jinja base template."}}}, "features": {"search": true}, "metadata": {"name": "Atlas Docs", "version": "v0.1.0", "tagline": "A Python CLI and Atlas source format for building polished single-page documentation sites.", "accent": "#c8f060", "accent_dark": "#c8f060", "accent_light": "#7d9f20", "color_scheme": "dark", "display_font": "Fraunces", "body_font": "DM Sans", "mono_font": "IBM Plex Mono", "font_source": "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap", "search_trigger_label": "cli, format, guides...", "search_placeholder": "Search Atlas Docs...", "search_secondary_hint": "Search commands, content files, and renderer behavior.", "features": {"search": true}}, "siteName": "Atlas Docs", "theme": {"name": "atlas_dark", "defaultColorScheme": "dark", "supportsToggle": true, "supportedColorSchemes": ["dark", "light"]}, "search": {"placeholder": "Search Atlas Docs...", "triggerLabel": "cli, format, guides...", "secondaryHint": "Search commands, content files, and renderer behavior."}};
 </script>
 
 <div class="shell">
@@ -993,7 +1008,7 @@ html[data-color-scheme="light"] {
         Atlas Docs
         <span class="logo-pill">v0.1.0</span>
       </div>
-      <div class="logo-tagline">Atlas-style single-page documentation generator and Codex documentation workflow</div>
+      <div class="logo-tagline">A Python CLI and Atlas source format for building polished single-page documentation sites.</div>
     </div>
 
     <nav>
@@ -1002,32 +1017,63 @@ html[data-color-scheme="light"] {
         <a class="nav-link active" href="#section-introduction" data-section-link="introduction">
           <span class="dot"></span> Introduction
         </a>
-        <a class="nav-link" href="#section-quickstart" data-section-link="quickstart">
-          <span class="dot"></span> Quickstart
-        </a>
-        <a class="nav-link" href="#section-using-the-codex-skill" data-section-link="using-the-codex-skill">
-          <span class="dot"></span> Using the Codex skill
+        <a class="nav-link" href="#section-how-atlas-works" data-section-link="how-atlas-works">
+          <span class="dot"></span> How Atlas Works
         </a>
       </div>
 
       <div class="nav-group">
-        <div class="nav-group-label">Format</div>
-        <a class="nav-link" href="#section-atlas-source-format" data-section-link="atlas-source-format">
-          <span class="dot"></span> Atlas source format
+        <div class="nav-group-label">Guides</div>
+        <a class="nav-link" href="#section-install-the-cli" data-section-link="install-the-cli">
+          <span class="dot"></span> Install the CLI
+        </a>
+        <a class="nav-link" href="#section-build-your-first-site" data-section-link="build-your-first-site">
+          <span class="dot"></span> Build your first site
+        </a>
+        <a class="nav-link" href="#section-use-the-codex-skill" data-section-link="use-the-codex-skill">
+          <span class="dot"></span> Use the Codex skill
         </a>
       </div>
 
       <div class="nav-group">
-        <div class="nav-group-label">Internals</div>
-        <a class="nav-link" href="#section-render-pipeline" data-section-link="render-pipeline">
-          <span class="dot"></span> Render pipeline
+        <div class="nav-group-label">Commands</div>
+        <a class="nav-link" href="#section-command-init" data-section-link="command-init">
+          <span class="dot"></span> init
+        </a>
+        <a class="nav-link" href="#section-command-build" data-section-link="command-build">
+          <span class="dot"></span> build
+        </a>
+        <a class="nav-link" href="#section-command-serve" data-section-link="command-serve">
+          <span class="dot"></span> serve
         </a>
       </div>
 
       <div class="nav-group">
-        <div class="nav-group-label">Reference</div>
-        <a class="nav-link" href="#section-cli-reference" data-section-link="cli-reference">
-          <span class="dot"></span> CLI reference
+        <div class="nav-group-label">Source Format</div>
+        <a class="nav-link" href="#section-format-metadata" data-section-link="format-metadata">
+          <span class="dot"></span> metadata.md
+        </a>
+        <a class="nav-link" href="#section-format-navigation" data-section-link="format-navigation">
+          <span class="dot"></span> navigation.md
+        </a>
+        <a class="nav-link" href="#section-format-assets" data-section-link="format-assets">
+          <span class="dot"></span> assets.md
+        </a>
+        <a class="nav-link" href="#section-format-content" data-section-link="format-content">
+          <span class="dot"></span> content/*.md
+        </a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-label">Architecture</div>
+        <a class="nav-link" href="#section-architecture-loader" data-section-link="architecture-loader">
+          <span class="dot"></span> Loader and site model
+        </a>
+        <a class="nav-link" href="#section-architecture-markdown" data-section-link="architecture-markdown">
+          <span class="dot"></span> Markdown and directives
+        </a>
+        <a class="nav-link" href="#section-architecture-renderer" data-section-link="architecture-renderer">
+          <span class="dot"></span> Renderer and themes
         </a>
       </div>
     </nav>
@@ -1054,14 +1100,14 @@ html[data-color-scheme="light"] {
       <div class="topbar-left">
         <button class="menu-toggle" type="button" data-toggle-sidebar>&#9776;</button>
         <div class="breadcrumb" id="breadcrumb">
-          atlas docs <span>/</span> introduction
+          Atlas Docs <span>/</span> Introduction
         </div>
       </div>
       <div class="topbar-actions">
 
         <button class="search-trigger" type="button" data-open-search>
           <span aria-hidden="true">Search</span>
-          <span class="search-trigger-label">atlas docs, cli, format...</span>
+          <span class="search-trigger-label">cli, format, guides...</span>
           <span class="search-trigger-kbd">Ctrl K</span>
         </button>
 
@@ -1075,436 +1121,81 @@ html[data-color-scheme="light"] {
       <div class="section active" id="section-introduction" data-section="introduction">
         <div class="page-hero">
           <div class="page-tag">Overview</div>
-          <h1 class="page-title">Atlas Docs</h1>
-          <p class="page-lead">Atlas Docs is a Python static-site generator for Atlas-style single-page
-documentation sites, paired with a Codex workflow that can turn repository
-context into a finished docs build.</p>
+          <h1 class="page-title">Atlas Docs<em>.</em></h1>
+          <p class="page-lead">Atlas Docs is a Python package and CLI for compiling a structured Markdown source tree into a single-page documentation site with sidebar navigation, search, themed typography, and interactive reference blocks.</p>
         </div>
 
-        <h2 id="introduction-what-lives-in-this-repository" data-anchor="what-lives-in-this-repository">What lives in this repository</h2>
-        <p>This repository has two closely related deliverables:</p>
+        <h2 id="introduction-what-it-is" data-anchor="what-it-is">What it is</h2>
+        <img class="asset asset-image" src="./assets/hero-atlas-visual.png" alt="Editorial Atlas Docs hero visual">
+        <p>Atlas Docs has two layers:</p>
+        <ul>
+          <li>The reusable package in <code>src/atlas_docs/</code>, which loads Atlas source files, renders Markdown and directives, and emits a static HTML document.</li>
+          <li>The higher-level authoring workflow defined in <code>ATLAS_DOCS_FORMAT.md</code> and the <code>create-documentation</code> Codex skill, which generates that source tree from a project.</li>
+        </ul>
 
         <div class="feature-grid">
           <div class="feature-item">
-            <div class="feature-icon">PY</div>
+            <div class="feature-icon">HTML</div>
             <div class="feature-text">
-              <strong>Python package</strong>
-              <span><code>src/atlas_docs/</code> contains the reusable generator, CLI entry points, templates,
-        theme definitions, and browser-side JavaScript.</span>
+              <strong>Single-page output</strong>
+              <span>Compile one source directory into a standalone <code>index.html</code> that contains all sections and client-side navigation.</span>
             </div>
           </div>
           <div class="feature-item">
             <div class="feature-icon">MD</div>
             <div class="feature-text">
-              <strong>Source format</strong>
-              <span><code>ATLAS_DOCS_FORMAT.md</code> defines the directory contract that Atlas consumes:
-        <code>metadata.md</code>, <code>navigation.md</code>, <code>assets.md</code>, and <code>content/*.md</code>.</span>
+              <strong>Structured authoring</strong>
+              <span>Keep project identity, navigation, assets, and section content in separate files instead of mixing them together.</span>
             </div>
           </div>
           <div class="feature-item">
-            <div class="feature-icon">AI</div>
+            <div class="feature-icon">API</div>
             <div class="feature-text">
-              <strong>Codex workflow</strong>
-              <span>The <code>create-documentation</code> skill sits above the package and writes Atlas source
-        for a target project before compiling the final static HTML.</span>
+              <strong>Reference-friendly blocks</strong>
+              <span>Use <code>:::method</code>, <code>:::table</code>, <code>:::cards</code>, <code>:::callout</code>, and other Atlas directives to make technical docs denser and easier to scan.</span>
             </div>
           </div>
         </div>
-        <h2 id="introduction-python-package-icon-py" data-anchor="python-package-icon-py">Core workflow</h2>
-        <p>Atlas expects a structured source directory, then compiles it into one
-        self-contained HTML file with a left-rail navigation model and section-based
-        routing.</p>
+        <h2 id="introduction-single-page-output-icon-html" data-anchor="single-page-output-icon-html">What Atlas builds</h2>
+        <p>The generator expects a source directory with <code>metadata.md</code>, <code>navigation.md</code>, <code>assets.md</code>, and <code>content/*.md</code>. The CLI then parses those files, resolves section order from the navigation file, renders each content page to HTML, and injects CSS and JavaScript from the selected theme.</p>
         <div class="cards">
-          <div class="card" data-card-link="atlas-source-format">
-            <div class="card-title">→ Start with the source format</div>
-            <div class="card-desc">Use the four control files plus one markdown file per section.</div>
+          <div class="card" data-card-link="how-atlas-works">
+            <div class="card-title">→ Understand the workflow</div>
+            <div class="card-desc">Start with the mental model for how source files become sections, search text, and navigation state.</div>
           </div>
-          <div class="card" data-card-link="cli-reference">
-            <div class="card-title">→ Build with the CLI</div>
-            <div class="card-desc">Create a skeleton, compile HTML, or run a local preview server.</div>
+          <div class="card" data-card-link="build-your-first-site">
+            <div class="card-title">→ Build a site quickly</div>
+            <div class="card-desc">Follow the shortest path from an empty folder to a generated HTML file.</div>
           </div>
-          <div class="card" data-card-link="render-pipeline">
-            <div class="card-title">→ Understand the renderer</div>
-            <div class="card-desc">The loader, markdown compiler, theme system, templates, and static JS each own
-        a distinct stage of the build.</div>
+          <div class="card" data-card-link="command-build">
+            <div class="card-title">→ Jump to command reference</div>
+            <div class="card-desc">Look up the exact <code>atlas-docs</code> command signatures and output behavior.</div>
           </div>
         </div>
-        <h2 id="introduction-source-format-icon-md" data-anchor="source-format-icon-md">What the generated site includes</h2>
-        <table>
-          <thead>
-            <tr><th>Area</th><th>Implementation</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Navigation</td>
-              <td><code>navigation.md</code> drives groups, section order, default section, and footer links.</td>
-            </tr>
-            <tr>
-              <td>Identity</td>
-              <td><code>metadata.md</code> supplies project naming, version, typography, accent colors, and search copy.</td>
-            </tr>
-            <tr>
-              <td>Content</td>
-              <td><code>content/*.md</code> provides frontmatter-driven heroes plus Markdown and Atlas directive blocks.</td>
-            </tr>
-            <tr>
-              <td>Presentation</td>
-              <td>Jinja templates and bundled themes render CSS, layout, and light/dark palette variants.</td>
-            </tr>
-            <tr>
-              <td>Runtime UI</td>
-              <td>Bundled JavaScript handles section routing, search, settings, copy-code behavior, and color-scheme persistence.</td>
-            </tr>
-          </tbody>
-        </table>
+        <h2 id="introduction-structured-authoring-icon-md" data-anchor="structured-authoring-icon-md">Repository scope</h2>
+        <p>This repository currently exposes three CLI commands through Typer: <code>init</code>, <code>build</code>, and <code>serve</code>. It also bundles two related themes, <code>atlas_dark</code> and <code>atlas_light</code>, and switches between them based on the site metadata plus theme family rules in <a class="doc-link" href="#section-architecture-renderer" data-doc-link="architecture-renderer">Renderer and themes</a>.</p>
 
-        <div class="callout info">The repository currently exposes the generator as a Python package and CLI. The
-        Codex skill is described in the README and packaged separately when distributed
-        as a standalone skill bundle.</div>
-        <h2 id="introduction-codex-workflow-icon-ai" data-anchor="codex-workflow-icon-ai">Repository layout</h2>
-        <pre data-lang="text"><code>src/atlas_docs/
-  cli.py
-  loader.py
-  markdown.py
-  models.py
-  renderer.py
-  theme.py
-  templates/
-  themes/
-  static/
-
-ATLAS_DOCS_FORMAT.md
-README.md
-pyproject.toml</code></pre>
-        <div class="quick-links">
-        <ul>
-          <li><a class="doc-link" href="#section-quickstart" data-doc-link="quickstart">Quickstart</a> - Build or preview the docs generator locally</li>
-          <li><a class="doc-link" href="#section-atlas-source-format" data-doc-link="atlas-source-format">Atlas source format</a> - Learn the Atlas directory contract</li>
-          <li><a class="doc-link" href="#section-render-pipeline" data-doc-link="render-pipeline">Render pipeline</a> - See how Atlas turns markdown into a single-page site</li>
-          <li><a class="doc-link" href="#section-cli-reference" data-doc-link="cli-reference">CLI reference</a> - Review command behavior and options</li>
-        </ul>
-        </div>
+        <div class="callout info">The documentation here describes the current repository state at version <code>0.1.0</code> from <a href="https://github.com/BrandonBahret/Static-Documentation-Generator/blob/main/pyproject.toml" target="_blank"><code>pyproject.toml</code></a>.</div>
       </div>
 
-      <div class="section" id="section-quickstart" data-section="quickstart">
+      <div class="section" id="section-how-atlas-works" data-section="how-atlas-works">
         <div class="page-hero">
-          <div class="page-tag">Getting started</div>
-          <h1 class="page-title">Quickstart</h1>
-          <p class="page-lead">Install the package in editable mode or run the CLI from source, then build
-an Atlas source directory into a static HTML file.</p>
+          <div class="page-tag">Concepts</div>
+          <h1 class="page-title">How Atlas Works</h1>
+          <p class="page-lead">The Atlas workflow is a pipeline: source files define site structure, the loader resolves them into a typed site model, the Markdown renderer expands Atlas directives, and the renderer emits a themed HTML document.</p>
         </div>
 
-        <h2 id="quickstart-install-the-cli" data-anchor="install-the-cli">Install the CLI</h2>
-        <p>From the repository root:</p>
-        <pre data-lang="bash"><code>py -m pip install -e .</code></pre>
-        <p>That installs the <code>atlas-docs</code> console script declared in <code>pyproject.toml</code>.</p>
-        <h2 id="quickstart-run-from-source" data-anchor="run-from-source">Run from source</h2>
-        <p>If you do not want to install the package, point <code>PYTHONPATH</code> at <code>src</code> and call
-        the module directly:</p>
-        <pre data-lang="bash"><code>$env:PYTHONPATH = "src"
-py -m atlas_docs.cli build .\my-docs --out .\dist\index.html</code></pre>
-        <h2 id="quickstart-typical-command-flow" data-anchor="typical-command-flow">Typical command flow</h2>
-        <div class="cards">
-          <div class="card" data-card-link="cli-reference">
-            <div class="card-title">→ Create a starter tree</div>
-            <div class="card-desc">Use <code>atlas-docs init my-docs</code> to scaffold the expected directory structure.</div>
-          </div>
-          <div class="card" data-card-link="atlas-source-format">
-            <div class="card-title">→ Write Atlas content</div>
-            <div class="card-desc">Fill in the control files and add one markdown file per navigable section.</div>
-          </div>
-          <div class="card" data-card-link="cli-reference">
-            <div class="card-title">→ Compile HTML</div>
-            <div class="card-desc">Run <code>build</code> to emit a static <code>index.html</code>, or <code>serve</code> to preview local changes.</div>
-          </div>
-        </div>
-        <h2 id="quickstart-create-a-starter-tree-link-cli-reference" data-anchor="create-a-starter-tree-link-cli-reference">Minimal example</h2>
-        <pre data-lang="bash"><code>atlas-docs init my-docs
-atlas-docs build my-docs --out dist/index.html --theme atlas_dark
-atlas-docs serve my-docs --port 8000</code></pre>
-        <h2 id="quickstart-write-atlas-content-link-atlas-source-format" data-anchor="write-atlas-content-link-atlas-source-format">Dependency profile</h2>
-        <table>
-          <thead><tr><th>Package</th><th>Role</th></tr></thead>
-          <tbody>
-            <tr><td><code>typer</code></td><td>CLI entry points and option parsing</td></tr>
-            <tr><td><code>jinja2</code></td><td>HTML templates and theme token rendering</td></tr>
-            <tr><td><code>markdown-it-py</code> + <code>mdit-py-plugins</code></td><td>Markdown parsing and directive-friendly rendering</td></tr>
-            <tr><td><code>pyyaml</code></td><td>Frontmatter and configuration loading</td></tr>
-            <tr><td><code>watchfiles</code></td><td>Local preview workflow support</td></tr>
-            <tr><td><code>rapidfuzz</code> / <code>cydifflib</code></td><td>Search and matching support for the generated docs UI</td></tr>
-          </tbody>
-        </table>
-
-        <div class="callout info">The project requires Python 3.11 or newer according to <code>pyproject.toml</code>.</div>
-        <h2 id="quickstart-compile-html-link-cli-reference" data-anchor="compile-html-link-cli-reference">When to use the skill instead</h2>
-        <p>Use the Codex <code>create-documentation</code> workflow when the goal is not just to
-        render Atlas source, but to inspect a repository, author the Atlas files for
-        that target, and then build the finished static output. That workflow is
-        described in the README and mirrored in the standalone skill bundle.</p>
-      </div>
-
-      <div class="section" id="section-using-the-codex-skill" data-section="using-the-codex-skill">
-        <div class="page-hero">
-          <div class="page-tag">Workflow</div>
-          <h1 class="page-title">Using the Codex skill</h1>
-          <p class="page-lead">Package the <code>create_documentation</code> skill at the root of the repository, then
-use Codex to author Atlas source, expand thin sections, and rebuild the docs
-as the project evolves.</p>
-        </div>
-
-        <h2 id="using-the-codex-skill-install-the-skill-into-the-target-repository" data-anchor="install-the-skill-into-the-target-repository">Install the skill into the target repository</h2>
-        <p>For those that want to generate docs with Codex, place the
-        skill bundle at your repository root:</p>
-        <pre data-lang="text"><code>your-project/
-  .agents/
-    skills/
-      create_documentation/
-        SKILL.md
-        references/
-        scripts/</code></pre>
-
-        <p>That keeps the workflow local to the project instead of depending on a global
-        Codex setup. Once that folder exists at the root, Codex can expose the skill as
-        <code>/create documentation</code>. If Codex cannot find the skill, then restart the instance.</p>
-
-        <div class="callout info">Teams that prefer writing Atlas files directly can still use the same
-        repository-local layout. The skill does not replace the source format; it helps
-        author and maintain it.</div>
-        <h2 id="using-the-codex-skill-two-supported-authoring-modes" data-anchor="two-supported-authoring-modes">Two supported authoring modes</h2>
-        <div class="cards">
-          <div class="card" data-card-link="atlas-source-format">
-            <div class="card-title">→ Write Atlas source yourself</div>
-            <div class="card-desc">Use <code>metadata.md</code>, <code>navigation.md</code>, <code>assets.md</code>, and <code>content/*.md</code> directly
-        when you want exact control over the structure and wording.</div>
-          </div>
-          <div class="card" style="cursor:default">
-            <div class="card-title" style="color: var(--accent);">Use Codex to build and maintain it</div>
-            <div class="card-desc">Ask Codex to inspect the repository, draft or revise <code>atlas_sources/</code>, and then
-        compile the static HTML build for review.</div>
-          </div>
-        </div>
-        <h2 id="using-the-codex-skill-write-atlas-source-yourself-link-atlas-source-format" data-anchor="write-atlas-source-yourself-link-atlas-source-format">Good prompts for the skill</h2>
-        <p>The skill performs best when the prompt names both the output location and the
-        evidence it should rely on.</p>
-        <div class="selector-row">
-          <div class="selector-syntax">Bootstrap docs from a repo</div>
-          <div class="selector-desc"><code>/create documentation document this repository into atlas_sources and build docs_site/index.html</code></div>
-        </div>
-        <div class="selector-row">
-          <div class="selector-syntax">Expand package documentation while coding examples</div>
-          <div class="selector-desc"><code>/create documentation update atlas_sources for this package and, whenever you add an example, read the implementation first and document the feature from source</code></div>
-        </div>
-        <div class="selector-row">
-          <div class="selector-syntax">Tighten API docs</div>
-          <div class="selector-desc"><code>/create documentation refresh the API sections from the current handlers, types, and tests, then rebuild the docs</code></div>
-        </div>
-        <h2 id="using-the-codex-skill-use-codex-to-build-and-maintain-it" data-anchor="use-codex-to-build-and-maintain-it">How to get more from Codex</h2>
-        <p>If the repository already has some documentation, treat <code>atlas_sources/</code> as a
-        working knowledge base instead of a one-time export.</p>
-
-        <div class="feature-grid">
-          <div class="feature-item">
-            <div class="feature-icon">01</div>
-            <div class="feature-text">
-              <strong>Ask for source-backed examples</strong>
-              <span>When documenting a package or library, tell Codex to read the implementation,
-        tests, and existing examples before it writes new examples. That reduces drift
-        between docs and the actual feature behavior.</span>
-            </div>
-          </div>
-          <div class="feature-item">
-            <div class="feature-icon">02</div>
-            <div class="feature-text">
-              <strong>Grow <code>atlas_sources/</code> alongside the product</strong>
-              <span>If you are building a package or API, ask Codex to update the relevant
-        <code>atlas_sources/content/*.md</code> files in the same pass where it adds routes,
-        modules, CLI commands, or examples. The docs stay closer to the code because
-        the authoring happens during the feature change.</span>
-            </div>
-          </div>
-          <div class="feature-item">
-            <div class="feature-icon">03</div>
-            <div class="feature-text">
-              <strong>Add context when the docs feel thin</strong>
-              <span>If the first pass is too light, tell Codex to enrich the Atlas source with
-        architecture notes, constraints, tradeoffs, request flows, glossary material,
-        and links between related sections before rebuilding.</span>
-            </div>
-          </div>
-        </div>
-        <h2 id="using-the-codex-skill-good-prompts-for-the-skill" data-anchor="good-prompts-for-the-skill">Useful prompting patterns</h2>
-        <table>
-          <thead>
-            <tr><th>Goal</th><th>Prompt pattern</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Build initial package docs</td>
-              <td><code>Create atlas_sources for this package, include installation, concepts, examples, and API reference, and cite behavior from the source files you inspect.</code></td>
-            </tr>
-            <tr>
-              <td>Improve examples</td>
-              <td><code>Revise the examples in atlas_sources so each one matches the current implementation and test coverage.</code></td>
-            </tr>
-            <tr>
-              <td>Deepen sparse docs</td>
-              <td><code>The docs are too light. Add missing context to atlas_sources, especially architecture, edge cases, and operational guidance, then rebuild.</code></td>
-            </tr>
-            <tr>
-              <td>Keep docs current during feature work</td>
-              <td><code>As you implement this feature, also update atlas_sources for any new commands, config, or API behavior and rebuild the site.</code></td>
-            </tr>
-          </tbody>
-        </table>
-        <h2 id="using-the-codex-skill-bootstrap-docs-from-a-repo" data-anchor="bootstrap-docs-from-a-repo">Recommended workflow for GitHub repositories</h2>
+        <h2 id="how-atlas-works-pipeline" data-anchor="pipeline">Pipeline</h2>
+        <img class="asset asset-image" src="./assets/pipeline-figure.png" alt="Atlas Docs pipeline figure">
+        <p>The build path is straightforward:</p>
         <ol>
-          <li>Commit the skill bundle to <code>.agents/skills/create_documentation/</code> at the
-        root of the project.</li>
-          <li>Keep authored Atlas files in <code>atlas_sources/</code> so both humans and Codex have
-        a stable place to improve the docs.</li>
-          <li>Ask Codex to refresh the affected source files whenever code, APIs, or
-        examples change.</li>
-          <li>Rebuild the static output and review the generated HTML before publishing.</li>
+          <li>Resolve the source root from the path you pass to the CLI.</li>
+          <li>Read <code>metadata.md</code>, <code>navigation.md</code>, and <code>assets.md</code>.</li>
+          <li>Convert navigation entries into section labels and slugs.</li>
+          <li>Load each <code>content/*.md</code> file referenced by the nav.</li>
+          <li>Render prose, cross-section links, inline code refs, directives, headings, and code blocks.</li>
+          <li>Render a Jinja template with the site payload, theme CSS, and bundled JavaScript.</li>
         </ol>
-        <div class="quick-links">
-        <ul>
-          <li><a class="doc-link" href="#section-quickstart" data-doc-link="quickstart">Quickstart</a> - Build Atlas docs from source or via the CLI</li>
-          <li><a class="doc-link" href="#section-atlas-source-format" data-doc-link="atlas-source-format">Atlas source format</a> - Review the Atlas file contract Codex writes</li>
-          <li><a class="doc-link" href="#section-cli-reference" data-doc-link="cli-reference">CLI reference</a> - See build and preview commands</li>
-        </ul>
-        </div>
-      </div>
-
-      <div class="section" id="section-atlas-source-format" data-section="atlas-source-format">
-        <div class="page-hero">
-          <div class="page-tag">Format</div>
-          <h1 class="page-title">Atlas source format</h1>
-          <p class="page-lead">Atlas reads a compact directory contract: site metadata, navigation wiring,
-asset declarations, and one content file per section.</p>
-        </div>
-
-        <h2 id="atlas-source-format-required-layout" data-anchor="required-layout">Required layout</h2>
-        <pre data-lang="text"><code>my-docs/
-  metadata.md
-  navigation.md
-  assets.md
-  content/
-    introduction.md
-    quickstart.md
-    api-reference.md</code></pre>
-
-        <p>The generator processes the control files first, then compiles section files in
-        the order declared in <code>navigation.md</code>.</p>
-        <h2 id="atlas-source-format-control-files" data-anchor="control-files">Control files</h2>
-        <div class="selector-row">
-          <div class="selector-syntax">metadata.md</div>
-          <div class="selector-desc">Defines project identity, version, tagline, accent colors, typography, search
-        copy, feature flags, and the default color scheme.</div>
-        </div>
-        <div class="selector-row">
-          <div class="selector-syntax">navigation.md</div>
-          <div class="selector-desc">Defines sidebar groups, section labels, slug mapping, default section behavior,
-        and optional footer links.</div>
-        </div>
-        <div class="selector-row">
-          <div class="selector-syntax">assets.md</div>
-          <div class="selector-desc">Declares inline SVGs, bundled images, and remote images that content files can
-        reference by short name through <code>@asset[...]</code>.</div>
-        </div>
-        <h2 id="atlas-source-format-metadata-md" data-anchor="metadata-md">Section files</h2>
-        <p>Every navigable entry in <code>navigation.md</code> maps to one file in <code>content/</code>.
-        Frontmatter controls the hero region:</p>
-        <table>
-          <thead><tr><th>Field</th><th>Purpose</th></tr></thead>
-          <tbody>
-            <tr><td><code>tag</code></td><td>Small category label above the page title</td></tr>
-            <tr><td><code>title</code></td><td>Generated <code>&lt;h1&gt;</code> for the section</td></tr>
-            <tr><td><code>title_em</code></td><td>Optional emphasized suffix appended to the title</td></tr>
-            <tr><td><code>lead</code></td><td>Subtitle paragraph under the title</td></tr>
-            <tr><td><code>breadcrumb</code></td><td>Topbar breadcrumb override</td></tr>
-            <tr><td><code>comment</code></td><td>Optional HTML comment label injected above the section in the output</td></tr>
-          </tbody>
-        </table>
-        <h2 id="atlas-source-format-navigation-md" data-anchor="navigation-md">Cross-section and asset syntax</h2>
-        <p>Atlas adds a few authoring shortcuts on top of plain Markdown.</p>
-        <table>
-          <thead>
-            <tr><th>Syntax</th><th>Effect</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><code>&lt;a class="doc-link" href="#section-slug" data-doc-link="slug"&gt;slug&lt;/a&gt;</code></td>
-              <td>Link to another section using its nav label</td>
-            </tr>
-            <tr>
-              <td><code>&lt;a class="doc-link" href="#section-slug:slug-anchor" data-doc-link="slug" data-target-id="slug-anchor"&gt;Label&lt;/a&gt;</code></td>
-              <td>Link to a specific section heading with custom text</td>
-            </tr>
-            <tr>
-              <td><code>&lt;code class="inline-code-ref" data-section-id="slug"&gt;token&lt;/code&gt;</code></td>
-              <td>Render inline code that can jump to another section</td>
-            </tr>
-            <tr>
-              <td><code>&lt;!-- missing asset: name --&gt;</code></td>
-              <td>Insert a declared SVG or image asset</td>
-            </tr>
-          </tbody>
-        </table>
-        <h2 id="atlas-source-format-assets-md" data-anchor="assets-md">Structured directives</h2>
-        <p>The markdown compiler also recognizes Atlas block directives. The format spec
-        documents blocks such as <code>:::feature_grid</code>, <code>:::cards</code>, <code>:::callout</code>,
-        <code>:::method</code>, <code>:::selector_list</code>, <code>:::table</code>, <code>:::quick_links</code>, and
-        <code>:::reference_list</code>.</p>
-
-        <div class="callout info">The current implementation includes renderer logic for the directive set in
-        <code>src/atlas_docs/markdown.py</code>. The repository documentation should treat that
-        code as the implementation source of truth when behavior and examples need to
-        be reconciled.</div>
-        <h2 id="atlas-source-format-section-files" data-anchor="section-files">Authoring guidance</h2>
-
-        <div class="feature-grid">
-          <div class="feature-item">
-            <div class="feature-icon">01</div>
-            <div class="feature-text">
-              <strong>Keep navigation explicit</strong>
-              <span>Every non-external nav entry must have a matching <code>content/&lt;slug&gt;.md</code> file or
-        the loader raises <code>FileNotFoundError</code>.</span>
-            </div>
-          </div>
-          <div class="feature-item">
-            <div class="feature-icon">02</div>
-            <div class="feature-text">
-              <strong>Prefer evidence over invention</strong>
-              <span>When Atlas source is generated for another project, derive setup, API, and
-        architecture details from repository files or official sources.</span>
-            </div>
-          </div>
-          <div class="feature-item">
-            <div class="feature-icon">03</div>
-            <div class="feature-text">
-              <strong>Use assets sparingly</strong>
-              <span>Leave <code>assets.md</code> empty when there is nothing worth bundling. The workflow
-        expects that to be a normal case.</span>
-            </div>
-          </div>
-        </div>
-        <div class="quick-links">
-        <ul>
-          <li><a class="doc-link" href="#section-render-pipeline" data-doc-link="render-pipeline">Render pipeline</a> - See how these source files are loaded and compiled</li>
-          <li><a class="doc-link" href="#section-cli-reference" data-doc-link="cli-reference">CLI reference</a> - Build and preview an Atlas source tree</li>
-        </ul>
-        </div>
-      </div>
-
-      <div class="section" id="section-render-pipeline" data-section="render-pipeline">
-        <div class="page-hero">
-          <div class="page-tag">Internals</div>
-          <h1 class="page-title">Render pipeline</h1>
-          <p class="page-lead">Atlas separates loading, markdown compilation, theme resolution, templating,
-and client-side behavior into distinct modules inside <code>src/atlas_docs/</code>.</p>
-        </div>
-
-        <h2 id="render-pipeline-pipeline-stages" data-anchor="pipeline-stages">Pipeline stages</h2>
         <table>
           <thead>
             <tr>
@@ -1515,162 +1206,525 @@ and client-side behavior into distinct modules inside <code>src/atlas_docs/</cod
           </thead>
           <tbody>
             <tr>
-              <td>1</td>
+              <td>Source discovery</td>
               <td><code>loader.py</code></td>
-              <td>Reads frontmatter files, repairs mojibake when possible, validates navigation targets, and constructs the in-memory <code>Site</code> model.</td>
+              <td>Validates the Atlas directory and maps nav labels to slugs</td>
             </tr>
             <tr>
-              <td>2</td>
+              <td>Markdown rendering</td>
               <td><code>markdown.py</code></td>
-              <td>Expands Atlas-specific link syntax, directives, assets, heading anchors, and Python code highlighting before returning section HTML.</td>
+              <td>Expands custom syntax such as <code>[doc:slug]</code> and <code>:::method</code></td>
             </tr>
             <tr>
-              <td>3</td>
-              <td><code>theme.py</code></td>
-              <td>Resolves theme directories, applies metadata-driven accent and typography overrides, and renders CSS tokens for primary and alternate schemes.</td>
-            </tr>
-            <tr>
-              <td>4</td>
+              <td>HTML output</td>
               <td><code>renderer.py</code></td>
-              <td>Loads the site, bundles CSS and JavaScript, assembles <code>window.__ATLAS_DOCS__</code>, and renders the final HTML template.</td>
+              <td>Builds final HTML, CSS, JavaScript, and serialized site config</td>
             </tr>
             <tr>
-              <td>5</td>
-              <td><code>templates/</code> + <code>static/js/</code></td>
-              <td>Deliver the shell, sidebar, modals, and browser behaviors for navigation, search, settings, and copy-code actions.</td>
+              <td>Theme resolution</td>
+              <td><code>theme.py</code></td>
+              <td>Loads the active theme, applies metadata overrides, and computes alternate scheme support</td>
             </tr>
           </tbody>
         </table>
-        <h2 id="render-pipeline-loader-model" data-anchor="loader-model">Loader model</h2>
-        <p>The data model is intentionally small:</p>
-        <div class="selector-row">
-          <div class="selector-syntax">NavEntry</div>
-          <div class="selector-desc">Stores the visible label, target slug or external URL, and whether the link is
-        external.</div>
-        </div>
-        <div class="selector-row">
-          <div class="selector-syntax">NavGroup</div>
-          <div class="selector-desc">Represents one labeled sidebar group with ordered entries.</div>
-        </div>
-        <div class="selector-row">
-          <div class="selector-syntax">Section</div>
-          <div class="selector-desc">Carries the slug, label, hero metadata, compiled body HTML, search text, and
-        raw frontmatter.</div>
-        </div>
-        <div class="selector-row">
-          <div class="selector-syntax">Site</div>
-          <div class="selector-desc">Combines metadata, nav groups, sections, footer links, and assets while also
-        exposing the default section.</div>
-        </div>
-        <h2 id="render-pipeline-naventry" data-anchor="naventry">Theme behavior</h2>
-        <p>The shipped theme family is <code>atlas</code>, with <code>atlas_dark</code> and <code>atlas_light</code>
-        variants. <code>theme.py</code> can choose the active variant from the requested theme name
-        and <code>metadata.md</code> color scheme, then optionally load the opposite variant so the
-        generated UI can support a light/dark toggle.</p>
+        <h2 id="how-atlas-works-source-files-and-their-roles" data-anchor="source-files-and-their-roles">Source files and their roles</h2>
+        <p>The source format deliberately splits identity, navigation, assets, and content into separate files. That keeps docs maintainable:</p>
+        <ul>
+          <li><code>metadata.md</code> controls branding, fonts, theme accents, and search copy.</li>
+          <li><code>navigation.md</code> defines the sidebar groups and determines the order of all sections.</li>
+          <li><code>assets.md</code> names SVGs and images so content pages can refer to them indirectly.</li>
+          <li><code>content/*.md</code> contains the actual prose and Atlas directive blocks.</li>
+        </ul>
+        <p>Readers in a lookup mode care most about <code>navigation.md</code> and the section pages. Authors care most about a predictable structure. Atlas uses the same split for both.</p>
+        <h2 id="how-atlas-works-why-it-stays-single-page" data-anchor="why-it-stays-single-page">Why it stays single-page</h2>
+        <p>The generated output includes all sections in the DOM at once. Navigation and cross-section links switch the active section client-side instead of issuing page loads. That gives Atlas its reference-manual feel while still letting content stay split across source files.</p>
 
-        <div class="callout info">Metadata can override the accent color per scheme through <code>accent_dark</code> and
-        <code>accent_light</code>, while typography fields such as <code>display_font</code>, <code>body_font</code>, and
-        <code>mono_font</code> override the bundled theme defaults.</div>
-        <h2 id="render-pipeline-navgroup" data-anchor="navgroup">Output model</h2>
-        <p><code>renderer.py</code> emits one HTML file with all sections already present in the DOM.
-        The browser runtime swaps the active section client-side rather than loading
-        separate pages.</p>
-        <pre data-lang="text"><code>Atlas source -&gt; Site model -&gt; themed HTML shell -&gt; single static index.html</code></pre>
-        <h2 id="render-pipeline-section" data-anchor="section">Search and settings</h2>
-        <p>The base template injects <code>window.__ATLAS_DOCS__</code> with:</p>
-        <table>
-          <thead><tr><th>Key</th><th>Purpose</th></tr></thead>
-          <tbody>
-            <tr><td><code>defaultSection</code></td><td>The first non-external navigation target</td></tr>
-            <tr><td><code>sections</code></td><td>Section labels, breadcrumbs, and frontmatter metadata</td></tr>
-            <tr><td><code>features</code></td><td>Runtime feature flags such as search</td></tr>
-            <tr><td><code>metadata</code></td><td>Site-level identity and UI copy</td></tr>
-            <tr><td><code>theme</code></td><td>Current scheme, toggle support, and supported palette variants</td></tr>
-            <tr><td><code>search</code></td><td>Placeholder text and empty-state labels</td></tr>
-          </tbody>
-        </table>
-        <p>That payload is consumed by the bundled JavaScript modules that power the docs
-        UI.</p>
+        <div class="callout info">Search works against section metadata plus rendered section text. Atlas serializes a site configuration payload into the page so the JavaScript can drive navigation and local search.</div>
       </div>
 
-      <div class="section" id="section-cli-reference" data-section="cli-reference">
+      <div class="section" id="section-install-the-cli" data-section="install-the-cli">
         <div class="page-hero">
-          <div class="page-tag">Reference</div>
-          <h1 class="page-title">CLI reference</h1>
-          <p class="page-lead">Atlas Docs exposes a Typer-based CLI with three commands: <code>init</code>, <code>build</code>,
-and <code>serve</code>.</p>
+          <div class="page-tag">Guides</div>
+          <h1 class="page-title">Install the CLI</h1>
+          <p class="page-lead">Atlas Docs can run as an installed command or directly from source. The repository currently targets Python 3.11+ and exposes the <code>atlas-docs</code> entry point through <code>pyproject.toml</code>.</p>
         </div>
 
-        <h2 id="cli-reference-command-summary" data-anchor="command-summary">Command summary</h2>
-        <table>
-          <thead>
-            <tr><th>Command</th><th>Purpose</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><code>atlas-docs init &lt;path&gt;</code></td>
-              <td>Create a minimal Atlas source tree with control files and an introduction page.</td>
-            </tr>
-            <tr>
-              <td><code>atlas-docs build &lt;source&gt; --out &lt;html&gt;</code></td>
-              <td>Compile an Atlas source directory into static HTML.</td>
-            </tr>
-            <tr>
-              <td><code>atlas-docs serve &lt;source&gt; --out-dir &lt;dir&gt; --port &lt;n&gt;</code></td>
-              <td>Build a preview copy and serve it over a simple local HTTP server.</td>
-            </tr>
-          </tbody>
-        </table>
-        <h2 id="cli-reference-init" data-anchor="init"><code>init</code></h2>
-        <div class="method">atlas-docs init PATH</div>
-        <p>Creates:</p>
-        <pre data-lang="text"><code>&lt;path&gt;/
+        <h2 id="install-the-cli-editable-install" data-anchor="editable-install">Editable install</h2>
+        <p>From the repository root:</p>
+        <pre data-lang="bash"><code>py -m pip install -e .</code></pre>
+        <p>That installs the <code>atlas-docs</code> console script from the <code>[project.scripts]</code> entry in <code>pyproject.toml</code>.</p>
+        <h2 id="install-the-cli-run-from-source" data-anchor="run-from-source">Run from source</h2>
+        <p>If you do not want an editable install, set <code>PYTHONPATH</code> to <code>src</code> and invoke the module directly:</p>
+        <pre data-lang="powershell"><code>$env:PYTHONPATH = "src"
+py -m atlas_docs.cli build .\my-docs --out .\dist\index.html</code></pre>
+        <h2 id="install-the-cli-runtime-dependencies" data-anchor="runtime-dependencies">Runtime dependencies</h2>
+        <p>Atlas Docs currently depends on Typer, Jinja2, <code>markdown-it-py</code>, <code>mdit-py-plugins</code>, PyYAML, RapidFuzz, <code>cydifflib</code>, and <code>watchfiles</code>.</p>
+
+        <div class="callout info">Those dependencies come directly from <code>pyproject.toml</code>. There is no separate lockfile in this repository.</div>
+      </div>
+
+      <div class="section" id="section-build-your-first-site" data-section="build-your-first-site">
+        <div class="page-hero">
+          <div class="page-tag">Guides</div>
+          <h1 class="page-title">Build your first site</h1>
+          <p class="page-lead">The shortest end-to-end flow is: initialize a source tree, edit the generated Markdown files, and run the build command to produce a static <code>index.html</code>.</p>
+        </div>
+
+        <h2 id="build-your-first-site-initialize-the-source-tree" data-anchor="initialize-the-source-tree">Initialize the source tree</h2>
+        <pre data-lang="bash"><code>atlas-docs init my-docs</code></pre>
+        <p>That creates:</p>
+        <pre data-lang="text"><code>my-docs/
   metadata.md
   navigation.md
   assets.md
-  content/introduction.md</code></pre>
+  content/
+    introduction.md</code></pre>
+        <h2 id="build-your-first-site-edit-the-source" data-anchor="edit-the-source">Edit the source</h2>
+        <p>Update <code>metadata.md</code> with project identity and colors, define groups in <code>navigation.md</code>, then add matching <code>content/*.md</code> files for every nav entry.</p>
 
-        <p>The starter metadata uses the bundled Atlas visual defaults and enables search.</p>
-        <h2 id="cli-reference-build" data-anchor="build"><code>build</code></h2>
-        <div class="method">atlas-docs build SOURCE --out dist/index.html --theme atlas_dark --pretty False</div>
-        <p>Behavior:</p>
-        <div class="selector-row">
-          <div class="selector-syntax">source</div>
-          <div class="selector-desc">Atlas source directory to compile. The loader also accepts a parent directory
-        when it contains a nested <code>atlas_docs/</code> source root.</div>
-        </div>
-        <div class="selector-row">
-          <div class="selector-syntax">--out</code>, <code>-o</div>
-          <div class="selector-desc">Destination HTML file. Parent directories are created automatically.</div>
-        </div>
-        <div class="selector-row">
-          <div class="selector-syntax">--theme</code>, <code>-t</div>
-          <div class="selector-desc">Theme name or path to a theme directory.</div>
-        </div>
-        <div class="selector-row">
-          <div class="selector-syntax">--pretty</div>
-          <div class="selector-desc">Exposed as an option in the CLI, though the current implementation always calls
-        <code>build_site(..., minify=False)</code>.</div>
-        </div>
-        <h2 id="cli-reference-source" data-anchor="source"><code>serve</code></h2>
-        <div class="method">atlas-docs serve SOURCE --out-dir .atlas-preview --theme atlas_dark --port 8000</div>
-        <p><code>serve</code> builds an <code>index.html</code> into the preview directory, changes into that
-        directory, and starts <code>http.server.SimpleHTTPRequestHandler</code> through
-        <code>socketserver.TCPServer</code>.</p>
-
-        <div class="callout warn">The current implementation serves the generated preview, but it does not yet
-        wire file watching or incremental rebuild behavior into the command loop.</div>
-        <h2 id="cli-reference-out-o" data-anchor="out-o">Common usage</h2>
-        <pre data-lang="bash"><code>atlas-docs init my-docs
-atlas-docs build my-docs --out dist/index.html
-atlas-docs serve my-docs --port 8000</code></pre>
-        <div class="reference-list">
+        <div class="callout warn">If a slug appears in <code>navigation.md</code> and the matching file is missing from <code>content/</code>, the loader raises <code>FileNotFoundError</code> during build.</div>
+        <h2 id="build-your-first-site-build-the-html" data-anchor="build-the-html">Build the HTML</h2>
+        <pre data-lang="bash"><code>atlas-docs build my-docs --out dist/index.html</code></pre>
+        <p>The generated file contains all sections, styles, and behavior in one HTML document.</p>
+        <h2 id="build-your-first-site-preview-locally" data-anchor="preview-locally">Preview locally</h2>
+        <pre data-lang="bash"><code>atlas-docs serve my-docs --port 8000</code></pre>
+        <p>That command builds a preview into <code>.atlas-preview/index.html</code> by default, then serves the output directory over a local HTTP server.</p>
+        <div class="quick-links">
         <ul>
-          <li><a class="doc-link" href="#section-quickstart" data-doc-link="quickstart">Quickstart</a> - Installation and first-run commands</li>
-          <li><a class="doc-link" href="#section-render-pipeline" data-doc-link="render-pipeline">Render pipeline</a> - How the CLI hands off to the loader and renderer</li>
-          <li><a class="doc-link" href="#section-atlas-source-format" data-doc-link="atlas-source-format">Atlas source format</a> - The expected source directory contract</li>
+          <li><a class="doc-link" href="#section-command-init" data-doc-link="command-init">init</a> - Create a starter Atlas tree</li>
+          <li><a class="doc-link" href="#section-command-build" data-doc-link="command-build">build</a> - Compile a source tree into HTML</li>
+          <li><a class="doc-link" href="#section-format-content" data-doc-link="format-content">content/*.md</a> - Write section files correctly</li>
         </ul>
         </div>
+      </div>
+
+      <div class="section" id="section-use-the-codex-skill" data-section="use-the-codex-skill">
+        <div class="page-hero">
+          <div class="page-tag">Guides</div>
+          <h1 class="page-title">Use the Codex skill</h1>
+          <p class="page-lead">The <code>create-documentation</code> skill sits above the CLI. It inspects a local or remote project, designs documentation navigation around the project domain, writes Atlas source files, and builds the resulting site.</p>
+        </div>
+
+        <h2 id="use-the-codex-skill-what-the-skill-adds" data-anchor="what-the-skill-adds">What the skill adds</h2>
+        <p>The CLI expects you to author Atlas source manually. The Codex skill automates the authoring layer:</p>
+        <ul>
+          <li>It infers the project to document from the prompt.</li>
+          <li>It classifies the project domain before writing nav entries.</li>
+          <li>It separates orientation, guides, and reference pages so the site is easier to scan.</li>
+          <li>It chooses metadata and branding from the project rather than using arbitrary values.</li>
+          <li>It runs the bundled Atlas generator from the skill package.</li>
+        </ul>
+        <h2 id="use-the-codex-skill-when-to-use-it" data-anchor="when-to-use-it">When to use it</h2>
+        <p>Use the skill when you want Atlas docs for:</p>
+        <ul>
+          <li>the current repository</li>
+          <li>another local repository</li>
+          <li>a non-local project that first needs primary-source research</li>
+        </ul>
+        <h2 id="use-the-codex-skill-bundled-build-command" data-anchor="bundled-build-command">Bundled build command</h2>
+        <p>The skill keeps its own vendored <code>atlas_docs</code> package under <code>scripts/atlas_docs/</code>, so it does not depend on this repository being installed into the environment:</p>
+        <pre data-lang="powershell"><code>$env:PYTHONPATH = "&lt;skill-dir&gt;\scripts"
+py -m atlas_docs.cli build .\atlas_sources\[project] --out .\docs_site\[project]\index.html</code></pre>
+
+        <div class="callout info">This repository contains both the reusable package in <code>src/atlas_docs/</code> and the packaged skill bundle under <code>.agents/skills/create-documentation/</code>.</div>
+      </div>
+
+      <div class="section" id="section-command-init" data-section="command-init">
+        <div class="page-hero">
+          <div class="page-tag">Commands</div>
+          <h1 class="page-title">init</h1>
+          <p class="page-lead"><code>atlas-docs init</code> creates a minimal Atlas source tree with starter metadata, navigation, assets, and one introduction page.</p>
+        </div>
+
+        <h2 id="command-init-signature" data-anchor="signature">Signature</h2>
+        <div class="method">atlas-docs init PATH</div>
+        <h2 id="command-init-behavior" data-anchor="behavior">Behavior</h2>
+        <p>The <code>init</code> command calls <code>renderer.init_site(path)</code>, creates the target directory if needed, creates a <code>content/</code> directory, and writes starter versions of:</p>
+        <ul>
+          <li><code>metadata.md</code></li>
+          <li><code>navigation.md</code></li>
+          <li><code>assets.md</code></li>
+          <li><code>content/introduction.md</code></li>
+        </ul>
+        <h2 id="command-init-arguments" data-anchor="arguments">Arguments</h2>
+        <table>
+          <thead><tr><th>Argument</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>PATH</code></td><td><code>Path</code></td><td>Yes</td><td>Directory where the starter Atlas source tree will be created</td></tr>
+          </tbody>
+        </table>
+        <h2 id="command-init-example" data-anchor="example">Example</h2>
+        <pre data-lang="bash"><code>atlas-docs init docs-source</code></pre>
+        <p>After running the command, edit the generated files and then continue with <a class="doc-link" href="#section-command-build" data-doc-link="command-build">build</a>.</p>
+      </div>
+
+      <div class="section" id="section-command-build" data-section="command-build">
+        <div class="page-hero">
+          <div class="page-tag">Commands</div>
+          <h1 class="page-title">build</h1>
+          <p class="page-lead"><code>atlas-docs build</code> compiles an Atlas source directory into a static HTML file. This is the main production command.</p>
+        </div>
+
+        <h2 id="command-build-signature" data-anchor="signature">Signature</h2>
+        <div class="method">atlas-docs build SOURCE --out dist/index.html --theme atlas_dark --pretty</div>
+        <h2 id="command-build-parameters" data-anchor="parameters">Parameters</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Parameter</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>SOURCE</code></td>
+              <td><code>Path</code></td>
+              <td>—</td>
+              <td>Atlas source directory</td>
+            </tr>
+            <tr>
+              <td><code>--out</code>, <code>-o</code></td>
+              <td><code>Path</code></td>
+              <td><code>dist/index.html</code></td>
+              <td>Output HTML path</td>
+            </tr>
+            <tr>
+              <td><code>--theme</code>, <code>-t</code></td>
+              <td><code>str</code></td>
+              <td><code>atlas_dark</code></td>
+              <td>Theme name or theme directory</td>
+            </tr>
+            <tr>
+              <td><code>--pretty</code></td>
+              <td><code>bool</code></td>
+              <td><code>False</code></td>
+              <td>Declared for debugging, though current CLI code always calls <code>build_site(..., minify=False)</code></td>
+            </tr>
+          </tbody>
+        </table>
+        <h2 id="command-build-what-it-does" data-anchor="what-it-does">What it does</h2>
+        <p><code>build</code> loads the site via <code>load_site()</code>, resolves the theme family and alternate color-scheme variant, concatenates theme CSS plus bundled JavaScript, renders the base Jinja template, and writes the resulting HTML to the requested path.</p>
+
+        <div class="callout warn"><code>--pretty</code> is currently accepted by the CLI but does not change output formatting because the command hard-codes <code>minify=False</code>. That is a repository fact, not a docs convention.</div>
+        <h2 id="command-build-example" data-anchor="example">Example</h2>
+        <pre data-lang="bash"><code>atlas-docs build my-docs --out dist/index.html --theme atlas_dark</code></pre>
+      </div>
+
+      <div class="section" id="section-command-serve" data-section="command-serve">
+        <div class="page-hero">
+          <div class="page-tag">Commands</div>
+          <h1 class="page-title">serve</h1>
+          <p class="page-lead"><code>atlas-docs serve</code> builds a preview into a directory and serves it over Python's standard library HTTP server.</p>
+        </div>
+
+        <h2 id="command-serve-signature" data-anchor="signature">Signature</h2>
+        <div class="method">atlas-docs serve SOURCE --out-dir .atlas-preview --theme atlas_dark --port 8000</div>
+        <h2 id="command-serve-parameters" data-anchor="parameters">Parameters</h2>
+        <table>
+          <thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>SOURCE</code></td><td><code>Path</code></td><td>—</td><td>Atlas source directory</td></tr>
+            <tr><td><code>--out-dir</code></td><td><code>Path</code></td><td><code>.atlas-preview</code></td><td>Directory where preview files are written</td></tr>
+            <tr><td><code>--theme</code>, <code>-t</code></td><td><code>str</code></td><td><code>atlas_dark</code></td><td>Theme name or theme directory</td></tr>
+            <tr><td><code>--port</code>, <code>-p</code></td><td><code>int</code></td><td><code>8000</code></td><td>Local port for the HTTP server</td></tr>
+          </tbody>
+        </table>
+        <h2 id="command-serve-behavior" data-anchor="behavior">Behavior</h2>
+        <p>The command builds <code>index.html</code> into the selected output directory, changes the working directory to that output folder, and then starts <code>socketserver.TCPServer</code> with <code>http.server.SimpleHTTPRequestHandler</code>.</p>
+
+        <div class="callout warn">The current implementation serves forever until interrupted and does not watch source files for changes, even though <code>watchfiles</code> is present as a dependency.</div>
+      </div>
+
+      <div class="section" id="section-format-metadata" data-section="format-metadata">
+        <div class="page-hero">
+          <div class="page-tag">Source Format</div>
+          <h1 class="page-title">metadata.md</h1>
+          <p class="page-lead"><code>metadata.md</code> defines site identity, theme accents, typography, default color scheme, and search UI copy. It is a frontmatter-only file with no prose body.</p>
+        </div>
+
+        <h2 id="format-metadata-purpose" data-anchor="purpose">Purpose</h2>
+        <p>Use <code>metadata.md</code> to set the values that affect the whole site rather than any one page.</p>
+        <div class="selector-row">
+          <div class="selector-syntax">name</div>
+          <div class="selector-desc">Project name shown in the shell, breadcrumb defaults, and site identity.</div>
+        </div>
+        <div class="selector-row">
+          <div class="selector-syntax">version</div>
+          <div class="selector-desc">Version badge text rendered in the top shell.</div>
+        </div>
+        <div class="selector-row">
+          <div class="selector-syntax">tagline</div>
+          <div class="selector-desc">Short one-line description used in the chrome.</div>
+        </div>
+        <div class="selector-row">
+          <div class="selector-syntax">accent</code>, <code>accent_dark</code>, <code>accent_light</div>
+          <div class="selector-desc">Brand accent colors used by the active theme.</div>
+        </div>
+        <div class="selector-row">
+          <div class="selector-syntax">display_font</code>, <code>body_font</code>, <code>mono_font</div>
+          <div class="selector-desc">Typography choices applied across page titles, prose, and code surfaces.</div>
+        </div>
+        <div class="selector-row">
+          <div class="selector-syntax">features.search</div>
+          <div class="selector-desc">Enables the client-side search interface.</div>
+        </div>
+        <h2 id="format-metadata-name" data-anchor="name">Minimal example</h2>
+        <pre data-lang="yaml"><code>---
+name: Atlas Docs
+version: v0.1.0
+tagline: Build single-page documentation sites from Markdown
+accent: "#c8f060"
+accent_dark: "#c8f060"
+accent_light: "#7d9f20"
+color_scheme: dark
+features:
+  search: true
+---</code></pre>
+        <h2 id="format-metadata-version" data-anchor="version">Theme overrides</h2>
+        <p><code>theme.py</code> lets metadata override visual choices from the chosen theme family. In practice that means the theme can supply defaults, but project-specific docs can still replace accent colors and fonts without editing theme files directly.</p>
+      </div>
+
+      <div class="section" id="section-format-navigation" data-section="format-navigation">
+        <div class="page-hero">
+          <div class="page-tag">Source Format</div>
+          <h1 class="page-title">navigation.md</h1>
+          <p class="page-lead"><code>navigation.md</code> is the sidebar contract for the whole site. It defines group order, nav labels, section slugs, and optional footer links.</p>
+        </div>
+
+        <h2 id="format-navigation-entry-format" data-anchor="entry-format">Entry format</h2>
+        <p>Atlas expects each nav entry in pipe syntax:</p>
+        <pre data-lang="yaml"><code>- Introduction | introduction
+- GitHub | https://example.com/repo | external</code></pre>
+        <h2 id="format-navigation-rules-that-matter" data-anchor="rules-that-matter">Rules that matter</h2>
+        <table>
+          <thead>
+            <tr><th>Rule</th><th>Why it matters</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Every non-external entry must map to a real <code>content/[slug].md</code> file</td>
+              <td>The loader raises an error otherwise</td>
+            </tr>
+            <tr>
+              <td>Group order controls sidebar order and first-read flow</td>
+              <td>Atlas uses the first non-external entry as the default visible section</td>
+            </tr>
+            <tr>
+              <td>Labels drive doc-link fallback text</td>
+              <td><code>[doc:slug]</code> expands to the nav label when you do not provide custom link text</td>
+            </tr>
+            <tr>
+              <td>Footer links are optional and external-friendly</td>
+              <td>They render separately from the main nav stack</td>
+            </tr>
+          </tbody>
+        </table>
+        <h2 id="format-navigation-cross-section-links" data-anchor="cross-section-links">Cross-section links</h2>
+        <p>Content pages can link to a nav entry by slug:</p>
+        <pre data-lang="md"><code>See [doc:command-build] for the main compilation command.
+See [build command | doc:command-build] for a custom label.
+See [build parameters | doc:command-build#parameters] for a subsection.</code></pre>
+
+        <p>The Markdown renderer converts those links into client-side navigation anchors tied to the section slug and optional heading anchor.</p>
+      </div>
+
+      <div class="section" id="section-format-assets" data-section="format-assets">
+        <div class="page-hero">
+          <div class="page-tag">Source Format</div>
+          <h1 class="page-title">assets.md</h1>
+          <p class="page-lead"><code>assets.md</code> is an optional registry for SVGs and images. It keeps raw paths out of section prose by assigning each asset a short name.</p>
+        </div>
+
+        <h2 id="format-assets-supported-catalogs" data-anchor="supported-catalogs">Supported catalogs</h2>
+        <div class="selector-row">
+          <div class="selector-syntax">svgs</div>
+          <div class="selector-desc">Inline SVG asset declarations using <code>name | path</code>.</div>
+        </div>
+        <div class="selector-row">
+          <div class="selector-syntax">images</div>
+          <div class="selector-desc">Image declarations using <code>name | path | alt text</code>.</div>
+        </div>
+        <div class="selector-row">
+          <div class="selector-syntax">remote_images</div>
+          <div class="selector-desc">External image URLs using <code>name | url | alt text</code>.</div>
+        </div>
+        <h2 id="format-assets-svgs" data-anchor="svgs">Referencing an asset</h2>
+        <p>Use the <code>@asset[name]</code> syntax inside content files:</p>
+        <pre data-lang="md"><code>@asset[logo-mark]</code></pre>
+
+        <p>The Atlas Docs source in this repository uses that pattern for the introduction hero image and the pipeline diagram in <a class="doc-link" href="#section-how-atlas-works" data-doc-link="how-atlas-works">How Atlas Works</a>.</p>
+        <h2 id="format-assets-images" data-anchor="images">Current implementation note</h2>
+        <p>The renderer resolves asset declarations into inline placeholders or <code>&lt;img&gt;</code> tags during Markdown rendering. Local SVG and image assets are now copied into the built site's <code>assets/</code> directory during the build so <code>./assets/...</code> references stay portable.</p>
+      </div>
+
+      <div class="section" id="section-format-content" data-section="format-content">
+        <div class="page-hero">
+          <div class="page-tag">Source Format</div>
+          <h1 class="page-title">content/*.md</h1>
+          <p class="page-lead">Each file in <code>content/</code> is one navigable section. The slug in <code>navigation.md</code> must match the filename, and the frontmatter supplies the page hero metadata.</p>
+        </div>
+
+        <h2 id="format-content-frontmatter" data-anchor="frontmatter">Frontmatter</h2>
+        <p>Common frontmatter keys:</p>
+        <table>
+          <thead><tr><th>Key</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>tag</code></td><td>Small category label above the title</td></tr>
+            <tr><td><code>title</code></td><td>Main page heading</td></tr>
+            <tr><td><code>title_em</code></td><td>Optional emphasized suffix rendered in accent color</td></tr>
+            <tr><td><code>lead</code></td><td>Subtitle paragraph under the title</td></tr>
+            <tr><td><code>breadcrumb</code></td><td>Optional breadcrumb override</td></tr>
+            <tr><td><code>comment</code></td><td>Optional HTML comment label carried into the section metadata</td></tr>
+          </tbody>
+        </table>
+        <h2 id="format-content-heading-and-anchor-behavior" data-anchor="heading-and-anchor-behavior">Heading and anchor behavior</h2>
+        <p>Atlas assigns DOM IDs to <code>##</code>, <code>###</code>, and <code>####</code> headings and supports explicit anchor overrides:</p>
+        <pre data-lang="md"><code>## Request options {id=request}
+### Theme family {id=theme-family}</code></pre>
+
+        <p>Those anchors let you target subsections with <code>[doc:slug#anchor]</code>.</p>
+        <h2 id="format-content-directive-blocks" data-anchor="directive-blocks">Directive blocks</h2>
+        <p>The current renderer supports these purpose-built blocks:</p>
+        <div class="selector-row">
+          <div class="selector-syntax">:::feature_grid</div>
+          <div class="selector-desc">Summarize capabilities in a card grid.</div>
+        </div>
+        <div class="selector-row">
+          <div class="selector-syntax">:::cards</div>
+          <div class="selector-desc">Create clickable nav cards that jump to another section.</div>
+        </div>
+        <div class="selector-row">
+          <div class="selector-syntax">:::callout</div>
+          <div class="selector-desc">Highlight info, warnings, or side notes.</div>
+        </div>
+        <div class="selector-row">
+          <div class="selector-syntax">:::method</div>
+          <div class="selector-desc">Render API and command signatures in monospace.</div>
+        </div>
+        <div class="selector-row">
+          <div class="selector-syntax">:::selector_list</div>
+          <div class="selector-desc">Render syntax-description rows.</div>
+        </div>
+        <div class="selector-row">
+          <div class="selector-syntax">:::table</div>
+          <div class="selector-desc">Format reference tables.</div>
+        </div>
+        <div class="selector-row">
+          <div class="selector-syntax">:::quick_links</div>
+          <div class="selector-desc">Render a compact row of internal or external links.</div>
+        </div>
+        <div class="selector-row">
+          <div class="selector-syntax">:::reference_list</div>
+          <div class="selector-desc">Render a small "see also" link block.</div>
+        </div>
+        <h2 id="format-content-feature-grid" data-anchor="feature-grid">Code blocks</h2>
+        <p>Python code fences receive custom highlighting from <code>highlight_code()</code> in <code>markdown.py</code>. Other languages render without the Python-specific token styling.</p>
+      </div>
+
+      <div class="section" id="section-architecture-loader" data-section="architecture-loader">
+        <div class="page-hero">
+          <div class="page-tag">Architecture</div>
+          <h1 class="page-title">Loader and site model</h1>
+          <p class="page-lead">The loader is responsible for turning an Atlas source directory into a typed <code>Site</code> object composed of metadata, nav groups, assets, and rendered sections.</p>
+        </div>
+
+        <h2 id="architecture-loader-core-types" data-anchor="core-types">Core types</h2>
+        <p><code>models.py</code> defines the repository's structural dataclasses:</p>
+        <div class="selector-row">
+          <div class="selector-syntax">NavEntry</div>
+          <div class="selector-desc">Sidebar entry with a label, target slug or URL, and <code>external</code> flag.</div>
+        </div>
+        <div class="selector-row">
+          <div class="selector-syntax">NavGroup</div>
+          <div class="selector-desc">Named collection of sidebar entries.</div>
+        </div>
+        <div class="selector-row">
+          <div class="selector-syntax">SidebarFooter</div>
+          <div class="selector-desc">Optional footer nav group rendered separately from the main sidebar.</div>
+        </div>
+        <div class="selector-row">
+          <div class="selector-syntax">Section</div>
+          <div class="selector-desc">Rendered documentation section with frontmatter-derived metadata and HTML body.</div>
+        </div>
+        <div class="selector-row">
+          <div class="selector-syntax">Site</div>
+          <div class="selector-desc">Top-level container holding metadata, nav groups, sections, footer, and assets.</div>
+        </div>
+        <h2 id="architecture-loader-naventry" data-anchor="naventry">Loader behavior</h2>
+        <p><code>load_site()</code> performs several normalization steps:</p>
+        <ul>
+          <li>repairs common mojibake patterns before YAML parsing</li>
+          <li>tolerates pipe-style nav entries that are not valid YAML scalars by quoting them</li>
+          <li>supports both a direct source root and a nested <code>atlas_docs/</code> directory</li>
+          <li>computes fallback breadcrumbs and label maps from navigation</li>
+        </ul>
+
+        <div class="callout info">The default section is the first non-external nav entry in the first nav group.</div>
+      </div>
+
+      <div class="section" id="section-architecture-markdown" data-section="architecture-markdown">
+        <div class="page-hero">
+          <div class="page-tag">Architecture</div>
+          <h1 class="page-title">Markdown and directives</h1>
+          <p class="page-lead"><code>markdown.py</code> is where Atlas becomes more than plain CommonMark. It adds internal document links, inline code references, asset expansion, custom blocks, heading IDs, and Python code highlighting.</p>
+        </div>
+
+        <h2 id="architecture-markdown-extensions-over-plain-markdown" data-anchor="extensions-over-plain-markdown">Extensions over plain Markdown</h2>
+        <table>
+          <thead><tr><th>Feature</th><th>Input syntax</th><th>Result</th></tr></thead>
+          <tbody>
+            <tr><td>Internal doc link</td><td><code>[doc:slug]</code></td><td>Client-side section link using the nav label</td></tr>
+            <tr><td>Custom internal link text</td><td>`[label</td><td>doc:slug]`</td></tr>
+            <tr><td>Inline code ref</td><td><code>`token{ref=slug}`</code></td><td>Clickable code token tied to a section</td></tr>
+            <tr><td>Asset reference</td><td><code>@asset[name]</code></td><td>Inline SVG placeholder or image tag</td></tr>
+            <tr><td>Directive block</td><td><code>:::kind</code></td><td>Structured HTML component</td></tr>
+          </tbody>
+        </table>
+        <h2 id="architecture-markdown-directive-coverage" data-anchor="directive-coverage">Directive coverage</h2>
+        <p>The current implementation handles <code>feature_grid</code>, <code>cards</code>, <code>callout</code>, <code>method</code>, <code>selector_list</code>, <code>table</code>, <code>quick_links</code>, and <code>reference_list</code>.</p>
+        <h2 id="architecture-markdown-heading-ids" data-anchor="heading-ids">Heading IDs</h2>
+        <p>Atlas strips explicit <code>{id=...}</code> suffixes from the rendered heading text, but preserves them for the resulting DOM ID. If no explicit anchor is present, it slugifies the heading text.</p>
+        <h2 id="architecture-markdown-syntax-highlighting" data-anchor="syntax-highlighting">Syntax highlighting</h2>
+        <p>Python code fences are tokenized with repository-defined regex rules for comments, strings, decorators, classes, functions, keywords, and numbers. That means highlighting is deterministic and local to the project; it is not delegated to an external highlighter.</p>
+      </div>
+
+      <div class="section" id="section-architecture-renderer" data-section="architecture-renderer">
+        <div class="page-hero">
+          <div class="page-tag">Architecture</div>
+          <h1 class="page-title">Renderer and themes</h1>
+          <p class="page-lead"><code>renderer.py</code> and <code>theme.py</code> turn a loaded site into the final document by choosing the active theme, layering metadata overrides, serializing search/navigation state, and rendering the Jinja base template.</p>
+        </div>
+
+        <h2 id="architecture-renderer-build-path" data-anchor="build-path">Build path</h2>
+        <p><code>build_site()</code> does four main things:</p>
+        <ol>
+          <li>Loads the site model from source files.</li>
+          <li>Resolves the active theme and optional alternate color-scheme variant.</li>
+          <li>Concatenates CSS and bundled JavaScript modules.</li>
+          <li>Renders <code>templates/base.html.j2</code> with the site payload and serialized config.</li>
+        </ol>
+        <h2 id="architecture-renderer-theme-family-behavior" data-anchor="theme-family-behavior">Theme family behavior</h2>
+        <p>Atlas currently ships one theme family with two variants:</p>
+        <table>
+          <thead><tr><th>Theme</th><th>Color scheme</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td><code>atlas_dark</code></td><td><code>dark</code></td><td>Default theme for CLI build output</td></tr>
+            <tr><td><code>atlas_light</code></td><td><code>light</code></td><td>Alternate variant in the same family</td></tr>
+          </tbody>
+        </table>
+        <p>If the chosen theme belongs to a known family, Atlas can resolve an alternate theme name and expose a color-scheme toggle in the generated site configuration.</p>
+        <h2 id="architecture-renderer-metadata-overrides" data-anchor="metadata-overrides">Metadata overrides</h2>
+        <p>The theme loader lets site metadata override:</p>
+        <ul>
+          <li>accent color for the active scheme</li>
+          <li>display, body, and mono fonts</li>
+          <li>font source URL</li>
+          <li>default color scheme</li>
+        </ul>
+        <h2 id="architecture-renderer-search-and-navigation-payload" data-anchor="search-and-navigation-payload">Search and navigation payload</h2>
+        <p>The renderer serializes a JSON config object with section metadata, theme metadata, search copy, and feature flags. The client-side JavaScript uses that payload to drive section routing, search indexing, and user settings.</p>
       </div>
 
     </div>
@@ -1699,7 +1753,7 @@ atlas-docs serve my-docs --port 8000</code></pre>
     </div>
     <div class="search-results" id="search-results">
       <div class="search-empty">
-        <strong>Search the local docs. Try cli, format, theme, build.</strong>
+        <strong>Search commands, content files, and renderer behavior.</strong>
       </div>
     </div>
   </div>

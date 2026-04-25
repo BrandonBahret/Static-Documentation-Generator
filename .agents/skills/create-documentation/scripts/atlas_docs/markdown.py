@@ -20,6 +20,113 @@ md = MarkdownIt("commonmark", {"html": True, "linkify": False, "typographer": Fa
 md_inline = MarkdownIt("commonmark", {"html": True, "linkify": False, "typographer": False}).enable("table")
 
 
+def protect_fenced_code_blocks(text: str) -> tuple[str, dict[str, str]]:
+    lines = text.splitlines(keepends=True)
+    placeholders: dict[str, str] = {}
+    rendered: list[str] = []
+    index = 0
+
+    while index < len(lines):
+        opener = re.match(r"^ {0,3}([`~]{3,})(.*)$", lines[index])
+        if not opener:
+            rendered.append(lines[index])
+            index += 1
+            continue
+
+        fence = opener.group(1)
+        fence_char = fence[0]
+        fence_len = len(fence)
+        block_lines = [lines[index]]
+        index += 1
+
+        while index < len(lines):
+            block_lines.append(lines[index])
+            closer = re.match(r"^ {0,3}([`~]{3,})[ \t]*\r?\n?$", lines[index])
+            if closer and closer.group(1)[0] == fence_char and len(closer.group(1)) >= fence_len:
+                index += 1
+                break
+            index += 1
+
+        token = f"@@ATLAS_LITERAL_BLOCK_{len(placeholders)}@@"
+        placeholders[token] = "".join(block_lines)
+        rendered.append(token)
+
+    return "".join(rendered), placeholders
+
+
+def protect_inline_code_spans(text: str) -> tuple[str, dict[str, str]]:
+    placeholders: dict[str, str] = {}
+    rendered: list[str] = []
+    index = 0
+
+    while index < len(text):
+        if text[index] != "`":
+            rendered.append(text[index])
+            index += 1
+            continue
+
+        opener_end = index
+        while opener_end < len(text) and text[opener_end] == "`":
+            opener_end += 1
+        fence_len = opener_end - index
+
+        closer_start = opener_end
+        while closer_start < len(text):
+            closer_start = text.find("`", closer_start)
+            if closer_start == -1:
+                break
+            closer_end = closer_start
+            while closer_end < len(text) and text[closer_end] == "`":
+                closer_end += 1
+            if closer_end - closer_start == fence_len:
+                token = f"@@ATLAS_LITERAL_INLINE_{len(placeholders)}@@"
+                placeholders[token] = text[index:closer_end]
+                rendered.append(token)
+                index = closer_end
+                break
+            closer_start = closer_end
+        else:
+            closer_start = -1
+
+        if closer_start == -1:
+            rendered.append(text[index:opener_end])
+            index = opener_end
+
+    return "".join(rendered), placeholders
+
+
+def restore_literal_regions(text: str, placeholders: dict[str, str]) -> str:
+    for token, original in placeholders.items():
+        text = text.replace(token, original)
+    return text
+
+
+def apply_prose_transforms(
+    text: str,
+    nav_labels: dict[str, str],
+    assets: dict[str, Any],
+    *,
+    current_section_slug: str = "",
+    protect_fences: bool = False,
+    protect_inline: bool = False,
+    include_assets: bool = True,
+) -> str:
+    placeholders: dict[str, str] = {}
+    if protect_fences:
+        text, fence_placeholders = protect_fenced_code_blocks(text)
+        placeholders.update(fence_placeholders)
+    if protect_inline:
+        text, inline_placeholders = protect_inline_code_spans(text)
+        placeholders.update(inline_placeholders)
+
+    text = suppress_proximate_inline_refs(text, current_section_slug)
+    text = render_doc_links(text, nav_labels)
+    text = render_inline_refs(text)
+    if include_assets:
+        text = render_assets(text, assets)
+    return restore_literal_regions(text, placeholders)
+
+
 def attrs_to_dict(value: str | None) -> dict[str, str]:
     if not value:
         return {}
@@ -140,10 +247,13 @@ def render_markdown_inline(
     current_section_slug: str = "",
 ) -> str:
     text = text.strip()
-    text = suppress_proximate_inline_refs(text, current_section_slug)
-    text = render_doc_links(text, nav_labels)
-    text = render_inline_refs(text)
-    text = render_assets(text, assets)
+    text = apply_prose_transforms(
+        text,
+        nav_labels,
+        assets,
+        current_section_slug=current_section_slug,
+        protect_inline=True,
+    )
     return render_inline_html(md_inline.renderInline(text))
 
 
@@ -261,7 +371,9 @@ def render_directive(kind: str, attr_line: str | None, body: str, nav_labels: di
 
     if kind == "callout":
         variant = (attr_line or "").strip() or "default"
-        rendered = md.render(render_doc_links(body, nav_labels)).strip()
+        rendered = md.render(
+            apply_prose_transforms(body, nav_labels, assets, protect_fences=True, protect_inline=True, include_assets=False)
+        ).strip()
         rendered = rendered.replace("&quot;", '"')
         paragraph_match = re.fullmatch(r"<p>(.*)</p>", rendered, flags=re.DOTALL)
         if paragraph_match:
@@ -291,7 +403,10 @@ def render_directive(kind: str, attr_line: str | None, body: str, nav_labels: di
 
     if kind in {"quick_links", "reference_list"}:
         cls = "quick-links" if kind == "quick_links" else "reference-list"
-        return f'<div class="{cls}">\n{md.render(render_doc_links(body, nav_labels)).strip()}\n</div>'
+        rendered = md.render(
+            apply_prose_transforms(body, nav_labels, assets, protect_fences=True, protect_inline=True, include_assets=False)
+        ).strip()
+        return f'<div class="{cls}">\n{rendered}\n</div>'
 
     return md.render(body).strip()
 
@@ -497,10 +612,14 @@ def add_external_link_targets(value: str) -> str:
 
 def render_markdown(text: str, nav_labels: dict[str, str], assets: dict[str, Any], *, section_slug: str = "") -> str:
     text, heading_specs = extract_heading_specs(text)
-    text = suppress_proximate_inline_refs(text, section_slug)
-    text = render_doc_links(text, nav_labels)
-    text = render_inline_refs(text)
-    text = render_assets(text, assets)
+    text = apply_prose_transforms(
+        text,
+        nav_labels,
+        assets,
+        current_section_slug=section_slug,
+        protect_fences=True,
+        protect_inline=True,
+    )
     text = render_directives(text, nav_labels, assets)
     html_text = md.render(text)
     if section_slug:

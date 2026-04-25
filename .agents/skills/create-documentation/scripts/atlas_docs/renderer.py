@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import shutil
 from pathlib import Path
 
 from .loader import load_site
@@ -12,6 +13,32 @@ from .theme import (
     template_env,
     package_path,
 )
+
+
+def copy_local_assets(site, out_file: Path) -> None:
+    asset_dir = out_file.parent / "assets"
+    copied_any = False
+
+    for key in ("svgs", "images"):
+        for row in site.assets.get(key, []) or []:
+            if not isinstance(row, str):
+                continue
+            parts = [part.strip() for part in row.split("|")]
+            if len(parts) < 2:
+                continue
+            asset_path = parts[1]
+            if asset_path.startswith(("http://", "https://")):
+                continue
+            if Path(asset_path).is_absolute():
+                source_path = Path(asset_path)
+            else:
+                source_path = site.source / asset_path
+            if not source_path.exists() or not source_path.is_file():
+                continue
+            if not copied_any:
+                asset_dir.mkdir(parents=True, exist_ok=True)
+                copied_any = True
+            shutil.copy2(source_path, asset_dir / source_path.name)
 
 
 def init_site(path: Path) -> None:
@@ -133,4 +160,5 @@ def build_site(source: Path, out_file: Path, theme_name: str = "atlas_dark", min
 
     out_file.parent.mkdir(parents=True, exist_ok=True)
     out_file.write_text(html, encoding="utf-8")
+    copy_local_assets(site, out_file)
     return out_file
