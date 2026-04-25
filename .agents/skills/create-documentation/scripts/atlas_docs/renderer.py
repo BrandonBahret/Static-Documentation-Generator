@@ -101,7 +101,13 @@ def compact_html(value: str) -> str:
     return value
 
 
-def build_site(source: Path, out_file: Path, theme_name: str = "atlas_dark", minify: bool = True) -> Path:
+def build_site(
+    source: Path,
+    out_file: Path,
+    theme_name: str = "atlas_dark",
+    minify: bool = True,
+    extra_js: str = "",
+) -> Path:
     site = load_site(source)
 
     default_scheme = (site.metadata.get("color_scheme") or "dark").strip().lower()
@@ -114,6 +120,8 @@ def build_site(source: Path, out_file: Path, theme_name: str = "atlas_dark", min
         (package_path("static", "js", filename)).read_text(encoding="utf-8")
         for filename in ["state.js", "settings.js", "navigation.js", "copy-code.js", "search.js", "app.js"]
     )).rstrip("\n")
+    if extra_js.strip():
+        js = f"{js}\n\n{extra_js.strip()}"
 
     sections_payload = {
         section.slug: {

@@ -54,6 +54,75 @@ def protect_fenced_code_blocks(text: str) -> tuple[str, dict[str, str]]:
     return "".join(rendered), placeholders
 
 
+def protect_directive_blocks(text: str, kinds: set[str]) -> tuple[str, dict[str, str]]:
+    lines = text.splitlines(keepends=True)
+    placeholders: dict[str, str] = {}
+    rendered: list[str] = []
+    index = 0
+
+    while index < len(lines):
+        opener = re.match(r"^:::(\w+)(?:\s+(.+))?\s*$", lines[index].rstrip("\r\n"))
+        if not opener or opener.group(1) not in kinds:
+            rendered.append(lines[index])
+            index += 1
+            continue
+
+        depth = 1
+        block_lines = [lines[index]]
+        index += 1
+        while index < len(lines):
+            line = lines[index]
+            stripped = line.rstrip("\r\n")
+            if re.match(r"^:::(\w+)(?:\s+(.+))?\s*$", stripped):
+                depth += 1
+                block_lines.append(line)
+                index += 1
+                continue
+            if stripped.strip() == ":::":
+                depth -= 1
+                block_lines.append(line)
+                index += 1
+                if depth == 0:
+                    break
+                continue
+            block_lines.append(line)
+            index += 1
+
+        token = f"@@ATLAS_LITERAL_DIRECTIVE_{len(placeholders)}@@"
+        placeholders[token] = "".join(block_lines)
+        rendered.append(token)
+
+    return "".join(rendered), placeholders
+
+
+def protect_indented_code_blocks(text: str) -> tuple[str, dict[str, str]]:
+    lines = text.splitlines(keepends=True)
+    placeholders: dict[str, str] = {}
+    rendered: list[str] = []
+    index = 0
+
+    while index < len(lines):
+        if not re.match(r"^(?: {4}|\t)", lines[index]):
+            rendered.append(lines[index])
+            index += 1
+            continue
+
+        block_lines = [lines[index]]
+        index += 1
+        while index < len(lines):
+            if re.match(r"^(?: {4}|\t)", lines[index]) or lines[index].strip() == "":
+                block_lines.append(lines[index])
+                index += 1
+                continue
+            break
+
+        token = f"@@ATLAS_LITERAL_INDENTED_{len(placeholders)}@@"
+        placeholders[token] = "".join(block_lines)
+        rendered.append(token)
+
+    return "".join(rendered), placeholders
+
+
 def protect_inline_code_spans(text: str) -> tuple[str, dict[str, str]]:
     placeholders: dict[str, str] = {}
     rendered: list[str] = []
@@ -79,8 +148,13 @@ def protect_inline_code_spans(text: str) -> tuple[str, dict[str, str]]:
             while closer_end < len(text) and text[closer_end] == "`":
                 closer_end += 1
             if closer_end - closer_start == fence_len:
+                span = text[index:closer_end]
+                if INLINE_REF_RE.fullmatch(span):
+                    rendered.append(span)
+                    index = closer_end
+                    break
                 token = f"@@ATLAS_LITERAL_INLINE_{len(placeholders)}@@"
-                placeholders[token] = text[index:closer_end]
+                placeholders[token] = span
                 rendered.append(token)
                 index = closer_end
                 break
@@ -101,6 +175,13 @@ def restore_literal_regions(text: str, placeholders: dict[str, str]) -> str:
     return text
 
 
+def restore_rendered_directives(text: str, placeholders: dict[str, str]) -> str:
+    for token, rendered in placeholders.items():
+        text = re.sub(rf"<p>\s*{re.escape(token)}\s*</p>", rendered, text)
+        text = text.replace(token, rendered)
+    return text
+
+
 def apply_prose_transforms(
     text: str,
     nav_labels: dict[str, str],
@@ -115,6 +196,8 @@ def apply_prose_transforms(
     if protect_fences:
         text, fence_placeholders = protect_fenced_code_blocks(text)
         placeholders.update(fence_placeholders)
+        text, indented_placeholders = protect_indented_code_blocks(text)
+        placeholders.update(indented_placeholders)
     if protect_inline:
         text, inline_placeholders = protect_inline_code_spans(text)
         placeholders.update(inline_placeholders)
@@ -130,7 +213,7 @@ def apply_prose_transforms(
 def attrs_to_dict(value: str | None) -> dict[str, str]:
     if not value:
         return {}
-    pairs = re.findall(r"([a-zA-Z_][\w-]*)=([^\s}]+)", value)
+    pairs = re.findall(r'([a-zA-Z_][\w-]*)=(".*?"|\'.*?\'|[^\s}]+)', value)
     return {key: raw.strip('"').strip("'") for key, raw in pairs}
 
 
@@ -145,6 +228,46 @@ def html_attrs(base_class: str, attrs: dict[str, str], *, allow: set[str] | None
             continue
         rendered.append(f'{html.escape(key)}="{html.escape(value)}"')
     return " " + " ".join(rendered)
+
+
+def render_example_pair(
+    body: str,
+    attrs: dict[str, str],
+    nav_labels: dict[str, str],
+    assets: dict[str, Any],
+    *,
+    current_section_slug: str = "",
+) -> str:
+    title = attrs.get("title", "Example")
+    language = attrs.get("lang") or attrs.get("language") or "md"
+    source = body.strip("\n")
+    preview_slug = f"{current_section_slug or 'example'}-{atlas_slugify(title)}"
+    preview_html = render_markdown(source, nav_labels, assets, section_slug=preview_slug).strip()
+    preview_html = re.sub(r'\sid="[^"]+"', "", preview_html)
+    preview_html = re.sub(r'\sdata-anchor="[^"]+"', "", preview_html)
+    container_attrs = html_attrs("example-pair", attrs, allow={"id"})
+    title_html = html.escape(title)
+    source_html = html.escape(source)
+    return (
+        f"<section{container_attrs}>\n"
+        "  <div class=\"example-pair-head\">\n"
+        f"    <div class=\"example-pair-title\">{title_html}</div>\n"
+        "    <div class=\"example-pair-kicker\">Markdown to browser output</div>\n"
+        "  </div>\n"
+        "  <div class=\"example-pair-grid\">\n"
+        "    <div class=\"example-pair-panel example-pair-panel-source\">\n"
+        "      <div class=\"example-pair-label\">Source</div>\n"
+        f"      <pre data-lang=\"{html.escape(language)}\"><code>{source_html}</code></pre>\n"
+        "    </div>\n"
+        "    <div class=\"example-pair-panel example-pair-panel-preview\">\n"
+        "      <div class=\"example-pair-label\">Browser</div>\n"
+        "      <div class=\"example-pair-render\">\n"
+        f"{preview_html}\n"
+        "      </div>\n"
+        "    </div>\n"
+        "  </div>\n"
+        "</section>"
+    )
 
 
 def atlas_slugify(text: str) -> str:
@@ -330,9 +453,18 @@ def parse_items(body: str) -> list[tuple[str, dict[str, str], str]]:
     return items
 
 
-def render_directive(kind: str, attr_line: str | None, body: str, nav_labels: dict[str, str], assets: dict[str, Any]) -> str:
+def render_directive(
+    kind: str,
+    attr_line: str | None,
+    body: str,
+    nav_labels: dict[str, str],
+    assets: dict[str, Any],
+    *,
+    current_section_slug: str = "",
+) -> str:
+    attrs = attrs_to_dict(attr_line)
     if kind == "feature_grid":
-        container_attrs = html_attrs("feature-grid", attrs_to_dict(attr_line), allow={"id"})
+        container_attrs = html_attrs("feature-grid", attrs, allow={"id"})
         rows = []
         for title, item_attrs, content in parse_items(body):
             rows.append(
@@ -347,7 +479,7 @@ def render_directive(kind: str, attr_line: str | None, body: str, nav_labels: di
         return f"<div{container_attrs}>\n" + "\n".join(rows) + "\n</div>"
 
     if kind == "cards":
-        container_attrs = html_attrs("cards", attrs_to_dict(attr_line), allow={"id"})
+        container_attrs = html_attrs("cards", attrs, allow={"id"})
         rows = []
         for title, item_attrs, content in parse_items(body):
             slug = item_attrs.get("link")
@@ -382,6 +514,15 @@ def render_directive(kind: str, attr_line: str | None, body: str, nav_labels: di
 
     if kind == "method":
         return render_method_block(body.strip())
+
+    if kind == "example_pair":
+        return render_example_pair(
+            body,
+            attrs,
+            nav_labels,
+            assets,
+            current_section_slug=current_section_slug,
+        )
 
     if kind == "selector_list":
         rows = []
@@ -578,9 +719,16 @@ def render_method_block(text: str) -> str:
     return "<div class=\"method\">\n  " + "\n  ".join(lines + [closing]) + "\n</div>"
 
 
-def render_directives(text: str, nav_labels: dict[str, str], assets: dict[str, Any]) -> str:
+def render_directives(
+    text: str,
+    nav_labels: dict[str, str],
+    assets: dict[str, Any],
+    *,
+    current_section_slug: str = "",
+) -> tuple[str, dict[str, str]]:
     lines = text.splitlines()
     rendered: list[str] = []
+    placeholders: dict[str, str] = {}
     index = 0
     while index < len(lines):
         opener = re.match(r"^:::(\w+)(?:\s+(.+))?\s*$", lines[index])
@@ -591,19 +739,42 @@ def render_directives(text: str, nav_labels: dict[str, str], assets: dict[str, A
 
         kind, attr_line = opener.group(1), opener.group(2)
         body_lines: list[str] = []
+        depth = 1
         index += 1
-        while index < len(lines) and lines[index].strip() != ":::":
-            body_lines.append(lines[index])
+        while index < len(lines):
+            line = lines[index]
+            if re.match(r"^:::(\w+)(?:\s+(.+))?\s*$", line):
+                depth += 1
+                body_lines.append(line)
+                index += 1
+                continue
+            if line.strip() == ":::":
+                depth -= 1
+                if depth == 0:
+                    break
+                body_lines.append(line)
+                index += 1
+                continue
+            body_lines.append(line)
             index += 1
         if index == len(lines):
             rendered.append(lines[index - len(body_lines) - 1])
             rendered.extend(body_lines)
             break
 
-        rendered.append(render_directive(kind, attr_line, "\n".join(body_lines), nav_labels, assets))
+        token = f'<div data-atlas-directive="{len(placeholders)}"></div>'
+        placeholders[token] = render_directive(
+            kind,
+            attr_line,
+            "\n".join(body_lines),
+            nav_labels,
+            assets,
+            current_section_slug=current_section_slug,
+        )
+        rendered.append(token)
         index += 1
 
-    return "\n".join(rendered)
+    return "\n".join(rendered), placeholders
 
 
 def add_external_link_targets(value: str) -> str:
@@ -611,6 +782,7 @@ def add_external_link_targets(value: str) -> str:
 
 
 def render_markdown(text: str, nav_labels: dict[str, str], assets: dict[str, Any], *, section_slug: str = "") -> str:
+    text, directive_placeholders = protect_directive_blocks(text, {"example_pair"})
     text, heading_specs = extract_heading_specs(text)
     text = apply_prose_transforms(
         text,
@@ -620,10 +792,12 @@ def render_markdown(text: str, nav_labels: dict[str, str], assets: dict[str, Any
         protect_fences=True,
         protect_inline=True,
     )
-    text = render_directives(text, nav_labels, assets)
+    text = restore_literal_regions(text, directive_placeholders)
+    text, directive_placeholders = render_directives(text, nav_labels, assets, current_section_slug=section_slug)
     html_text = md.render(text)
     if section_slug:
         html_text = add_heading_ids(html_text, section_slug, heading_specs)
+    html_text = restore_rendered_directives(html_text, directive_placeholders)
     html_text = render_code_blocks(html_text)
     return render_inline_html(html_text)
 
